@@ -10,8 +10,8 @@ class NoCourse(object):
         self.action = None
 
     def __call__(self):
-        if self.is_body_in_box():
-            self.choose_action()
+        # if self.is_body_in_box():
+        self.choose_action()
         return self
 
     def is_body_in_box(self):

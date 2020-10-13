@@ -7,14 +7,6 @@ class Camera(object):
     def __init__(self, args):
         self.args = args
 
-    def read(self, cap):
-        res, img = cap.read()
-
-        if not res:
-            raise IOError("webcam failure")
-
-        return img
-
     def preprocessing(self, img):
         h, w, c = img.shape
 

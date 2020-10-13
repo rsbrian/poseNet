@@ -15,10 +15,12 @@ from controller import Controller
 from third_party import ThirdParty
 from websocket_server import WebsocketServer
 
+import pickle
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
-parser.add_argument('--rotate', type=int, default=0)
+parser.add_argument('--rotate', type=int, default=90)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--cam_width', type=int, default=540)
@@ -37,13 +39,8 @@ camera = Camera(args)
 control = Controller(args)
 third_party = ThirdParty()
 
-video_name = "C1-3 高腳杯啞鈴夾胸F.mp4"
+video_name = "videos/behavior.MOV"
 cap = cv2.VideoCapture(video_name)
-#cap = cv2.VideoCapture(2)
-# Not Working
-# cap.set(cv2.CAP_PROP_FRAME_WIDTH, args.cam_width)
-# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, args.cam_height)
-# cap.set(cv2.CAP_PROP_FPS, 60)
 
 
 def main():
@@ -51,8 +48,10 @@ def main():
         global server
         third_party.load_model(args.model, sess)
         while True:
+            res, img = cap.read()
+            if not res:
+                break
 
-            img = camera.read(cap)
             img = camera.preprocessing(img)
 
             img, multi_points = camera.get_multi_skeleton_from(
@@ -62,12 +61,21 @@ def main():
             control.update_model(img, points)
 
             course = control.choose_course()
+            points = course.brain.get_test_points()
+            print(len(points))
+            # calcGradient(points)
+
             api = course().get_api()
             control.send(server, api)
 
             control.show(img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+
+        print(len(points))
+        pickle_out = open('points.pickle', "wb")
+        pickle.dump(points, pickle_out)
+        pickle_out.close()
 
         control.destroy()
         cap.release()
