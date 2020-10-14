@@ -15,7 +15,9 @@ from controller import Controller
 from third_party import ThirdParty
 from websocket_server import WebsocketServer
 
+
 import pickle
+from analysis import Analysis
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
@@ -38,6 +40,7 @@ if len(physical_devices):
 camera = Camera(args)
 control = Controller(args)
 third_party = ThirdParty()
+analysis = Analysis()
 
 video_name = "videos/behavior.MOV"
 cap = cv2.VideoCapture(video_name)
@@ -62,8 +65,11 @@ def main():
 
             course = control.choose_course()
             points = course.brain.get_test_points()
-            print(len(points))
-            # calcGradient(points)
+
+            analysis.load(points)
+            behavior = analysis.predict(points)
+            if behavior != "":
+                print(behavior)
 
             api = course().get_api()
             control.send(server, api)
@@ -72,10 +78,10 @@ def main():
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
-        print(len(points))
-        pickle_out = open('points.pickle', "wb")
-        pickle.dump(points, pickle_out)
-        pickle_out.close()
+        # print(len(points))
+        # pickle_out = open('points.pickle', "wb")
+        # pickle.dump(points, pickle_out)
+        # pickle_out.close()
 
         control.destroy()
         cap.release()
