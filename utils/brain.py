@@ -35,7 +35,7 @@ class Brain(object):
             self.stored_angles = self.stored_angles[1:]
             self.median_filter(self.stored_points, self.human.points)
             self.median_filter(self.stored_angles, self.human.angles)
-            self.test_points.append(self.human.points)
+            self.test_points.append(copy.deepcopy(self.human.points))
 
     def median_filter(self, listed_points, new_list):
         median = len(listed_points) // 2
