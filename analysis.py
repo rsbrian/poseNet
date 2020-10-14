@@ -169,7 +169,7 @@ class Analysis(object):
         self.state = NoAction(self)
 
     def load(self, points):
-        if self.temp is None:
+        if self.temp is None and points != []:
             self.temp = points
 
     def load_data(self, data):
@@ -179,7 +179,7 @@ class Analysis(object):
         self.state = state
 
     def predict(self, points):
-        if self.temp is None:
+        if self.temp is None and points == []:
             return ""
         self.calcPast(points)
         return self.state.analyze()

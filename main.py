@@ -63,14 +63,13 @@ def main():
 
             control.update_model(img, points)
 
-            course = control.choose_course()
-            points = course.brain.get_test_points()
-
+            points = control.brain.get_test_points()
             analysis.load(points)
             behavior = analysis.predict(points)
             if behavior != "":
                 print(behavior)
 
+            course = control.choose_course()
             api = course().get_api()
             control.send(server, api)
 

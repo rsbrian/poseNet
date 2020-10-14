@@ -62,7 +62,7 @@ class Controller(object):
 
     def send(self, server, api):
         if self.args.socket:
-            print(api)
+            # print(api)
             server.send_message_to_all(json.dumps(api, ensure_ascii=False))
             # if api["function"] == "exercise_status" and api["最後動作"] != "":
             #     server.send_message_to_all(
