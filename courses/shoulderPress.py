@@ -4,6 +4,7 @@ import datetime
 from api.socket import Api
 from utils.counter import Counter
 
+# 肩推
 
 class ShoulderPress(object):
     def __init__(self, brain, view):
@@ -73,7 +74,8 @@ class Action(object):
 
     def __call__(self):
         print("Action")
-
+        print(self.brain.get_points("left_wrist_x"))
+        print(self.brain.get_points("left_wrist_x_temp"))
         if self.brain.is_pose("shoulder_width_apart"):
             # print("雙腳請與肩同寬")
             self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
@@ -102,6 +104,9 @@ class HandsUp(object):
         if self.brain.is_pose("ending"):
             if self.is_time_small_than(0.8):
                 print("你沒有要開始就不要亂動")
+            self.course.api.course_action["action"]["alert"] = ["舉的不夠高不列入次數"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
 
         elif self.brain.is_pose("shoulder_width_apart"):
@@ -112,7 +117,7 @@ class HandsUp(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
-        elif self.brain.is_pose("hands_down_boat"):
+        elif self.brain.is_pose("hands_down_shoulderpress"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
             self.counter.record("up")

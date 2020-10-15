@@ -4,6 +4,7 @@ import datetime
 from api.socket import Api
 from utils.counter import Counter
 
+# 俯身啞鈴後划船
 
 class BentRow(object):
     def __init__(self, brain, view):
@@ -122,6 +123,9 @@ class HandsUp(object):
         if self.brain.is_pose("ending"):
             if self.is_time_small_than(0.8):
                 print("你沒有要開始就不要亂動")
+            self.course.api.course_action["action"]["alert"] = ["舉的不夠高不列入次數"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
 
         elif self.brain.is_pose("shoulder_width_apart"):
