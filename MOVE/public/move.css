@@ -1,7 +1,7 @@
 @font-face {
 font-family: 'Adventure Subtitles';
-src: url('./assets/Adventure Subtitles.ttf') format('truetype'); 
-} 
+src: url('./assets/Adventure Subtitles.ttf') format('truetype');
+}
 
 .home_pageTitle {
     position: absolute;
@@ -72,6 +72,11 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 .home_videoArea {
     height: 1000px;
     mix-blend-mode: lighten;
+
+    position: relative;
+    width: 900px;
+    left: -254px;
+
     /*position: relative;
     mix-blend-mode: lighten;
     top: 44px;
@@ -256,7 +261,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     letter-spacing: 0px;
     color: #93D5FF;
     opacity: 0.82;
-} 
+}
 
 /*.home_tip{
     position: absolute;
@@ -275,7 +280,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .home_pageButton {
     position: absolute;
-    
+
     top: 997px;
     left: 308px;
     width: 468px;
@@ -301,6 +306,207 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .home_pageButton:focus-within {
     border: 6px solid #79E0FA;
+}
+
+.class2_col_move {
+    animation: move 2s linear;
+}
+
+
+@keyframes move {
+from {
+    opacity:.2;
+}
+
+to {
+    opacity:1;
+}
+}
+
+.class2_area{
+    position: absolute;
+    top: 302px;
+    left: 0px;
+    width: 1080px;
+    height: 1364px;
+    max-height: 1364px;
+    min-height: 1364px;
+    overflow-y: hidden;
+
+}
+
+.class2_catalog_area{
+    height: 354px;
+    width: 100%;
+    display: flex;
+    margin-bottom: 47px;
+}
+
+.class2_catalog{
+    width:269px;
+}
+
+.class2_catalog_Name1{
+    position: relative;
+
+    left: 94px;
+    top: 89px;
+    height: 160px;
+    width: 112px;
+
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 164px/42px Adventure Subtitles;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-74e0fc);
+    text-align: center;
+    font: normal normal normal 164px/42px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #FBFBFB;
+    opacity: 0.44;
+}
+
+.class2_catalog_Name2{
+    position: relative;
+
+    top: 0px;
+    width: 269px;
+    height: 29px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 30px/var(--unnamed-line-spacing-41) Adventure Subtitles;
+    text-align: center;
+    font: normal normal normal 30px/41px Adventure Subtitles;
+    letter-spacing: 1.86px;
+    color: #FBFBFB;
+    opacity: 0.7;
+}
+
+.class2_catalog_Name3 {
+    position: relative;
+    top: -120px;
+    left: 165px;
+    width: 53px;
+    height: 70px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-74e0fc);
+    text-align: left;
+    font-size: 53px;
+    font: Regular 53px/52px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+}
+
+.class2_course_area {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.class2_courseItem {
+
+    width: 630px;
+    height: 354px;
+    min-width: 630px;
+    min-height: 354px;
+    max-width: 630px;
+    max-height: 354px;
+
+    background: #001620 0% 0% no-repeat padding-box;
+    opacity: 1;
+    margin-right: 47px;
+}
+
+.class2_courseWrappImage_area {
+    position: relative;
+
+    display: none;
+    top: -502px;
+    overflow-y: hidden;
+
+    width: 630px;
+    height: 354px;
+    min-width: 630px;
+    min-height: 354px;
+    max-width: 630px;
+    max-height: 354px;
+
+    background: #001620 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.class2_courseWrappImage_border {
+    position: relative;
+
+    left: 157.5px;
+
+    width: 315px;
+    height: 345px;
+    min-width: 315px;
+    min-height: 345px;
+    max-width: 315px;
+    max-height: 345px;
+
+    border-top: 5px #74E0FC solid;
+    border-bottom: 5px #74E0FC solid;
+}
+
+.class2_courseWrapperImage {
+    position: relative;
+    top: -344px;
+    height: 337px;
+    mix-blend-mode:screen;
+}
+
+.class2_courseItem:focus {
+    outline:none
+}
+
+.class2_courseItem:focus-within{
+    /*width: 630px;
+    height: 354px;
+    min-width: 630px;
+    min-height: 354px;
+    max-width: 630px;
+    max-height: 354px;
+
+    background-image: url('./assets/pic_leg_selected.png');
+    opacity: 1;
+    margin-right: 47px;*/
+
+    /*position: absolute;
+    top: 1144px;
+    left: 124px;
+    width: 385px;
+    height: 150px;
+    background-image: url('./assets/pic_leg_selected.png');
+    opacity: 1;*/
+}
+
+.class2_courseImage {
+    margin-top: 49px;
+}
+
+.class2_courseName_wrapper {
+    position: relative;
+    top: -176px;
+    width: 100%;
+    height: 110px;
+
+    background: #000000 0% 0% no-repeat padding-box;
+    opacity: 0.49;
+}
+
+.class2_courseName_title {
+    position: relative;
+    top: -275px;
+    width: 100%;
+
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-74e0fc);
+    text-align: center;
+    font-size: 69px;
+    font: Regular 69px/52px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
 }
 
 .catalog_dotImg{
@@ -330,47 +536,47 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     from {
       opacity:.2;
     }
-    
+
     to {
       opacity:1;
     }
   }
-  
+
   @-moz-keyframes led {
     from {
       opacity:.2;
     }
-    
+
     to {
       opacity:1;
     }
   }
-  
+
   @-ms-keyframes led {
     from {
       opacity:.2;
     }
-    
+
     to {
       opacity:1;
     }
   }
-  
+
   @-o-keyframes led {
     from {
       opacity:.2;
     }
-    
+
     to {
       opacity:1;
     }
   }
-  
+
   @keyframes led {
     from {
       opacity:.2;
     }
-    
+
     to {
       opacity:1;
     }
@@ -543,7 +749,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .catalog_pageButton {
     position: absolute;
-    
+
     left: 183px;
     width: 300px;
     height: 216px;
@@ -603,7 +809,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .level_pageButton {
     position: absolute;
-    
+
     left: 170px;
     width: 741px;
     height: 184px;
@@ -623,7 +829,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .level_pageButton_title {
     position: relative;
-    
+
     /*top: 975px;
     left: 482px;*/
     width: 100%;
@@ -649,7 +855,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     font: Regular 37px/63px Segoe UI;
     letter-spacing: 0px;
     color: #FFFFFF;
-    opacity: 1; 
+    opacity: 1;
 }
 
 .level_parent {
@@ -681,12 +887,12 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .classSelect_pageSize{
     position: absolute;
-    
+
     top: 274px;
     left: 96px;
     width: 889px;
     height: 1423px;
-    
+
     z-index: 10;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -725,7 +931,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .classSelect_pageButton_title {
     position: relative;
-    
+
     top: 0px;
     left: 69px;
     width: 751px;
@@ -1121,7 +1327,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     font: Bold 33px/36px Microsoft New Tai Lue;
     letter-spacing: 0px;
     color: #FFFFFF;
-    opacity: 1; 
+    opacity: 1;
 }
 
 .classIntro_courseStep {
@@ -1188,6 +1394,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     letter-spacing: 0px;
     color: #74E0FC;
     opacity: 1;
+    z-index: 10;
 }
 
 .classBegin_backgroundImg {
@@ -1334,9 +1541,10 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .classBegin_video{
     position: absolute;
-    top: 470px;
-    left: 225px;
-    height: 1100px;
+    top: 200px;
+    /*left: 215px;*/
+    height: 1450px;
+    mix-blend-mode:screen;
     /*width:150%;*/
 }
 
@@ -1346,7 +1554,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     left: 179px;
     width: 800px;
     height: 226px;
-    
+
     opacity: 1;
 }
 
@@ -1358,22 +1566,20 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 }
 
 .classBegin_actionTip_img{
-    position: relative;
     width: 167px;
     height: 226px;
     background: transparent url('./assets/pic_deco2.png') 0% 0% no-repeat padding-box;
-    float: left;
+    display: table-cell;
 }
 
 .classBegin_actionTip_text{
-    position: relative;
     /*display: inline;*/
     /*vertical-align: middle;
 
     line-height: 226px;*/
 
-    display: grid;
-    height: 226px;
+    display: table-cell;
+    /*height: 226px;*/
     width: 602px;
     margin: 0 auto;
     place-content: center;
@@ -1384,6 +1590,8 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     letter-spacing: 0px;
     color: #17FF21;
     opacity: 1;
+    line-height: 60px;
+    vertical-align: middle;
 }
 
 /*.classBegin_noticeboard{
@@ -1408,6 +1616,21 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     background: transparent url('./assets/noticeboard_2.gif') 0% 0% no-repeat padding-box;
     opacity: 1;
 }
+.classBegin_newTimer {
+    position: absolute;
+
+    top: 448px;
+    left: 871px;
+    width: 98px;
+    height: 138px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 142px/42px Adventure Subtitles;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 142px/42px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #FAFAFA;
+    opacity: 1;
+}
 
 .classBegin_Timer {
     position: absolute;
@@ -1422,6 +1645,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     letter-spacing: 0px;
     color: #74E0FC;
     opacity: 1;
+    z-index: 10;
 }
 
 .classBegin_counter {
@@ -1432,7 +1656,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     width: 219px;
     height: 217px;
     background: transparent url('./assets/pic_timecount_bg.png') 0% 0% no-repeat padding-box;
-    
+
     opacity: 1;
     z-index: 5;
 }
@@ -1489,7 +1713,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .classBegin_BPM_Title {
     position: absolute;
-    
+
     top: 807px;
     left: 138px;
     width: 45px;
@@ -1517,7 +1741,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .classBegin_REPS_Title {
     position: absolute;
-    
+
     top: 470px;
     left: 820px;
     width: 50px;
@@ -1768,7 +1992,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 }
 
 .classDone_QRCodeTitle {
-    
+
     position: absolute;
 
     top: 863px;
@@ -1961,7 +2185,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     width: 333px;
     text-align: center;
 
-    height: 114px; 
+    height: 114px;
     letter-spacing: NaNpx;
     font-size: 109px;
     font: Normal 109px/83px Adventure Subtitles;
@@ -2024,11 +2248,72 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     left: 0px;
     width: 1080px;
     height: 286px;
+
+    background: var(--unnamed-color-74e0fc) 0% 0% no-repeat padding-box;
+    background: #74E0FC 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 143px;
+    opacity: 0.23;
+
     /*background: #000000 0% 0% no-repeat padding-box;*/
-    background: transparent url('./assets/Rectangle 102.png') 0% 0% no-repeat padding-box;
+    /*background: transparent url('./assets/Rectangle 102.png') 0% 0% no-repeat padding-box;*/
     /*border: 1px solid #707070;
     border-radius: 143px;
     opacity: 0.23;*/
+}
+
+.classDone_newCountArea {
+    position: absolute;
+
+    top:505px;
+    width:100%;
+}
+
+.classDone_innerArea{
+    display: table;
+    margin: 0 auto;
+}
+
+.classDone_inner2Area{
+    display: flex;
+}
+
+.classDone_newNumberFons{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 143px/95px Adventure Subtitles;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 143px/95px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #17FF21;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.classDone_Star {
+    color: #74E0FC;
+    font-size: 55px;
+    margin: 0 auto 20px 40%;
+}
+
+.classDone_newFons {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 53px/108px var(--unnamed-font-family-microsoft-sans-serif);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 53px/108px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_newFons2{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 53px/108px var(--unnamed-font-family-microsoft-sans-serif);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 108px/108px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-right: 20px;
 }
 
 .classDone_qrcode_title{
@@ -2112,7 +2397,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     color: #FFFFFF;
 
     opacity: 1;
-}   
+}
 
 
 .classDone_endButton:focus{

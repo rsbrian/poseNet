@@ -1,3 +1,5 @@
+from utils.brain import Brain
+
 from urllib.parse import unquote
 
 from courses.barbellOverheadSquat import BarbellOverheadSquat
@@ -37,11 +39,9 @@ class Server(object):
         if self.is_course_need_to_change():
             self.course_name_cache = self.course_name
             self.course = self.course_template[self.course_name](brain, view)
-
         return self.course
 
     def set_api(self, msg):
-        print(msg)
         self.function = msg["function"]
 
         if self.function == "endExercise":

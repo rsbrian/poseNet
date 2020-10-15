@@ -17,7 +17,6 @@ from websocket_server import WebsocketServer
 
 
 import pickle
-from analysis import Analysis
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
@@ -40,10 +39,9 @@ if len(physical_devices):
 camera = Camera(args)
 control = Controller(args)
 third_party = ThirdParty()
-analysis = Analysis()
 
 video_name = "videos/behavior.MOV"
-cap = cv2.VideoCapture(video_name)
+cap = cv2.VideoCapture(2)
 
 
 def main():
@@ -59,15 +57,11 @@ def main():
 
             img, multi_points = camera.get_multi_skeleton_from(
                 img, third_party)
-            img, points = camera.multi_person_filter(img, multi_points)
+            img, points, face = camera.multi_person_filter(img, multi_points)
 
             control.update_model(img, points)
 
-            points = control.brain.get_test_points()
-            analysis.load(points)
-            behavior = analysis.predict(points)
-            if behavior != "":
-                print(behavior)
+            control.test_loading(face)
 
             course = control.choose_course()
             api = course().get_api()

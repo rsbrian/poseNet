@@ -40,6 +40,8 @@ class Brain(object):
     def median_filter(self, listed_points, new_list):
         median = len(listed_points) // 2
         for key in listed_points[0].keys():
+            if "temp" in key:
+                continue
             newlist = sorted(listed_points, key=lambda x: x[key])
             value = newlist[median].get(key)
             new_list[key] = value
