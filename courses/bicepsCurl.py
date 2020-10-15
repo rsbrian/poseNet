@@ -25,7 +25,6 @@ class BicepsCurl(object):
         self.state = new_state
 
     def get_api(self):
-        print(self.api.course_action)
         return self.api.course_action
 
     def set_time(self, name):
@@ -237,6 +236,7 @@ class ErrorHandleing(object):
         self.brain = brain
 
     def __call__(self):
+        print("Error Handleing")
         if self.brain.is_pose("ending"):
             self.brain.reset_temp_points()
             self.course.change(Action(self.course, self.brain))
