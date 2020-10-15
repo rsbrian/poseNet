@@ -15,7 +15,6 @@ from controller import Controller
 from third_party import ThirdParty
 from websocket_server import WebsocketServer
 
-
 import pickle
 
 parser = argparse.ArgumentParser()
