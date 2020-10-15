@@ -40,7 +40,7 @@ control = Controller(args)
 third_party = ThirdParty()
 
 video_name = "videos/behavior.MOV"
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 
 
 def main():

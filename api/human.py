@@ -10,7 +10,6 @@ class Human:
 
     @temp_points.setter
     def temp_points(self, new_points):
-        print("?????", self._points["left_wrist_x"])
         self._points["left_hip_x_temp"] = self._points["left_hip_x"]
         self._points["left_hip_y_temp"] = self._points["left_hip_y"]
         self._points["left_knee_x_temp"] = self._points["left_knee_x"]
@@ -35,7 +34,6 @@ class Human:
         self._points["left_shoulder_y_temp"] = self._points["left_shoulder_y"]
         self._points["right_shoulder_x_temp"] = self._points["right_shoulder_x"]
         self._points["right_shoulder_y_temp"] = self._points["right_shoulder_y"]
-        print(self._points["left_wrist_x_temp"])
 
     @property
     def points(self):
