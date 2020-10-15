@@ -38,12 +38,7 @@ control = Controller(args)
 third_party = ThirdParty()
 
 video_name = "C1-3 高腳杯啞鈴夾胸F.mp4"
-cap = cv2.VideoCapture(video_name)
-#cap = cv2.VideoCapture(2)
-# Not Working
-# cap.set(cv2.CAP_PROP_FRAME_WIDTH, args.cam_width)
-# cap.set(cv2.CAP_PROP_FRAME_HEIGHT, args.cam_height)
-# cap.set(cv2.CAP_PROP_FPS, 60)
+cap = cv2.VideoCapture(2)
 
 
 def main():

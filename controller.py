@@ -62,13 +62,11 @@ class Controller(object):
 
     def send(self, server, api):
         if self.args.socket:
-            print(api)
-            server.send_message_to_all(json.dumps(api, ensure_ascii=False))
-            # if api["function"] == "exercise_status" and api["最後動作"] != "":
-            #     server.send_message_to_all(
-            #         json.dumps(api, ensure_ascii=False))
-            # elif api["function"] == "getExercise":
-            #     server.send_message_to_all(json.dumps(api, ensure_ascii=False))
+            if api["function"] == "exercise_status" and api["最後動作"] != "":
+                server.send_message_to_all(
+                    json.dumps(api, ensure_ascii=False))
+            elif api["function"] == "getExercise":
+                server.send_message_to_all(json.dumps(api, ensure_ascii=False))
 
     def is_body_in_box(self):
         return self.brain.human.points != {} and self.view.calibrate_human_body()
