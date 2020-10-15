@@ -1,4 +1,5 @@
 from api.socket import Api
+from analysis import Analysis
 
 
 class NoCourse(object):
@@ -8,10 +9,14 @@ class NoCourse(object):
         self.view = view
         self.stored_api = []
         self.action = None
+        self.analysis = Analysis()
 
     def __call__(self):
         if self.is_body_in_box():
-            self.choose_action()
+            points = self.brain.get_test_points()
+            behavior = self.analysis.predict(points, self.brain.face)
+            self.set_api("最後動作", behavior)
+        # self.choose_action()
         return self
 
     def is_body_in_box(self):
@@ -47,7 +52,7 @@ class NoCourse(object):
         return api
 
     def get_api(self):
-        return self.filtered(self.api.behavior)
+        return self.api.behavior  # self.filtered(self.api.behavior)
 
     def set_api(self, column_name, behavior_name):
         self.api.behavior[column_name] = behavior_name

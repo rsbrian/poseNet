@@ -15,6 +15,8 @@ from controller import Controller
 from third_party import ThirdParty
 from websocket_server import WebsocketServer
 
+import pickle
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
@@ -37,7 +39,7 @@ camera = Camera(args)
 control = Controller(args)
 third_party = ThirdParty()
 
-video_name = "C1-3 高腳杯啞鈴夾胸F.mp4"
+video_name = "videos/behavior.MOV"
 cap = cv2.VideoCapture(2)
 
 
@@ -46,15 +48,19 @@ def main():
         global server
         third_party.load_model(args.model, sess)
         while True:
+            res, img = cap.read()
+            if not res:
+                break
 
-            img = camera.read(cap)
             img = camera.preprocessing(img)
 
             img, multi_points = camera.get_multi_skeleton_from(
                 img, third_party)
-            img, points = camera.multi_person_filter(img, multi_points)
+            img, points, face = camera.multi_person_filter(img, multi_points)
 
             control.update_model(img, points)
+
+            control.test_loading(face)
 
             course = control.choose_course()
             api = course().get_api()
@@ -63,6 +69,11 @@ def main():
             control.show(img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+
+        # print(len(points))
+        # pickle_out = open('points.pickle', "wb")
+        # pickle.dump(points, pickle_out)
+        # pickle_out.close()
 
         control.destroy()
         cap.release()

@@ -7,14 +7,6 @@ class Camera(object):
     def __init__(self, args):
         self.args = args
 
-    def read(self, cap):
-        res, img = cap.read()
-
-        if not res:
-            raise IOError("webcam failure")
-
-        return img
-
     def preprocessing(self, img):
         h, w, c = img.shape
 
@@ -34,6 +26,7 @@ class Camera(object):
         result = []
         minmimum = np.inf
         center = self.args.cam_width // 2
+        (x, y, r) = (None, None, None)
         for i in range(len(points)):
             face_points = points[i][1]
 
@@ -43,12 +36,15 @@ class Camera(object):
 
             try:
                 cv2.circle(img, (int(x), int(y)), int(r), (255, 255, 0), -1)
-
-                if abs(x - center) < minmimum:
+                diff = abs(x - center)
+                if diff < minmimum:
                     result = points[i][0].copy()
-                    minmimum = abs(x - center)
+                    x = np.mean([point[0] for point in points[i][1]])
+                    y = np.mean([point[1] for point in points[i][1]])
+                    r = np.mean([point[2] for point in points[i][1]])
+                    minmimum = diff
 
             except Exception as e:
                 print(x, y, r, e)
 
-        return img, result
+        return img, result, (x, y, r)

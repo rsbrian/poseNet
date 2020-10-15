@@ -6,11 +6,16 @@ class Brain(object):
     def __init__(self):
         self.human = Human()
 
+        self.test_points = []
+
         self.stored_points = []
         self.stored_angles = []
 
         self.count_next = 0
         self.count_back = 0
+
+    def get_test_points(self):
+        return self.test_points
 
     def get_points(self, name):
         return self.human.points[name]
@@ -30,6 +35,7 @@ class Brain(object):
             self.stored_angles = self.stored_angles[1:]
             self.median_filter(self.stored_points, self.human.points)
             self.median_filter(self.stored_angles, self.human.angles)
+            self.test_points = copy.deepcopy(self.human.points)
 
     def median_filter(self, listed_points, new_list):
         median = len(listed_points) // 2

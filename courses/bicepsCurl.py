@@ -241,6 +241,7 @@ class ErrorHandleing(object):
         self.brain = brain
 
     def __call__(self):
+        print("Error Handleing")
         if self.brain.is_pose("ending"):
             self.brain.reset_temp_points()
             self.course.change(Action(self.course, self.brain))

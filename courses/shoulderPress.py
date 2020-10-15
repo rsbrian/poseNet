@@ -74,8 +74,6 @@ class Action(object):
 
     def __call__(self):
         print("Action")
-        print(self.brain.get_points("left_wrist_x"))
-        print(self.brain.get_points("left_wrist_x_temp"))
         if self.brain.is_pose("shoulder_width_apart"):
             # print("雙腳請與肩同寬")
             self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
@@ -90,6 +88,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
+
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -198,6 +197,7 @@ class ErrorHandleing(object):
         self.brain = brain
 
     def __call__(self):
+        print("Error")
         if self.brain.is_pose("ending"):
             self.brain.reset_temp_points()
             self.course.change(Action(self.course, self.brain))

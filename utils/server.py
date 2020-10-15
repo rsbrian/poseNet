@@ -1,3 +1,5 @@
+from utils.brain import Brain
+
 from urllib.parse import unquote
 
 from courses.barbellOverheadSquat import BarbellOverheadSquat
@@ -59,7 +61,6 @@ class Server(object):
 
             self.course_name_cache = self.course_name
             self.course = self.course_template[self.course_name](brain, view)
-
         return self.course
 
     def set_api(self, msg):
