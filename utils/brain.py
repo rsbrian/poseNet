@@ -244,30 +244,24 @@ class Brain(object):
             self.abs_compare("left_hip_y", "left_knee_y", ">", 120)
 
     # TODO: Calculate Velocity instead
-    def hands_up(self):  # 動作往上開始
-        param = 30
+    def hands_up(self, param=30):  # 動作往上開始
         return self.human.points["left_wrist_y"] < self.human.points["left_wrist_y_temp"] - param and \
             self.human.points["right_wrist_y"] < self.human.points["right_wrist_y_temp"] - param
 
-    def hands_up_down(self):  # 動作往下開始
-        param = 30
+    def hands_up_down(self, param=30):  # 動作往下開始
         return self.human.points["left_wrist_y"] > self.human.points["left_wrist_y_temp"] + param and \
             self.human.points["right_wrist_y"] > self.human.points["right_wrist_y_temp"] + param
 
-    def hands_up_left(self):  # 動作由左手開始
-        param = 30
+    def hands_up_left(self, param=30):  # 動作由左手開始
         return self.human.points["left_wrist_y"] < self.human.points["left_wrist_y_temp"] - param
 
-    def hands_up_right(self):  # 動作由右手開始
-        param = 30
+    def hands_up_right(self, param=30):  # 動作由右手開始
         return self.human.points["right_wrist_y"] < self.human.points["right_wrist_y_temp"] - param
 
-    def hands_up_downleft(self):  # 動作由左腳往下開始
-        param = 30
+    def hands_up_downleft(self, param=30):  # 動作由左腳往下開始
         return self.human.points["left_hip_x"] > self.human.points["left_hip_x_temp"] + param
 
-    def hands_up_downright(self):
-        param = 30
+    def hands_up_downright(self, param=30):
         return self.human.points["right_hip_x"] < self.human.points["right_hip_x_temp"] - param
 
     def hands_down(self):
@@ -339,19 +333,19 @@ class Brain(object):
         return self.human.angles["right_knee_angle"] < 150 and self.human.angles["left_knee_angle"] < 150
 
     def ending(self):
-        return not self.hands_up()
+        return not self.hands_up(param=0)
 
     def ending_left(self):
-        return not self.hands_up_left()
+        return not self.hands_up_left(param=0)
 
     def ending_right(self):
-        return not self.hands_up_right()
+        return not self.hands_up_right(param=0)
 
     def ending_down(self):
-        return not self.hands_up_down()
+        return not self.hands_up_down(param=0)
 
     def ending_downleft(self):
-        return not self.hands_up_downleft()
+        return not self.hands_up_downleft(param=0)
 
     def ending_downright(self):
-        return not self.hands_up_downright()
+        return not self.hands_up_downright(param=0)

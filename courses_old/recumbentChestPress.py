@@ -4,9 +4,9 @@ import datetime
 from api.socket import Api
 from utils.counter import Counter
 
-# 斜躺飛鳥
+# 斜躺胸推
 
-class Recumbentbird(object):
+class RecumbentChestPress(object):
     def __init__(self, brain, view):
         self.api = Api()
         self.brain = brain
@@ -107,7 +107,7 @@ class HandsUp(object):
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
-            
+
         elif self.brain.is_pose("lying_down"):
             # print("坐在斜躺椅上，腹部收緊，下被緊貼靠墊")
             self.course.api.course_action["action"]["alert"] = ["坐在斜躺椅上，腹部收緊，下被緊貼靠墊雙腳"]

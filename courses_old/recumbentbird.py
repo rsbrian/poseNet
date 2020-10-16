@@ -103,11 +103,8 @@ class HandsUp(object):
         if self.brain.is_pose("ending"):
             if self.is_time_small_than(0.8):
                 print("你沒有要開始就不要亂動")
-            self.course.api.course_action["action"]["alert"] = ["舉的不夠高不列入次數"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
-            
+
         elif self.brain.is_pose("lying_down"):
             # print("坐在斜躺椅上，腹部收緊，下被緊貼靠墊")
             self.course.api.course_action["action"]["alert"] = ["坐在斜躺椅上，腹部收緊，下被緊貼靠墊雙腳"]
@@ -139,10 +136,12 @@ class HandsDown(object):
 
         self.counter.start()
         if self.brain.is_pose("ending"):
-            # print("Bar2 Close", self.counter.result())
-            self.counter.record("total")
-            self.course.change(
-                Evaluation(self.course, self.brain, self.counter))
+            if self.is_time_small_than(0.8):
+                print("你沒有要開始就不要亂動")
+            self.course.api.course_action["action"]["alert"] = ["舉的不夠高不列入次數"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(Action(self.course, self.brain))
 
         elif self.brain.is_pose("hand_too_straight"):
             print("手打太直了，請回到預備動作重新開始")

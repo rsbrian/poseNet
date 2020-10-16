@@ -219,6 +219,9 @@ class ErrorHandleing(object):
         self.number = number
 
     def __call__(self):
-        if self.brain.is_pose("ending"):
+        if self.brain.is_pose("ending_downleft") and self.number == 0:
+            self.brain.reset_temp_points()
+            self.course.change(Action(self.course, self.brain, self.number))
+        elif self.brain.is_pose("ending_downright") and self.number == 1:
             self.brain.reset_temp_points()
             self.course.change(Action(self.course, self.brain, self.number))

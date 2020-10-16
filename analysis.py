@@ -74,10 +74,11 @@ class NoAction(Template):
             (abs(left_gradient) + abs(right_gradient))
 
         if left_hand_moved or right_hand_moved:
-            if proportion < 0.3 and right_y < 0:
+            if proportion < 0.15 and right_y < 0:
                 self.tool.change(RightHandsUp(self.tool, right_distance))
-            elif proportion < 0.7 and left_y < 0 and right_y < 0:
-                self.tool.change(BothHandsUp(self.tool))
+            elif proportion < 0.85 and left_y < 0 and right_y < 0:
+                self.tool.change(BothHandsUp(
+                    self.tool, right_distance, left_distance, self.features))
             elif left_y < 0:
                 self.tool.change(LeftHandsUp(self.tool, left_distance))
 
@@ -106,8 +107,10 @@ class RightHandsUp(Template):
         right_gradient_x = [f[1][0] for f in self.features]
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(right_gradient_x)
-        print(pos, neg)
-        if pos > neg:
+        click = max(pos, neg)
+        if click < 40:
+            return "右手彎舉"
+        elif pos > neg:
             return "向左選取"
         else:
             return "向右選取"
@@ -128,13 +131,6 @@ class LeftHandsUp(Template):
             self.behavior = self.predict()
             self.tool.change(NoAction(self.tool))
         return self.behavior
-        # left_distance, right_distance = data[0][2], data[1][2]
-        # down = left_gradient < 0
-        # close_record = left_distance < self.close
-        # if down and close_record:
-        #     self.behavior = self.predict()
-        #     self.tool.change(NoAction(self.tool))
-        # return self.behavior
 
     def predict(self):
         left_gradient_x = [f[0][0] for f in self.features]
@@ -142,6 +138,9 @@ class LeftHandsUp(Template):
         right_gradient_x = [f[1][0] for f in self.features]
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(left_gradient_x)
+        click = max(pos, neg)
+        if click < 40:
+            return "左手彎舉"
         if pos > neg:
             return "向左選取"
         else:
@@ -149,35 +148,43 @@ class LeftHandsUp(Template):
 
 
 class BothHandsUp(Template):
-    def __init__(self, tool):
+    def __init__(self, tool, right_distance, left_distance, past_features):
         super().__init__(tool)
-        self.click_cancel_param = 30  # Above ${param} means cancel
+        self.stop_right = right_distance / 3
+        self.stop_left = left_distance / 3
+        self.click_cancel_param = self.tool.dynamic_thres_by_camera * \
+            16  # Above ${param} means cancel
+        self.past_features = past_features
 
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
-        left_distance, right_distance = data[0][2], data[1][2]
-        down = left_gradient < 0 and right_gradient < 0
-        close_record = left_distance < self.close and right_distance < self.close
-        if down and close_record:
+        finished_left = left_gradient > -self.stop_left
+        finished_right = right_gradient > -self.stop_right
+        if len(self.features) > 50:
+            self.tool.change(NoAction(self.tool))
+
+        if finished_left and finished_right:
             self.behavior = self.predict()
             self.tool.change(NoAction(self.tool))
         return self.behavior
 
     def predict(self):
         left_gradient_x = [f[0][0] for f in self.features]
-        left_gradient_y = [f[0][1] for f in self.features]
         right_gradient_x = [f[1][0] for f in self.features]
-        right_gradient_y = [f[1][1] for f in self.features]
-        left_mean_x = np.mean(left_gradient_x)
-        left_mean_y = np.mean(left_gradient_y)
-        right_mean_x = np.mean(right_gradient_x)
-        right_mean_y = np.mean(right_gradient_y)
-        mean_x = self.calcMean(left_mean_x, right_mean_x)
-        mean_y = self.calcMean(left_mean_y, right_mean_y)
-        left_g = self.calcGradient(left_gradient_x)
-        right_g = self.calcGradient(right_gradient_x)
-        print(left_g, right_g)
-        if mean_x > self.click_cancel_param:
+
+        left_wrist_x = [f[0][3] for f in self.features]
+        past_left_wrist_x = [f[0][3] for f in self.past_features]
+        new_left_wrist_x = np.append(past_left_wrist_x, left_wrist_x)
+        new_left_wrist_gradient = self.calcGradient(new_left_wrist_x)
+
+        right_wrist_x = [f[1][3] for f in self.features]
+        past_right_wrist_x = [f[1][3] for f in self.past_features]
+        new_right_wrist_x = np.append(past_right_wrist_x, right_wrist_x)
+        new_right_wrist_gradient = self.calcGradient(new_right_wrist_x)
+
+        mean = self.calcMean(new_left_wrist_gradient, new_right_wrist_gradient)
+        print(mean, self.click_cancel_param)
+        if mean > self.click_cancel_param:
             return "雙手交叉"
         else:
             return "雙手彎舉"
@@ -233,6 +240,6 @@ class Analysis(object):
         self.temp = copy.deepcopy(points)
 
         self.load_data([
-            [left_gradient_x, left_gradient_y, left_distance],
-            [right_gradient_x, right_gradient_y, right_distance]
+            [left_gradient_x, left_gradient_y, left_distance, left_wrist_x],
+            [right_gradient_x, right_gradient_y, right_distance, right_wrist_x]
         ])

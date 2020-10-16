@@ -20,7 +20,7 @@ import pickle
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
-parser.add_argument('--rotate', type=int, default=-90)
+parser.add_argument('--rotate', type=int, default=90)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--cam_width', type=int, default=540)
@@ -40,7 +40,7 @@ control = Controller(args)
 third_party = ThirdParty()
 
 video_name = "videos/behavior.MOV"
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 
 
 def main():
@@ -50,6 +50,7 @@ def main():
         while True:
             res, img = cap.read()
             if not res:
+                print("Camera Failed")
                 break
 
             img = camera.preprocessing(img)

@@ -4,9 +4,9 @@ import datetime
 from api.socket import Api
 from utils.counter import Counter
 
-# 斜躺飛鳥
+# 高腳杯寬腿深蹲​
 
-class Recumbentbird(object):
+class GobletSquat(object):
     def __init__(self, brain, view):
         self.api = Api()
         self.brain = brain
@@ -42,14 +42,14 @@ class Prepare(object):
     def __call__(self):
         print("Preparing")
         self.counter.start()
-        if self.brain.is_pose("lying_down"):
-            # print("坐在斜躺椅上，腹部收緊，下被緊貼靠墊")
-            self.course.api.course_action["tip"]["note"] = ["坐在斜躺椅上，腹部收緊，下被緊貼靠墊"]
+        if self.brain.is_pose("hold_dumbbells_on_chest"):
+            # print("持啞鈴於胸口")
+            self.course.api.course_action["tip"]["note"] = ["高腳杯握法持啞鈴至胸前​"]
             self.counter.reset()
 
-        elif self.brain.is_pose("hold_dumbbel_shoulder"):
-            # print("雙手持啞鈴下放到胸前")
-            self.course.api.course_action["tip"]["note"] = ["雙手持啞鈴下放到胸前"]
+        elif self.brain.is_pose("spread_feet"):
+            # print("雙腳張開45度，腹部收緊")
+            self.course.api.course_action["tip"]["note"] = ["雙腳張開45度，腹部收緊"]
             self.counter.reset()
 
         elif self.is_ready_to_start():
@@ -59,7 +59,6 @@ class Prepare(object):
                 Action(self.course, self.brain))
 
     def is_ready_to_start(self):
-        # print("很好請保持", self.counter.result())
         self.course.api.course_action["tip"]["note"] = [
             f"很好請保持"]
         self.course.set_time("lastTime")
@@ -74,21 +73,20 @@ class Action(object):
 
     def __call__(self):
         print("Action")
-
-        if self.brain.is_pose("lying_down"):
-            # print("坐在斜躺椅上，腹部收緊，下被緊貼靠墊")
-            self.course.api.course_action["action"]["alert"] = ["坐在斜躺椅上，腹部收緊，下被緊貼靠墊"]
+        if self.brain.is_pose("hold_dumbbells_on_chest"):
+            # print("持啞鈴於胸口")
+            self.course.api.course_action["action"]["alert"] = ["高腳杯握法持啞鈴至胸前​"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
-        elif self.brain.is_pose("hands_up"):
+        elif self.brain.is_pose("hands_up_down"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
+
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -100,23 +98,23 @@ class HandsUp(object):
         print('HandsUp')
 
         self.counter.start()
-        if self.brain.is_pose("ending"):
+        if self.brain.is_pose("ending_down"):
             if self.is_time_small_than(0.8):
                 print("你沒有要開始就不要亂動")
-            self.course.api.course_action["action"]["alert"] = ["舉的不夠高不列入次數"]
+            self.course.api.course_action["action"]["alert"] = ["蹲的不夠低不列入次數"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
-            
-        elif self.brain.is_pose("lying_down"):
-            # print("坐在斜躺椅上，腹部收緊，下被緊貼靠墊")
-            self.course.api.course_action["action"]["alert"] = ["坐在斜躺椅上，腹部收緊，下被緊貼靠墊雙腳"]
+
+        if self.brain.is_pose("hold_dumbbells_on_chest"):
+            # print("持啞鈴於胸口")
+            self.course.api.course_action["action"]["alert"] = ["高腳杯握法持啞鈴至胸前​"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
-        elif self.brain.is_pose("hands_down_boat"):
+        elif self.brain.is_pose("hands_down_overheadsquat"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
             self.counter.record("up")
@@ -138,24 +136,16 @@ class HandsDown(object):
         print("HandsDown")
 
         self.counter.start()
-        if self.brain.is_pose("ending"):
+        if self.brain.is_pose("ending_down"):
             # print("Bar2 Close", self.counter.result())
+            self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
                 Evaluation(self.course, self.brain, self.counter))
-
-        elif self.brain.is_pose("hand_too_straight"):
-            print("手打太直了，請回到預備動作重新開始")
-            self.course.api.course_action["action"]["alert"] = [
-                "手打太直了，請回到預備動作重新開始"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
-
-        elif self.brain.is_pose("lying_down"):
-            # print("坐在斜躺椅上，腹部收緊，下被緊貼靠墊")
-            self.course.api.course_action["action"]["alert"] = ["坐在斜躺椅上，腹部收緊，下被緊貼靠墊"]
+        
+        elif self.brain.is_pose("hold_dumbbells_on_chest"):
+            # print("持啞鈴於胸口")
+            self.course.api.course_action["action"]["alert"] = ["高腳杯握法持啞鈴至胸前​"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
@@ -197,6 +187,6 @@ class ErrorHandleing(object):
         self.brain = brain
 
     def __call__(self):
-        if self.brain.is_pose("ending"):
+        if self.brain.is_pose("ending_down"):
             self.brain.reset_temp_points()
             self.course.change(Action(self.course, self.brain))

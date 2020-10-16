@@ -103,28 +103,27 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .home_image1{
     position: absolute;
-    top: 1547px;
-    left: 196px;
-    width: 140px;
-    height: 140px;
+    top: 1573px;
+    left: 37px;
+    width: 134px;
+    height: 134px;
     background-image: url('./assets/pic_tcurl.png');
-    background-size: 140px;
+    background-size: 134px;
     background-repeat: no-repeat;
     opacity: 1;
 }
 
 .home_textArea1{
     position: absolute;
-    top: 1565px;
-    left: 353px;
-    width: 148px;
+    top: 1583px;
+    left: 188px;
+    width: 172px;
     height: 94px;
-    font-size: 37%;
     letter-spacing: var(--unnamed-character-spacing-0);
     text-align: left;
     letter-spacing: 0px;
     color: #FFFFFF;
-    font-size: 37px;
+    font-size: 43px;
 }
 
 .home_dot1{
@@ -140,28 +139,27 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .home_image2{
     position: absolute;
-    top: 1547px;
-    left: 580px;
-    width: 140px;
-    height: 140px;
+    top: 1573px;
+    left: 378px;
+    width: 172px;
+    height: 134px;
     background-image: url('./assets/pic_cross.png');
-    background-size: 140px;
+    background-size: 134px;
     background-repeat: no-repeat;
     opacity: 1;
 }
 
 .home_textArea2{
     position: absolute;
-    top: 1565px;
-    left: 746px;
+    top: 1583px;
+    left: 530px;
     width: 185px;
     height: 94px;
-    font-size: 37%;
     letter-spacing: var(--unnamed-character-spacing-0);
     text-align: left;
     letter-spacing: 0px;
     color: #FFFFFF;
-    font-size: 37px;
+    font-size: 43px;
 }
 
 .home_dot2{
@@ -177,28 +175,27 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .home_image3{
     position: absolute;
-    top: 1712px;
-    left: 196px;
-    width: 140px;
-    height: 140px;
+    top: 1573px;
+    left: 720px;
+    width: 134px;
+    height: 134px;
     background-image: url('./assets/pic_lc.png');
-    background-size: 140px;
+    background-size: 134px;
     background-repeat: no-repeat;
     opacity: 1;
 }
 
 .home_textArea3{
     position: absolute;
-    top: 1733px;
-    left: 353px;
-    width: 148px;
+    top: 1583px;
+    left: 871px;
+    width: 172px;
     height: 94px;
-    font-size: 37%;
     letter-spacing: var(--unnamed-character-spacing-0);
     text-align: left;
     letter-spacing: 0px;
     color: #FFFFFF;
-    font-size: 37px;
+    font-size: 43px;
 }
 
 .home_dot3{
@@ -214,28 +211,77 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 
 .home_image4{
     position: absolute;
-    top: 1712px;
-    left: 580px;
-    width: 140px;
-    height: 140px;
+    top: 1738px;
+    left: 37px;
+    width: 134px;
+    height: 134px;
     background-image: url('./assets/pic_rc.png');
-    background-size: 140px;
+    background-size: 134px;
     background-repeat: no-repeat;
     opacity: 1;
 }
 
 .home_textArea4{
     position: absolute;
-    top: 1722px;
-    left: 746px;
-    width: 148px;
+    top: 1750px;
+    left: 188px;
+    width: 172px;
     height: 94px;
-    font-size: 37%;
     letter-spacing: var(--unnamed-character-spacing-0);
     text-align: left;
     letter-spacing: 0px;
     color: #FFFFFF;
-    font-size: 37px;
+    font-size: 43px;
+}
+
+.home_image5{
+    position: absolute;
+    top: 1738px;
+    left: 378px;
+    width: 134px;
+    height: 134px;
+    background-image: url('./assets/pic_next.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea5{
+    position: absolute;
+    top: 1750px;
+    left: 530px;
+    width: 172px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
+}
+
+.home_image6{
+    position: absolute;
+    top: 1738px;
+    left: 720px;
+    width: 134px;
+    height: 134px;
+    background-image: url('./assets/pic_previous.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea6{
+    position: absolute;
+    top: 1750px;
+    left: 871px;
+    width: 172px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
 }
 
 .home_dot4{
@@ -262,6 +308,110 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     color: #93D5FF;
     opacity: 0.82;
 }
+
+@keyframes tipanimation {
+    from { background-position: 0px 0;}
+    to { background-position: -1675px 0;}
+}
+
+.page_tip_area {
+    position: absolute;
+    top: 1770px;
+    width: 1675px;
+    height: 82px;
+    display: table;
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+    animation: tipanimation 2s linear infinite;
+}
+
+
+.page_tip_area_group {
+    display: table-cell;
+    padding-left:20px
+}
+
+.page_tip_image1 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_tcurl.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image2 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_cross.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image3 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_lc.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image4 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_rc.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image5 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_next.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image6 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_previous.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_text {
+    display: table-cell;
+
+    width: 110px;
+    height: 82px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 26px;
+
+    padding-left:10px
+}
+
 
 /*.home_tip{
     position: absolute;
