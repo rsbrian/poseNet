@@ -12,8 +12,7 @@ class Api(object):
                 "lastTime": "",
                 "times": 0,
                 "stop": False,
-                "quit": False,
-                "score": 0
+                "quit": False
             },
             "start": False,
         }

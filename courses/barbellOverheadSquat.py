@@ -3,9 +3,8 @@ import datetime
 
 from api.socket import Api
 from utils.counter import Counter
-from courses.evaluation import EvaluationTemplate
-# 單臂啞鈴過頂深蹲
 
+# 單臂啞鈴過頂深蹲
 
 class BarbellOverheadSquat(object):
     def __init__(self, brain, view):
@@ -14,13 +13,6 @@ class BarbellOverheadSquat(object):
         self.view = view
         self.state = Prepare(self, self.brain)
         self.api.course_action["tip"]["duration"] = 2
-        self.error = 0
-        self.total_score = 0
-        self.history = {
-            "fast": 0,
-            "perfect": 0,
-            "slow": 0,
-        }
 
     def __call__(self):
         if self.is_body_in_box():
@@ -135,7 +127,7 @@ class HandsDown(object):
             self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
-                EvaluationScore(self.course, self.brain, self.counter))
+                Evaluation(self.course, self.brain, self.counter))
 
 
 class Evaluation(object):
@@ -174,16 +166,5 @@ class ErrorHandleing(object):
 
     def __call__(self):
         if self.brain.is_pose("ending_down"):
-            self.course.error += 1
             self.brain.reset_temp_points()
             self.course.change(Action(self.course, self.brain))
-
-
-class EvaluationScore(EvaluationTemplate):
-    def __init__(self, course, brain, counter):
-        super().__init__(course, brain, counter)
-
-    def __call__(self):
-        super().__call__()
-        self.course.change(
-            Action(self.course, self.brain))
