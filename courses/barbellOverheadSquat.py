@@ -3,8 +3,8 @@ import datetime
 
 from api.socket import Api
 from utils.counter import Counter
-
 # 單臂啞鈴過頂深蹲
+
 
 class BarbellOverheadSquat(object):
     def __init__(self, brain, view):
@@ -13,6 +13,8 @@ class BarbellOverheadSquat(object):
         self.view = view
         self.state = Prepare(self, self.brain)
         self.api.course_action["tip"]["duration"] = 2
+        self.error = 0
+        self.total_score = 0
 
     def __call__(self):
         if self.is_body_in_box():
@@ -127,7 +129,7 @@ class HandsDown(object):
             self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
-                Evaluation(self.course, self.brain, self.counter))
+                EvaluationScore(self.course, self.brain, self.counter))
 
 
 class Evaluation(object):
@@ -166,5 +168,57 @@ class ErrorHandleing(object):
 
     def __call__(self):
         if self.brain.is_pose("ending_down"):
+            self.course.error += 1
             self.brain.reset_temp_points()
             self.course.change(Action(self.course, self.brain))
+
+
+class EvaluationScore(object):
+    def __init__(self, course, brain, counter):
+        self.course = course
+        self.brain = brain
+        self.counter = counter
+
+        self.weights = [2, 6, 4]
+        self.history = {
+            "fast": 0,
+            "perfect": 0,
+            "slow": 0,
+        }
+
+    def __call__(self):
+        print("Evaluation")
+        total_time = self.counter.get_logs()["total"]
+
+        self.course.set_time("alertLastTime")
+        self.course.set_time("startPointLastTime")
+
+        if total_time < 1.2:
+            self.history["fast"] += 1
+            self.course.api.course_action["action"]["alert"] = ["太快了，請放慢速度"]
+        elif total_time < 2.5:
+            self.history["perfect"] += 1
+            self.course.api.course_action["action"]["alert"] = ["完美"]
+        else:
+            self.history["slow"] += 1
+            self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
+
+        self.course.api.course_action["action"]["times"] += 1
+
+        if self.finished:
+            self.calcScore()
+
+        self.course.change(
+            Action(self.course, self.brain))
+
+    def finished(self):
+        return self.course.api.course_action["action"]["times"] == 6
+
+    def calcScore(self):
+        total_score = 0
+        for i, (key, value) in enumerate(self.history.items()):
+            self.course.total_score += self.weights[i] * value
+
+        print(self.course.total_score)
+        print(self.course.error)
+        print(self.course.total_score - self.course.error)

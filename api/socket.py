@@ -12,9 +12,11 @@ class Api(object):
                 "lastTime": "",
                 "times": 0,
                 "stop": False,
-                "quit": False
+                "quit": False,
+                "score": 0
             },
-            "start": False}
+            "start": False,
+        }
         self._end = {"break": False}
         self._behavior = {
             'function': 'exercise_status',

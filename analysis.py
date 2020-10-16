@@ -60,27 +60,37 @@ class Template(object):
 class NoAction(Template):
     def __init__(self, tool):
         super().__init__(tool)
+        self.weight = 0.8
 
     def render_state(self, data):
-        thres = self.tool.dynamic_thres_by_camera * 10
+        thres = -90
+        moved_thres = abs(thres) * self.weight
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
-        left_distance, right_distance = data[0][2], data[1][2]
-        left_hand_moved = left_distance > thres
-        right_hand_moved = right_distance > thres
-
         if (left_gradient + right_gradient) == 0:
             return self.behavior
         proportion = abs(left_gradient) / \
             (abs(left_gradient) + abs(right_gradient))
 
+        left_distance, right_distance = data[0][2], data[1][2]
+
+        left_wrist_elbow = [f[0][4] for f in self.features]
+        right_wrist_elbow = [f[1][4] for f in self.features]
+        left_wrist_elbow = self.calcGradient(left_wrist_elbow)
+        right_wrist_elbow = self.calcGradient(right_wrist_elbow)
+
+        left_hand_moved = left_wrist_elbow < thres
+        right_hand_moved = right_wrist_elbow < thres
+
         if left_hand_moved or right_hand_moved:
-            if proportion < 0.15 and right_y < 0:
+            diff = abs(left_wrist_elbow) - abs(right_wrist_elbow)
+            print(diff)
+            if diff > moved_thres:
+                self.tool.change(LeftHandsUp(self.tool, left_distance))
+            elif diff < (-moved_thres):
                 self.tool.change(RightHandsUp(self.tool, right_distance))
-            elif proportion < 0.85 and left_y < 0 and right_y < 0:
+            else:
                 self.tool.change(BothHandsUp(
                     self.tool, right_distance, left_distance, self.features))
-            elif left_y < 0:
-                self.tool.change(LeftHandsUp(self.tool, left_distance))
 
         return self.behavior
 
@@ -183,7 +193,6 @@ class BothHandsUp(Template):
         new_right_wrist_gradient = self.calcGradient(new_right_wrist_x)
 
         mean = self.calcMean(new_left_wrist_gradient, new_right_wrist_gradient)
-        print(mean, self.click_cancel_param)
         if mean > self.click_cancel_param:
             return "雙手交叉"
         else:
@@ -218,6 +227,9 @@ class Analysis(object):
         left_wrist_y_temp = self.temp["left_wrist_y"]
         right_wrist_y_temp = self.temp["right_wrist_y"]
 
+        left_elbow_y = points["left_elbow_y"]
+        right_elbow_y = points["right_elbow_y"]
+
         left_wrist_x = points["left_wrist_x"]
         right_wrist_x = points["right_wrist_x"]
         left_wrist_y = points["left_wrist_y"]
@@ -225,8 +237,11 @@ class Analysis(object):
 
         minimum_y = face[1]
         maximum_y = max(points["left_knee_y"], points["right_knee_y"])
-        # print(round(maximum_y / minimum_y, 2))
+
         self.dynamic_thres_by_camera = maximum_y / minimum_y
+
+        left_wrist_elbow = (left_wrist_y - left_elbow_y)
+        right_wrist_elbow = (right_wrist_y - right_elbow_y)
 
         left_gradient_x = (left_wrist_x - left_wrist_x_temp)
         right_gradient_x = (right_wrist_x - right_wrist_x_temp)
@@ -240,6 +255,8 @@ class Analysis(object):
         self.temp = copy.deepcopy(points)
 
         self.load_data([
-            [left_gradient_x, left_gradient_y, left_distance, left_wrist_x],
-            [right_gradient_x, right_gradient_y, right_distance, right_wrist_x]
+            [left_gradient_x, left_gradient_y,
+                left_distance, left_wrist_x, left_wrist_elbow],
+            [right_gradient_x, right_gradient_y,
+                right_distance, right_wrist_x, right_wrist_elbow]
         ])

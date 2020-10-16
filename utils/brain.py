@@ -333,19 +333,19 @@ class Brain(object):
         return self.human.angles["right_knee_angle"] < 150 and self.human.angles["left_knee_angle"] < 150
 
     def ending(self):
-        return not self.hands_up(param=0)
+        return not self.hands_up(param=15)
 
     def ending_left(self):
-        return not self.hands_up_left(param=0)
+        return not self.hands_up_left(param=15)
 
     def ending_right(self):
-        return not self.hands_up_right(param=0)
+        return not self.hands_up_right(param=15)
 
     def ending_down(self):
-        return not self.hands_up_down(param=0)
+        return not self.hands_up_down(param=15)
 
     def ending_downleft(self):
-        return not self.hands_up_downleft(param=0)
+        return not self.hands_up_downleft(param=15)
 
     def ending_downright(self):
-        return not self.hands_up_downright(param=0)
+        return not self.hands_up_downright(param=15)
