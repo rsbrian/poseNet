@@ -13,11 +13,12 @@ class PrepareTemp(object):
             if self.check(error):
                 return
 
-        if self.is_ready_to_start():
-            self.course.api.course_action["start"] = True
-            self.brain.reset_temp_points()
-            # self.course.change(
-            #     Action(self.course, self.brain))
+        # TODO: need to customize
+        # if self.is_ready_to_start():
+        #     self.course.api.course_action["start"] = True
+        #     self.brain.reset_temp_points()
+        #     self.course.change(
+        #         Action(self.course, self.brain))
 
     def check(self, error):
         if self.brain.is_pose(ALERTS[error]):

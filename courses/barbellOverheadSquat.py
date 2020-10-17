@@ -1,44 +1,20 @@
 import time
 import datetime
 
-from api.socket import Api
 from utils.counter import Counter
+
+from courses.template.home import Home
 from courses.evaluation import EvaluationTemplate
 # 單臂啞鈴過頂深蹲
 
 
-class BarbellOverheadSquat(object):
+class BarbellOverheadSquat(Home):
     def __init__(self, brain, view):
-        self.api = Api()
-        self.brain = brain
-        self.view = view
+        super().__init__(brain, view)
         self.state = Prepare(self, self.brain)
-        self.api.course_action["tip"]["duration"] = 2
-        self.error = 0
-        self.total_score = 0
-        self.history = {
-            "fast": 0,
-            "perfect": 0,
-            "slow": 0,
-        }
 
     def __call__(self):
-        if self.is_body_in_box():
-            self.state()
-        return self
-
-    def is_body_in_box(self):
-        return self.brain.human.points != {} and self.view.calibrate_human_body_leg()
-
-    def change(self, new_state):
-        self.state = new_state
-
-    def get_api(self):
-        return self.api.course_action
-
-    def set_time(self, name):
-        self.api.course_action["action"][name] = datetime.datetime.now().strftime(
-            "%Y/%m/%d %H:%M:%S.%f")
+        super().__call__()
 
 
 class Prepare(object):
@@ -185,5 +161,4 @@ class EvaluationScore(EvaluationTemplate):
 
     def __call__(self):
         super().__call__()
-        self.course.change(
-            Action(self.course, self.brain))
+        self.course.change(Action(self.course, self.brain))

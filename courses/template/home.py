@@ -1,3 +1,5 @@
+from operator import getitem
+from functools import reduce
 from api.socket import Api
 
 

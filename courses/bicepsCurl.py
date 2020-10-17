@@ -1,8 +1,9 @@
 import time
 import datetime
 
+from utils.counter import Counter
+
 from courses.template.home import Home
-from courses.template.prepare import PrepareTemp
 from courses.template.evaluation import EvaluationTemplate
 
 # 雙手二頭彎曲
