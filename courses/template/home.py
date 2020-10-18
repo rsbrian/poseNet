@@ -14,13 +14,19 @@ class Home(object):
         self.api = Api()
         self.api.course_action["tip"]["duration"] = 2
 
-    def __call__(self):
-        if self.is_body_in_box():
+    def __call__(self, leg=None):
+        if self.is_body_in_box(leg):
             self.state()
         return self
 
-    def is_body_in_box(self):
-        return self.brain.human.points != {} and self.view.calibrate_human_body()
+    def is_body_in_box(self, leg):
+        c = self.brain.human.points != {}
+        c1 = self.view.calibrate_human_body_leg() and c
+        c2 = self.view.calibrate_human_body() and c
+        if leg is None:
+            return c2
+        else:
+            return c1
 
     def change(self, new_state):
         self.state = new_state

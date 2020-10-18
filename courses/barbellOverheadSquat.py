@@ -14,7 +14,7 @@ class BarbellOverheadSquat(Home):
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
-        super().__call__()
+        super().__call__("leg")
 
 
 class Prepare(object):
