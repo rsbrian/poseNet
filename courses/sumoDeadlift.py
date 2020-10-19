@@ -60,15 +60,8 @@ class Action(object):
 
     def __call__(self):
         print("Action")
-        if self.brain.is_pose("hold_dumbbells_on_abdomen"):
-            # print("持啞鈴於胸口")
-            self.course.api.course_action["action"]["alert"] = [
-                "手打直握啞鈴至腹前，手肘保持微彎​"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
-        elif self.brain.is_pose("hands_up_down"):
+
+        if self.brain.is_pose("hands_up_down"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")

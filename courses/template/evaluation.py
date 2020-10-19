@@ -34,7 +34,7 @@ class EvaluationTemplate(object):
         if self.course.api.course_action["action"]["times"] == 6:
             if self.course.api.course_action["action"]["score"] < 0:
                 self.course.api.course_action["action"]["score"] = round(random.random() * 20 + 30)
-            else:
+            elif self.course.api.course_action["action"]["score"] < 50:
                 self.course.api.course_action["action"]["score"] += 15
 
         if self.course.api.course_action["action"]["score"] < 0:
