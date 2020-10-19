@@ -16,8 +16,11 @@ class GobletSquat(Home):
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
-        return super().__call__(leg="leg")
-
+        if self.is_body_in_box(leg="leg"):
+            self.state()
+            print(self.api.course_action["action"]["score"])
+            # self.cancel_state()
+        return self
 
 class Prepare(object):
     def __init__(self, course, brain):
