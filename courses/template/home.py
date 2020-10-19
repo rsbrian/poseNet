@@ -22,14 +22,14 @@ class Canceling(object):
         if self.analysis.both_hand_move():
             self.home.change_cancel_state(
                 NotCancel(self.home, self.brain, self.analysis))
-        elif processing_time > 3:
+        elif processing_time > 1:
             self.home.api.course_action["action"]["quit"] = True
 
     def result(self):
         return self.end_time - self.start_time
 
 
-class NotCancel(self):
+class NotCancel(object):
     def __init__(self, home, brain, analysis):
         self.home = home
         self.brain = brain

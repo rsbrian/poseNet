@@ -150,6 +150,7 @@ class LeftHandsUp(Template):
         right_gradient_x = [f[1][0] for f in self.features]
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(left_gradient_x)
+        print(pos, neg)
         click = max(pos, neg)
         if click < 40:
             return "左手彎舉"
