@@ -18,12 +18,13 @@ class Canceling(object):
         self.end_time = time.time()
         processing_time = self.result()
         print(round(processing_time, 2))
-        print(self.analysis.both_hand_move())
+        points = self.brain.get_test_points()
+        behavior = self.analysis.predict(points, self.brain.face)
         if self.analysis.both_hand_move():
             self.home.change_cancel_state(
                 NotCancel(self.home, self.brain, self.analysis))
 
-        if processing_time > 4:
+        if processing_time > 2.5:
             self.home.api.course_action["action"]["quit"] = True
 
     def result(self):

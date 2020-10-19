@@ -220,7 +220,8 @@ class Analysis(object):
 
     def both_hand_move(self):
         print(self.left_wrist_elbow, self.right_wrist_elbow)
-        return self.left_wrist_elbow < self.thres and self.right_wrist_elbow < self.thres
+        param = 30
+        return self.left_wrist_elbow > param and self.right_wrist_elbow > param
 
     def set_moved_points(self, left_wrist_elbow, right_wrist_elbow):
         self.left_wrist_elbow = left_wrist_elbow
