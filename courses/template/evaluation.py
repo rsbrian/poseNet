@@ -1,3 +1,6 @@
+import random
+
+
 class EvaluationTemplate(object):
     def __init__(self, course, brain, counter):
         self.course = course
@@ -30,6 +33,9 @@ class EvaluationTemplate(object):
         self.course.api.course_action["action"]["times"] += 1
         if self.course.api.course_action["action"]["times"] == 6:
            self.course.api.course_action["action"]["score"] += 15 
+
+        if self.course.api.course_action["action"]["score"] < 10:
+            self.course.api.course_action["action"]["score"] = round(random.random() * 20 + 30)
 
         if self.course.api.course_action["action"]["score"] > 100:
             self.course.api.course_action["action"]["score"] = 100
