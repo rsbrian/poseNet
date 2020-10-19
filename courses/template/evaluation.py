@@ -14,9 +14,6 @@ class EvaluationTemplate(object):
         print("Evaluation")
         total_time = self.counter.get_logs()["total"]
 
-        self.course.set_time("alertLastTime")
-        self.course.set_time("startPointLastTime")
-
         if total_time < 1.2:
             self.course.api.course_action["action"]["score"] += self.weights["fast"]
             self.course.api.course_action["action"]["alert"] = ["太快了，請放慢速度"]
@@ -27,6 +24,12 @@ class EvaluationTemplate(object):
             self.course.api.course_action["action"]["score"] += self.weights["slow"]
             self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
 
+        self.course.set_time("alertLastTime")
+        self.course.set_time("startPointLastTime")
+
+        self.course.api.course_action["action"]["times"] += 1
+        if self.course.api.course_action["action"]["times"] == 6:
+           self.course.api.course_action["action"]["score"] += 15 
+
         if self.course.api.course_action["action"]["score"] > 100:
             self.course.api.course_action["action"]["score"] = 100
-        self.course.api.course_action["action"]["times"] += 1
