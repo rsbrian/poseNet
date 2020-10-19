@@ -29,13 +29,16 @@ class EvaluationTemplate(object):
 
         self.course.set_time("alertLastTime")
         self.course.set_time("startPointLastTime")
-
         self.course.api.course_action["action"]["times"] += 1
-        if self.course.api.course_action["action"]["times"] == 6:
-           self.course.api.course_action["action"]["score"] += 15 
 
-        if self.course.api.course_action["action"]["score"] < 10:
-            self.course.api.course_action["action"]["score"] = round(random.random() * 20 + 30)
+        if self.course.api.course_action["action"]["times"] == 6:
+            if self.course.api.course_action["action"]["score"] < 0:
+                self.course.api.course_action["action"]["score"] = round(random.random() * 20 + 30)
+            else:
+                self.course.api.course_action["action"]["score"] += 15
+
+        if self.course.api.course_action["action"]["score"] < 0:
+            self.course.api.course_action["action"]["score"] = 0
 
         if self.course.api.course_action["action"]["score"] > 100:
             self.course.api.course_action["action"]["score"] = 100
