@@ -53,6 +53,34 @@ class Prepare(object):
         self.course.set_time("startPoint")
         return self.counter.result() > 3
 
+class PrepareTest(object):
+    def __init__(self, course, brain):
+        self.course = course
+        self.brain = brain
+
+    def __call__(self):
+        print("Preparing")
+        if self.brain.is_pose("shoulder_width_apart"):
+            print("雙腳請與肩同寬")
+            self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+
+        elif self.brain.is_pose("hand_to_knee"):
+            print("膝蓋微彎、身體前傾、將手垂放到膝蓋")
+            self.course.api.course_action["action"]["alert"] = [
+                "膝蓋微彎、身體前傾、將手垂放到膝蓋"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+
+        else:
+            self.course.api.course_action["action"]["alert"] = ["很好，可以開始了"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.brain.reset_temp_points()
+            self.course.change(
+                Action(self.course, self.brain))
+
 
 class Action(object):
     def __init__(self, course, brain):
