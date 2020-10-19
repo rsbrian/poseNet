@@ -92,6 +92,14 @@ class Action(object):
             self.course.change(
                 HandsUp(self.course, self.brain))
         
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -132,6 +140,15 @@ class HandsUp(object):
             # print("右手肘移動了，請回到預備動作重新開始")
             self.course.api.course_action["action"]["alert"] = [
                 "右手肘移動了，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
@@ -189,6 +206,14 @@ class HandsDown(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
 
 class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
