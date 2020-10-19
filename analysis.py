@@ -105,6 +105,7 @@ class RightHandsUp(Template):
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
         finished = right_gradient > -self.stop_record
+        print(right_gradient, -self.stop_record)
         if len(self.features) > 50:
             self.tool.change(NoAction(self.tool))
 
@@ -120,13 +121,21 @@ class RightHandsUp(Template):
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(right_gradient_x)
         click = max(pos, neg)
-        if click < 40:
-            return "右手彎舉"
-        elif pos > neg:
-            return "向左選取"
+        # if click < 40:
+        #     return "右手彎舉"
+        # elif pos > neg:
+        #     return "向左選取"
+        # else:
+        #     return "向右選取"
+        if click < 25:
+            return "左手彎舉"
+        elif click > 60:
+            if pos > neg:
+                return "向左選取"
+            else:
+                return "向右選取"
         else:
-            return "向右選取"
-
+            return ""
 
 class LeftHandsUp(Template):
     def __init__(self, tool, left_distance):
@@ -135,6 +144,7 @@ class LeftHandsUp(Template):
 
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
+        print(left_gradient, -self.stop_record)
         finished = left_gradient > -self.stop_record
         if len(self.features) > 50:
             self.tool.change(NoAction(self.tool))
@@ -152,13 +162,15 @@ class LeftHandsUp(Template):
         pos, neg = self.calcPosNegGradient(left_gradient_x)
         print(pos, neg)
         click = max(pos, neg)
-        if click < 40:
+        if click < 25:
             return "左手彎舉"
-        if pos > neg:
-            return "向左選取"
+        elif click > 60:
+            if pos > neg:
+                return "向左選取"
+            else:
+                return "向右選取"
         else:
-            return "向右選取"
-
+            return ""
 
 class BothHandsUp(Template):
     def __init__(self, tool, right_distance, left_distance, past_features):

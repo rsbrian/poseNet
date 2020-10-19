@@ -69,7 +69,7 @@ class Controller(object):
                 print(api["最後動作"])
                 server.send_message_to_all(
                     json.dumps(api, ensure_ascii=False))
-            elif api["function"] == "getExercise":
+            elif api["function"] == "getExercise" or api["function"] == "endExercise":
                 server.send_message_to_all(json.dumps(api, ensure_ascii=False))
 
     def is_body_in_box(self):
