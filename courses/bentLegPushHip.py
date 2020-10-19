@@ -66,14 +66,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-        elif self.brain.is_pose("prepare_action"):
-            print("請回到預備動作重新開始")
-            self.course.api.course_action["action"]["alert"] = [
-                "請回到預備動作重新開始"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))        
+                
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -100,14 +93,6 @@ class HandsUp(object):
             self.course.change(
                 HandsDown(self.course, self.brain, self.counter))
         
-        elif self.brain.is_pose("prepare_action"):
-            print("請回到預備動作重新開始")
-            self.course.api.course_action["action"]["alert"] = [
-                "請回到預備動作重新開始"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
 
     def is_time_small_than(self, time_threshold):
         time = self.counter.result()
@@ -131,14 +116,6 @@ class HandsDown(object):
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
 
-        elif self.brain.is_pose("prepare_action"):
-            print("請回到預備動作重新開始")
-            self.course.api.course_action["action"]["alert"] = [
-                "請回到預備動作重新開始"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
 
 class Evaluation(object):
     def __init__(self, course, brain, counter):
