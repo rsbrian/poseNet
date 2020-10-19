@@ -275,16 +275,16 @@ class Brain(object):
         return self.human.points["right_hip_x"] < self.human.points["right_hip_x_temp"] - param
 
     def hands_down(self):
-        param = 30
+        param = 50
         return self.human.points["left_wrist_y"] < self.human.points["left_shoulder_y"] + param and \
             self.human.points["right_wrist_y"] < self.human.points["right_shoulder_y"] + param
 
     def hands_down_left(self):
-        param = 30
+        param = 50
         return self.human.points["left_wrist_y"] < self.human.points["left_shoulder_y"] + param
 
     def hands_down_right(self):
-        param = 30
+        param = 50
         return self.human.points["right_wrist_y"] < self.human.points["right_shoulder_y"] + param
 
     def hands_down_downleft(self):

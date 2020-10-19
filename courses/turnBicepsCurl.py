@@ -13,6 +13,7 @@ from courses.template.error_handleing import ErrorHandleingTemplate
 class TurnBicepsCurl(Home):
     def __init__(self, brain, view):
         super().__init__(brain, view)
+        self.number = 0
         self.state = Prepare(self, self.brain)
 
     def __call__(self):

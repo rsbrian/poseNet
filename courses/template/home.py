@@ -18,12 +18,16 @@ class Canceling(object):
         self.end_time = time.time()
         processing_time = self.result()
         print(round(processing_time, 2))
+        name = self.home.state.__class__.__name__
+        print(name)
+        if name == "Action" or name == "PrepareTest":
+            if processing_time > 3:
+                self.home.api.course_action["action"]["quit"] = True
 
+        print(self.analysis.both_hand_move())
         if self.analysis.both_hand_move():
             self.home.change_cancel_state(
                 NotCancel(self.home, self.brain, self.analysis))
-        elif processing_time > 3:
-            self.home.api.course_action["action"]["quit"] = True
 
     def result(self):
         return self.end_time - self.start_time
