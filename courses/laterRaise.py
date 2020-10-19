@@ -78,6 +78,15 @@ class Action(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+
         elif self.brain.is_pose("hands_up"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")
@@ -113,6 +122,15 @@ class HandsUp(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))        
+
         elif self.brain.is_pose("hands_down_laterraise"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
@@ -144,6 +162,15 @@ class HandsDown(object):
         elif self.brain.is_pose("shoulder_width_apart"):
             # print("雙腳請與肩同寬")
             self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+    
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
