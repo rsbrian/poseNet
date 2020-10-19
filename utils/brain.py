@@ -107,6 +107,7 @@ class Brain(object):
             "hand_too_straight": self.hand_too_straight,
             "left_elbow_moved": self.left_elbow_moved,
             "right_elbow_moved": self.right_elbow_moved,
+            "hands_lower_than_shoulder": self.hands_lower_than_shoulder,
             "hands_up": self.hands_up,
             "hands_up_down": self.hands_up_down,
             "hands_up_left": self.hands_up_left,
@@ -195,6 +196,10 @@ class Brain(object):
 
     def hand_too_straight(self):  # 手打太直了
         return self.human.angles["right_elbow_angle"] > 170
+
+    def hands_lower_than_shoulder(self):
+        return self.noabs_compare("right_elbow_y", "right_shoulder", ">", 50) or \
+            self.noabs_compare("left_elbow_y", "left_shoulder", ">", 50)
 
     def left_elbow_moved(self):
         return self.abs_compare("left_elbow_y", "left_elbow_y_temp", ">", 40) or \

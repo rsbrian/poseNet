@@ -202,6 +202,8 @@ class BothHandsUp(Template):
 
         mean = self.calcMean(new_left_wrist_gradient, new_right_wrist_gradient)
         if mean > self.click_cancel_param:
+            if abs(left_wrist_x[-1] - right_wrist_x[-1]) > 150:
+                return ""
             return "雙手交叉"
         else:
             return "雙手彎舉"

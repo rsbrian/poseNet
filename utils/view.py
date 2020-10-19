@@ -42,8 +42,8 @@ class View(object):
 
         x1 = segment_width * 1 + 10  # 1
         x2 = segment_width * 2 - 10  # 2
-        y1 = segment_height * 4 - 30  # 4
-        y2 = segment_height * 5 + 30  # 5
+        y1 = segment_height * 4 + 50  # 4
+        y2 = segment_height * 5 + 100  # 5
         return x1, x2, y1, y2
 
     def calibrate_human_body(self):
