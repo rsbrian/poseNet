@@ -22,7 +22,7 @@ class Canceling(object):
         if self.analysis.both_hand_move():
             self.home.change_cancel_state(
                 NotCancel(self.home, self.brain, self.analysis))
-        elif processing_time > 1:
+        elif processing_time > 3:
             self.home.api.course_action["action"]["quit"] = True
 
     def result(self):
