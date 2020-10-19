@@ -85,7 +85,7 @@ class NoAction(Template):
         left_wrist_elbow = self.calcGradient(left_wrist_elbow)
         right_wrist_elbow = self.calcGradient(right_wrist_elbow)
 
-        self.tool.set_moved_points(left_wrist_elbow, right_wrist_elbow)
+        self.tool.set_moved_points(left_gradient, right_gradient)
         left_hand_moved = left_wrist_elbow < self.tool.thres
         right_hand_moved = right_wrist_elbow < self.tool.thres
 
