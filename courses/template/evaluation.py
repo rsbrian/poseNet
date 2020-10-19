@@ -5,7 +5,7 @@ class EvaluationTemplate(object):
         self.counter = counter
         self.weights = {
             "fast": 2,
-            "slow": 4
+            "slow": 4,
             "perfect": 6,
         }
 

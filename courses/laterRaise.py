@@ -5,6 +5,7 @@ from utils.counter import Counter
 
 from courses.template.home import Home
 from courses.template.evaluation import EvaluationTemplate
+from courses.template.error_handleing import ErrorHandleingTemplate
 
 # 站姿側平舉
 
@@ -15,7 +16,7 @@ class LaterRaise(Home):
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
-        super().__call__()
+        return super().__call__()
 
 
 class Prepare(object):
@@ -186,15 +187,13 @@ class Evaluation(object):
             Action(self.course, self.brain))
 
 
-class ErrorHandleing(object):
+class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
+        super().__init__(course, brain)
+        self.check_list = ["ending"]
 
     def __call__(self):
-        if self.brain.is_pose("ending"):
-            self.course.error += 1
-            self.brain.reset_temp_points()
+        if super().__call__(self.check_list):
             self.course.change(Action(self.course, self.brain))
 
 

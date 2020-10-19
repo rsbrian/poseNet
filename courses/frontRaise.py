@@ -5,6 +5,7 @@ from utils.counter import Counter
 
 from courses.template.home import Home
 from courses.template.evaluation import EvaluationTemplate
+from courses.template.error_handleing import ErrorHandleingTemplate
 
 # 雙手交替前舉
 
@@ -12,10 +13,11 @@ from courses.template.evaluation import EvaluationTemplate
 class FrontRaise(Home):
     def __init__(self, brain, view):
         super().__init__(brain, view)
+        self.number = 0
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
-        super().__call__()
+        return super().__call__()
 
 
 class Prepare(object):
@@ -58,9 +60,6 @@ class Action(object):
 
     def __call__(self):
         print("Action")
-        print("number: ")
-        print(self.brain.get_points("left_wrist_y_temp"),
-              self.brain.get_points("left_wrist_y"))
         if self.brain.is_pose("shoulder_width_apart"):
             # print("雙腳請與肩同寬")
             self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
@@ -146,14 +145,11 @@ class HandsDown(object):
 
         self.counter.start()
         if self.brain.is_pose("ending_left") and self.course.number == 0:
-            # print("Bar2 Close", self.counter.result())
-            self.course.number += 1
             self.counter.record("total")
             self.course.number = 1
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
         elif self.brain.is_pose("ending_right") and self.course.number == 1:
-            self.course.number += 1
             self.counter.record("total")
             self.course.number = 0
             self.course.change(
@@ -194,19 +190,13 @@ class Evaluation(object):
             Action(self.course, self.brain))
 
 
-class ErrorHandleing(object):
+class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
+        super().__init__(course, brain)
+        self.check_list = ["ending_left", "ending_right"]
 
     def __call__(self):
-        if self.brain.is_pose("ending_left") and self.course.number == 0:
-            self.course.error += 1
-            self.brain.reset_temp_points()
-            self.course.change(Action(self.course, self.brain))
-        elif self.brain.is_pose("ending_right") and self.course.number == 1:
-            self.course.error += 1
-            self.brain.reset_temp_points()
+        if super().__call__(self.check_list):
             self.course.change(Action(self.course, self.brain))
 
 

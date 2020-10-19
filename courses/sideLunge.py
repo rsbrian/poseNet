@@ -5,6 +5,7 @@ from utils.counter import Counter
 
 from courses.template.home import Home
 from courses.template.evaluation import EvaluationTemplate
+from courses.template.error_handleing import ErrorHandleingTemplate
 
 # 側弓步
 
@@ -12,10 +13,11 @@ from courses.template.evaluation import EvaluationTemplate
 class SideLunge(Home):
     def __init__(self, brain, view):
         super().__init__(brain, view)
+        self.number = 0
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
-        super().__call__("leg")
+        return super().__call__(leg="leg")
 
 
 class Prepare(object):
@@ -194,19 +196,13 @@ class Evaluation(object):
             Action(self.course, self.brain))
 
 
-class ErrorHandleing(object):
+class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
+        super().__init__(course, brain)
+        self.check_list = ["ending_downleft", "ending_downright"]
 
     def __call__(self):
-        if self.brain.is_pose("ending_downleft") and self.course.number == 0:
-            self.course.error += 1
-            self.brain.reset_temp_points()
-            self.course.change(Action(self.course, self.brain))
-        elif self.brain.is_pose("ending_downright") and self.course.number == 1:
-            self.course.error += 1
-            self.brain.reset_temp_points()
+        if super().__call__(self.check_list):
             self.course.change(Action(self.course, self.brain))
 
 

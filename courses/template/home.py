@@ -8,7 +8,7 @@ class Home(object):
         self.brain = brain
         self.view = view
         self.error = 0
-        self.number = 0
+        self.number = -1
         self.total_score = 0
         self.state = None
         self.api = Api()
@@ -17,6 +17,10 @@ class Home(object):
     def __call__(self, leg=None):
         if self.is_body_in_box(leg):
             self.state()
+            print(self.api.course_action["action"]["score"])
+            points = self.brain.get_test_points()
+            behavior = self.analysis.predict(points, self.brain.face)
+            self.set_api("最後動作", behavior)
         return self
 
     def is_body_in_box(self, leg):
