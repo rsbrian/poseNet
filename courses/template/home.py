@@ -4,6 +4,7 @@ from api.socket import Api
 from analysis import Analysis
 import datetime
 
+
 class Home(object):
     def __init__(self, brain, view):
         self.brain = brain
@@ -20,13 +21,13 @@ class Home(object):
         if self.is_body_in_box(leg):
             self.state()
             print(self.api.course_action["action"]["score"])
+            self.cancel()
         return self
 
     def cancel(self):
         points = self.brain.get_test_points()
         behavior = self.analysis.predict(points, self.brain.face)
-        if behavior == "雙手交叉":
-            print(behavior)
+        if behavior == "雙手交叉" and self.analysis.both_hand_move():
             self.api.course_action["action"]["quit"] = True
 
     def is_body_in_box(self, leg):

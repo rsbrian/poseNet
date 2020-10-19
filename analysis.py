@@ -12,6 +12,9 @@ class Template(object):
         self.change_state_thres = 70
         self.scope = 10
 
+    def both_hand_move(self, left_wrist_elbow, right_wrist_elbow):
+        return left_wrist_elbow < self.thres, right_wrist_elbow < self.thres
+
     def analyze(self):
         data = self.tool.data
         self.features.append(data)
@@ -63,8 +66,7 @@ class NoAction(Template):
         self.weight = 0.8
 
     def render_state(self, data):
-        thres = -90
-        moved_thres = abs(thres) * self.weight
+        moved_thres = abs(self.tool.thres) * self.weight
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
         if (left_gradient + right_gradient) == 0:
             return self.behavior
@@ -78,8 +80,9 @@ class NoAction(Template):
         left_wrist_elbow = self.calcGradient(left_wrist_elbow)
         right_wrist_elbow = self.calcGradient(right_wrist_elbow)
 
-        left_hand_moved = left_wrist_elbow < thres
-        right_hand_moved = right_wrist_elbow < thres
+        self.tool.set_moved_points(left_wrist_elbow, right_wrist_elbow)
+        left_hand_moved = left_wrist_elbow < self.tool.thres
+        right_hand_moved = right_wrist_elbow < self.tool.thres
 
         if left_hand_moved or right_hand_moved:
             diff = abs(left_wrist_elbow) - abs(right_wrist_elbow)
@@ -203,6 +206,17 @@ class Analysis(object):
         self.temp = []
         self.state = NoAction(self)
         self.dynamic_thres_by_camera = None
+        self.left_wrist_elbow = None
+        self.right_wrist_elbow = None
+        self.thres = -90
+
+    def both_hand_move(self):
+        print(self.left_wrist_elbow, self.right_wrist_elbow)
+        return self.left_wrist_elbow < self.tool.thres and self.right_wrist_elbow < self.tool.thres
+
+    def set_moved_points(self, left_wrist_elbow, right_wrist_elbow):
+        self.left_wrist_elbow = left_wrist_elbow
+        self.right_wrist_elbow = right_wrist_elbow
 
     def load_data(self, data):
         self.data = data
