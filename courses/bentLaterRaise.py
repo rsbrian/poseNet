@@ -60,6 +60,9 @@ class PrepareTest(object):
 
     def __call__(self):
         print("Preparing")
+        self.course.api.course_action["action"]["alert"] = ["請回到預備動作重新開始"]
+        self.course.set_time("alertLastTime")
+        self.course.set_time("startPointLastTime")
         if self.brain.is_pose("shoulder_width_apart"):
             print("雙腳請與肩同寬")
             self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]

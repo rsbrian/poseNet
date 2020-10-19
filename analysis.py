@@ -75,6 +75,11 @@ class NoAction(Template):
 
         left_distance, right_distance = data[0][2], data[1][2]
 
+        left_gradient_x = [f[0][0] for f in self.features]
+        right_gradient_x = [f[1][0] for f in self.features]
+        left_gradient_x = self.calcGradient(left_gradient_x)
+        right_gradient_x = self.calcGradient(right_gradient_x)
+
         left_wrist_elbow = [f[0][4] for f in self.features]
         right_wrist_elbow = [f[1][4] for f in self.features]
         left_wrist_elbow = self.calcGradient(left_wrist_elbow)
@@ -84,6 +89,7 @@ class NoAction(Template):
         left_hand_moved = left_wrist_elbow < self.tool.thres
         right_hand_moved = right_wrist_elbow < self.tool.thres
 
+        print(left_gradient_x, right_gradient_x)
         if left_hand_moved or right_hand_moved:
             diff = abs(left_wrist_elbow) - abs(right_wrist_elbow)
             if diff > moved_thres:
@@ -105,7 +111,6 @@ class RightHandsUp(Template):
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
         finished = right_gradient > -self.stop_record
-        print(right_gradient, -self.stop_record)
         if len(self.features) > 50:
             self.tool.change(NoAction(self.tool))
 
@@ -121,21 +126,13 @@ class RightHandsUp(Template):
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(right_gradient_x)
         click = max(pos, neg)
-        # if click < 40:
-        #     return "右手彎舉"
-        # elif pos > neg:
-        #     return "向左選取"
-        # else:
-        #     return "向右選取"
+        print(pos, neg)
         if click < 25:
-            return "左手彎舉"
-        elif click > 60:
-            if pos > neg:
-                return "向左選取"
-            else:
-                return "向右選取"
+            return "右手彎舉"
+        elif pos > neg:
+            return "向左選取"
         else:
-            return ""
+            return "向右選取"
 
 class LeftHandsUp(Template):
     def __init__(self, tool, left_distance):
@@ -144,7 +141,6 @@ class LeftHandsUp(Template):
 
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
-        print(left_gradient, -self.stop_record)
         finished = left_gradient > -self.stop_record
         if len(self.features) > 50:
             self.tool.change(NoAction(self.tool))
@@ -160,17 +156,13 @@ class LeftHandsUp(Template):
         right_gradient_x = [f[1][0] for f in self.features]
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(left_gradient_x)
-        print(pos, neg)
         click = max(pos, neg)
         if click < 25:
             return "左手彎舉"
-        elif click > 60:
-            if pos > neg:
-                return "向左選取"
-            else:
-                return "向右選取"
+        elif pos > neg:
+            return "向左選取"
         else:
-            return ""
+            return "向右選取"
 
 class BothHandsUp(Template):
     def __init__(self, tool, right_distance, left_distance, past_features):

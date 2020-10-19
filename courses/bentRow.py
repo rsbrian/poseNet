@@ -43,7 +43,7 @@ class Prepare(object):
             self.course.api.course_action["start"] = True
             self.brain.reset_temp_points()
             self.course.change(
-                Action(self.course, self.brain))
+                PrepareTest(self.course, self.brain))
 
     def is_ready_to_start(self):
         # print("很好請保持", self.counter.result())
@@ -60,6 +60,9 @@ class PrepareTest(object):
 
     def __call__(self):
         print("Preparing")
+        self.course.api.course_action["action"]["alert"] = ["請回到預備動作重新開始"]
+        self.course.set_time("alertLastTime")
+        self.course.set_time("startPointLastTime")
         if self.brain.is_pose("shoulder_width_apart"):
             print("雙腳請與肩同寬")
             self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
@@ -283,7 +286,7 @@ class ErrorHandleing(ErrorHandleingTemplate):
 
     def __call__(self):
         if super().__call__(self.check_list):
-            self.course.change(Action(self.course, self.brain))
+            self.course.change(PrepareTest(self.course, self.brain))
 
 
 class EvaluationScore(EvaluationTemplate):
