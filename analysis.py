@@ -89,7 +89,6 @@ class NoAction(Template):
         left_hand_moved = left_wrist_elbow < self.tool.thres
         right_hand_moved = right_wrist_elbow < self.tool.thres
 
-        print(left_gradient_x, right_gradient_x)
         if left_hand_moved or right_hand_moved:
             diff = abs(left_wrist_elbow) - abs(right_wrist_elbow)
             if diff > moved_thres:
@@ -106,7 +105,8 @@ class NoAction(Template):
 class RightHandsUp(Template):
     def __init__(self, tool, right_distance):
         super().__init__(tool)
-        self.stop_record = right_distance / 3
+        self.scope = 8
+        self.stop_record = right_distance / 6
 
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
@@ -126,8 +126,7 @@ class RightHandsUp(Template):
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(right_gradient_x)
         click = max(pos, neg)
-        print(pos, neg)
-        if click < 25:
+        if click < 15:
             return "右手彎舉"
         elif pos > neg:
             return "向左選取"
@@ -137,7 +136,8 @@ class RightHandsUp(Template):
 class LeftHandsUp(Template):
     def __init__(self, tool, left_distance):
         super().__init__(tool)
-        self.stop_record = left_distance / 3
+        self.scope = 8
+        self.stop_record = left_distance / 6
 
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
@@ -157,7 +157,7 @@ class LeftHandsUp(Template):
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(left_gradient_x)
         click = max(pos, neg)
-        if click < 25:
+        if click < 15:
             return "左手彎舉"
         elif pos > neg:
             return "向左選取"
@@ -167,6 +167,7 @@ class LeftHandsUp(Template):
 class BothHandsUp(Template):
     def __init__(self, tool, right_distance, left_distance, past_features):
         super().__init__(tool)
+        self.scope = 8
         self.stop_right = right_distance / 3
         self.stop_left = left_distance / 3
         self.click_cancel_param = self.tool.dynamic_thres_by_camera * \
