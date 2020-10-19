@@ -42,3 +42,4 @@ class EvaluationTemplate(object):
 
         if self.course.api.course_action["action"]["score"] > 100:
             self.course.api.course_action["action"]["score"] = 100
+
