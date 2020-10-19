@@ -69,6 +69,13 @@ class Action(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
+        elif self.brain.is_pose("hands_lower_than_shoulder"):
+            # print("下放時，手肘略低於肩膀，無須再下放")
+            self.course.api.course_action["action"]["alert"] = [
+                "下放時，手肘略低於肩膀，無須再下放"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+
         elif self.brain.is_pose("hands_up"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")

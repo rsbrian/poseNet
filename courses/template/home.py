@@ -1,6 +1,7 @@
 from operator import getitem
 from functools import reduce
 from api.socket import Api
+from analysis import Analysis
 
 
 class Home(object):
@@ -11,6 +12,7 @@ class Home(object):
         self.number = -1
         self.total_score = 0
         self.state = None
+        self.analysis = Analysis()
         self.api = Api()
         self.api.course_action["tip"]["duration"] = 2
 

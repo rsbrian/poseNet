@@ -87,12 +87,31 @@ class Action(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
+        elif self.brain.is_pose("hands_up_right") and self.course.number == 0:
+            # print("請換左手動作，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請換左手動作，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+
+        elif self.brain.is_pose("hands_up_left") and self.course.number == 1:
+            # print("請換右手動作，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請換右手動作，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+
         elif self.brain.is_pose("hands_up_left") and self.course.number == 0:
             # print("Bar1 Open")
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
+
         elif self.brain.is_pose("hands_up_right") and self.course.number == 1:
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
@@ -183,7 +202,6 @@ class HandsDown(object):
         self.counter.start()
         if self.brain.is_pose("ending_left") and self.course.number == 0:
             # print("Bar2 Close", self.counter.result())
-            self.course.number += 1
             self.counter.record("total")
             self.course.number = 1
             self.course.change(

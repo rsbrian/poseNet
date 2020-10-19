@@ -309,27 +309,56 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     opacity: 0.82;
 }
 
-@keyframes tipanimation {
-    from { background-position: 0px 0;}
-    to { background-position: -1675px 0;}
+@keyframes moveSlideshow {
+    /*0%{ transform: translateX(0); }*/
+
+    100% { transform: translateX(-466.666%); }
+
+
+    /*100% {*/
+      /*transform: translateX(-100%);*/
+      /*transform: translateX(100%);*/
+    /*}*/
+  }
+.page_tip_area2 {
+    position: absolute;
+    top: 1720px;
+    width: 1080px;
+    height: 132px;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .page_tip_area {
     position: absolute;
     top: 1770px;
-    width: 1675px;
+    /*width: 1675px;*/
+    width: 1080px;
     height: 82px;
-    display: table;
-    overflow-y: hidden;
+    /*display: table;*/
+    /*overflow-y: hidden;*/
     overflow-x: hidden;
 
-    animation: tipanimation 2s linear infinite;
+    /*animation: tipanimation 2s linear infinite;*/
+}
+
+.page_tip_container {
+    /*width: 1630px;*/
+    width: 3240px;
+    /*width: 2180px;*/
+    height: 82px;
+    display: table;
 }
 
 
 .page_tip_area_group {
     display: table-cell;
-    padding-left:20px
+    padding-left:20px;
+
+    /*transform: translate3d(0, 0, 0);*/
+
+    /*animation: moveSlideshow 8s linear infinite;*/
 }
 
 .page_tip_image1 {
@@ -2416,7 +2445,7 @@ to {
     position: absolute;
 
     top:505px;
-    width:100%;
+    width:1080px;
 }
 
 .classDone_innerArea{

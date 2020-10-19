@@ -109,7 +109,7 @@ class HandsDown(object):
         self.counter.start()
         if self.brain.is_pose("ending_down"):
             # print("Bar2 Close", self.counter.result())
-            self.brain.reset_temp_points()
+            # self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
