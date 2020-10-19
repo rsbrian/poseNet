@@ -2,7 +2,7 @@ from operator import getitem
 from functools import reduce
 from api.socket import Api
 from analysis import Analysis
-
+import datetime
 
 class Home(object):
     def __init__(self, brain, view):
@@ -20,10 +20,14 @@ class Home(object):
         if self.is_body_in_box(leg):
             self.state()
             print(self.api.course_action["action"]["score"])
-            points = self.brain.get_test_points()
-            behavior = self.analysis.predict(points, self.brain.face)
-            self.set_api("最後動作", behavior)
         return self
+
+    def cancel(self):
+        points = self.brain.get_test_points()
+        behavior = self.analysis.predict(points, self.brain.face)
+        if behavior == "雙手交叉":
+            print(behavior)
+            self.api.course_action["action"]["quit"] = True
 
     def is_body_in_box(self, leg):
         c = self.brain.human.points != {}

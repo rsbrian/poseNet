@@ -116,7 +116,6 @@ class Action(object):
             self.course.change(
                 HandsUp(self.course, self.brain))
 
-
 class HandsUp(object):
     def __init__(self, course, brain):
         self.course = course

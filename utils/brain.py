@@ -96,6 +96,7 @@ class Brain(object):
             "lying_down": self.lying_down,
             "hold_dumbbel_shoulder": self.hold_dumbbel_shoulder,
             "raised_with_one_hand": self.raised_with_one_hand,
+            "raised_with_one_hand_simple": self.raised_with_one_hand_simple,
             "hold_dumbbells_on_chest": self.hold_dumbbells_on_chest,
             "hold_dumbbells_on_abdomen": self.hold_dumbbells_on_abdomen,
             "spread_feet": self.spread_feet,
@@ -212,6 +213,10 @@ class Brain(object):
     def raised_with_one_hand(self):  # 持啞鈴手舉起並貼緊耳朵
         return self.human.angles["right_shoulder_angle"] < 120 and \
             self.human.angles["left_shoulder_angle"] < 120
+    
+    def raised_with_one_hand_simple(self): 
+        return (self.noabs_compare("left_wrist_y", "left_elbow_y", ">", -50) or self.noabs_compare("left_elbow_y", "left_shoulder_y", ">", -50)) and \
+            (self.noabs_compare("right_wrist_y", "right_elbow_y", ">", -50) or self.noabs_compare("right_elbow_y", "right_shoulder_y", ">", -50))
 
     def hold_dumbbells_on_chest(self):  # 持啞鈴於胸口
         c1 = self.abs_compare("left_wrist_x", "right_wrist_x", ">", 100)

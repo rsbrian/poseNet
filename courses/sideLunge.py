@@ -90,7 +90,7 @@ class Action(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
+        
 
 class HandsUp(object):
     def __init__(self, course, brain):

@@ -66,7 +66,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-
+        
 
 class HandsUp(object):
     def __init__(self, course, brain):

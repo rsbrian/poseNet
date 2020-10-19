@@ -83,7 +83,6 @@ class NoAction(Template):
 
         if left_hand_moved or right_hand_moved:
             diff = abs(left_wrist_elbow) - abs(right_wrist_elbow)
-            print(diff)
             if diff > moved_thres:
                 self.tool.change(LeftHandsUp(self.tool, left_distance))
             elif diff < (-moved_thres):

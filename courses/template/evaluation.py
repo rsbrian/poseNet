@@ -3,10 +3,11 @@ class EvaluationTemplate(object):
         self.course = course
         self.brain = brain
         self.counter = counter
+        self.normal = 100/36
         self.weights = {
-            "fast": 2,
-            "slow": 4,
-            "perfect": 6,
+            "fast": round(2 * self.normal),
+            "slow": round(4 * self.normal),
+            "perfect": round(6 * self.normal),
         }
 
     def __call__(self):
@@ -25,5 +26,6 @@ class EvaluationTemplate(object):
         else:
             self.course.api.course_action["action"]["score"] += self.weights["slow"]
             self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
+
 
         self.course.api.course_action["action"]["times"] += 1
