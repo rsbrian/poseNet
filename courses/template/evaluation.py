@@ -1,5 +1,3 @@
-import math
-
 class EvaluationTemplate(object):
     def __init__(self, course, brain, counter):
         self.course = course
@@ -7,9 +5,9 @@ class EvaluationTemplate(object):
         self.counter = counter
         self.normal = 100/36
         self.weights = {
-            "fast": math.floor(2 * self.normal),
-            "slow": math.floor(4 * self.normal),
-            "perfect": math.floor(6 * self.normal),
+            "fast": round(2 * self.normal),
+            "slow": round(4 * self.normal),
+            "perfect": round(6 * self.normal),
         }
 
     def __call__(self):
@@ -29,5 +27,6 @@ class EvaluationTemplate(object):
             self.course.api.course_action["action"]["score"] += self.weights["slow"]
             self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
 
-
+        if self.course.api.course_action["action"]["score"] > 100:
+            self.course.api.course_action["action"]["score"] = 100
         self.course.api.course_action["action"]["times"] += 1
