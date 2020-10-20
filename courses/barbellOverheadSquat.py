@@ -1,36 +1,21 @@
 import time
 import datetime
 
-from api.socket import Api
 from utils.counter import Counter
 
+from courses.template.home import Home
+from courses.template.evaluation import EvaluationTemplate
+from courses.template.error_handleing import ErrorHandleingTemplate
 # 單臂啞鈴過頂深蹲
 
-class BarbellOverheadSquat(object):
+
+class BarbellOverheadSquat(Home):
     def __init__(self, brain, view):
-        self.api = Api()
-        self.brain = brain
-        self.view = view
+        super().__init__(brain, view)
         self.state = Prepare(self, self.brain)
-        self.api.course_action["tip"]["duration"] = 2
 
     def __call__(self):
-        if self.is_body_in_box():
-            self.state()
-        return self
-
-    def is_body_in_box(self):
-        return self.brain.human.points != {} and self.view.calibrate_human_body_leg()
-
-    def change(self, new_state):
-        self.state = new_state
-
-    def get_api(self):
-        return self.api.course_action
-
-    def set_time(self, name):
-        self.api.course_action["action"][name] = datetime.datetime.now().strftime(
-            "%Y/%m/%d %H:%M:%S.%f")
+        return super().__call__(leg="leg")
 
 
 class Prepare(object):
@@ -80,7 +65,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-
+                
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -106,6 +91,7 @@ class HandsUp(object):
             self.counter.record("up")
             self.course.change(
                 HandsDown(self.course, self.brain, self.counter))
+       
 
     def is_time_small_than(self, time_threshold):
         time = self.counter.result()
@@ -124,12 +110,12 @@ class HandsDown(object):
         self.counter.start()
         if self.brain.is_pose("ending_down"):
             # print("Bar2 Close", self.counter.result())
-            self.brain.reset_temp_points()
+            # self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
-                Evaluation(self.course, self.brain, self.counter))
-
-
+                EvaluationScore(self.course, self.brain, self.counter))
+        
+        
 class Evaluation(object):
     def __init__(self, course, brain, counter):
         self.course = course
@@ -159,12 +145,20 @@ class Evaluation(object):
             Action(self.course, self.brain))
 
 
-class ErrorHandleing(object):
+class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
+        super().__init__(course, brain)
+        self.check_list = ["ending_down"]
 
     def __call__(self):
-        if self.brain.is_pose("ending_down"):
-            self.brain.reset_temp_points()
+        if super().__call__(self.check_list):
             self.course.change(Action(self.course, self.brain))
+
+
+class EvaluationScore(EvaluationTemplate):
+    def __init__(self, course, brain, counter):
+        super().__init__(course, brain, counter)
+
+    def __call__(self):
+        super().__call__()
+        self.course.change(Action(self.course, self.brain))

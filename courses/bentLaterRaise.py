@@ -1,36 +1,22 @@
 import time
 import datetime
 
-from api.socket import Api
 from utils.counter import Counter
+
+from courses.template.home import Home
+from courses.template.evaluation import EvaluationTemplate
+from courses.template.error_handleing import ErrorHandleingTemplate
 
 # 俯身啞鈴反向飛鳥
 
-class BentLaterRaise(object):
+
+class BentLaterRaise(Home):
     def __init__(self, brain, view):
-        self.api = Api()
-        self.brain = brain
-        self.view = view
+        super().__init__(brain, view)
         self.state = Prepare(self, self.brain)
-        self.api.course_action["tip"]["duration"] = 2
 
     def __call__(self):
-        if self.is_body_in_box():
-            self.state()
-        return self
-
-    def is_body_in_box(self):
-        return self.brain.human.points != {} and self.view.calibrate_human_body()
-
-    def change(self, new_state):
-        self.state = new_state
-
-    def get_api(self):
-        return self.api.course_action
-
-    def set_time(self, name):
-        self.api.course_action["action"][name] = datetime.datetime.now().strftime(
-            "%Y/%m/%d %H:%M:%S.%f")
+        return super().__call__()
 
 
 class Prepare(object):
@@ -57,7 +43,7 @@ class Prepare(object):
             self.course.api.course_action["start"] = True
             self.brain.reset_temp_points()
             self.course.change(
-                Action(self.course, self.brain))
+                PrepareTest(self.course, self.brain))
 
     def is_ready_to_start(self):
         # print("很好請保持", self.counter.result())
@@ -66,6 +52,37 @@ class Prepare(object):
         self.course.set_time("lastTime")
         self.course.set_time("startPoint")
         return self.counter.result() > 3
+
+class PrepareTest(object):
+    def __init__(self, course, brain):
+        self.course = course
+        self.brain = brain
+
+    def __call__(self):
+        print("Preparing")
+        self.course.api.course_action["action"]["alert"] = ["請回到預備動作重新開始"]
+        self.course.set_time("alertLastTime")
+        self.course.set_time("startPointLastTime")
+        if self.brain.is_pose("shoulder_width_apart"):
+            print("雙腳請與肩同寬")
+            self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+
+        elif self.brain.is_pose("hand_to_knee"):
+            print("膝蓋微彎、身體前傾、將手垂放到膝蓋")
+            self.course.api.course_action["action"]["alert"] = [
+                "膝蓋微彎、身體前傾、將手垂放到膝蓋"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+
+        else:
+            self.course.api.course_action["action"]["alert"] = ["很好，可以開始了"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.brain.reset_temp_points()
+            self.course.change(
+                Action(self.course, self.brain))
 
 
 class Action(object):
@@ -92,14 +109,23 @@ class Action(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
+        
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+        
         elif self.brain.is_pose("hands_up"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-
+        
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -126,7 +152,14 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
         elif self.brain.is_pose("hands_down_laterraise"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
@@ -154,7 +187,7 @@ class HandsDown(object):
             self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
-                Evaluation(self.course, self.brain, self.counter))
+                EvaluationScore(self.course, self.brain, self.counter))
 
         elif self.brain.is_pose("shoulder_width_apart"):
             # print("雙腳請與肩同寬")
@@ -172,7 +205,14 @@ class HandsDown(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
+        elif self.brain.is_pose("prepare_action"):
+            print("請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
 
 class Evaluation(object):
     def __init__(self, course, brain, counter):
@@ -203,12 +243,20 @@ class Evaluation(object):
             Action(self.course, self.brain))
 
 
-class ErrorHandleing(object):
+class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
+        super().__init__(course, brain)
+        self.check_list = ["ending"]
 
     def __call__(self):
-        if self.brain.is_pose("ending"):
-            self.brain.reset_temp_points()
-            self.course.change(Action(self.course, self.brain))
+        if super().__call__(self.check_list):
+            self.course.change(PrepareTest(self.course, self.brain))
+
+
+class EvaluationScore(EvaluationTemplate):
+    def __init__(self, course, brain, counter):
+        super().__init__(course, brain, counter)
+
+    def __call__(self):
+        super().__call__()
+        self.course.change(Action(self.course, self.brain))

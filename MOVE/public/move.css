@@ -20,17 +20,20 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 .home_selectCoach {
     position: absolute;
     /*top: 550px;*/
-    top: 200px;
-    left: 400px;
-    width: 280px;
+    top: 213px;
+    /*left: 400px;*/
+    width: 1080px;
     height: 74px;
     font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 56px/74px Segoe UI;
     letter-spacing: var(--unnamed-character-spacing-0);
     color: var(--unnamed-color-ffffff);
     text-align: center;
-    font: normal normal normal 56px/74px Segoe UI;
+    /*font: normal normal normal 56px/74px Segoe UI; */
+    font: Bold 57px/42px Microsoft Tai Le;
     letter-spacing: 0px;
-    color: #FFFFFF;
+    /*color: #FFFFFF;*/
+    font-size: 60px;
+    color:#74E0FC;
     opacity: 1;
 }
 
@@ -309,27 +312,56 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     opacity: 0.82;
 }
 
-@keyframes tipanimation {
-    from { background-position: 0px 0;}
-    to { background-position: -1675px 0;}
+@keyframes moveSlideshow {
+    /*0%{ transform: translateX(0); }*/
+
+    100% { transform: translateX(-466.666%); }
+
+
+    /*100% {*/
+      /*transform: translateX(-100%);*/
+      /*transform: translateX(100%);*/
+    /*}*/
+  }
+.page_tip_area2 {
+    position: absolute;
+    top: 1720px;
+    width: 1080px;
+    height: 132px;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .page_tip_area {
     position: absolute;
     top: 1770px;
-    width: 1675px;
+    /*width: 1675px;*/
+    width: 1080px;
     height: 82px;
-    display: table;
-    overflow-y: hidden;
+    /*display: table;*/
+    /*overflow-y: hidden;*/
     overflow-x: hidden;
 
-    animation: tipanimation 2s linear infinite;
+    /*animation: tipanimation 2s linear infinite;*/
+}
+
+.page_tip_container {
+    /*width: 1630px;*/
+    width: 3240px;
+    /*width: 2180px;*/
+    height: 82px;
+    display: table;
 }
 
 
 .page_tip_area_group {
     display: table-cell;
-    padding-left:20px
+    padding-left:20px;
+
+    /*transform: translate3d(0, 0, 0);*/
+
+    /*animation: moveSlideshow 8s linear infinite;*/
 }
 
 .page_tip_image1 {
@@ -655,7 +687,7 @@ to {
     font-size: 69px;
     font: Regular 69px/52px Microsoft Sans Serif;
     letter-spacing: 0px;
-    color: #74E0FC;
+    color: #d4d4d4;
     opacity: 1;
 }
 
@@ -1535,12 +1567,13 @@ to {
 .classBegin_ClassName {
     position: absolute;
 
-    top: 293px;
+    top: 213px;
     /*left: 440px;*/
     width: 1080px;
     height: 67px;
     text-align: center;
     font: Bold 57px/42px Microsoft Tai Le;
+    font-size: 60px;
     letter-spacing: 0px;
     color: #74E0FC;
     opacity: 1;
@@ -1785,7 +1818,7 @@ to {
 .classBegin_Timer {
     position: absolute;
 
-    top: 384px;
+    top: 304px;
     /*left: 389px;*/
     width: 1080px;
     height: 100px;
@@ -2416,7 +2449,7 @@ to {
     position: absolute;
 
     top:505px;
-    width:100%;
+    width:1080px;
 }
 
 .classDone_innerArea{

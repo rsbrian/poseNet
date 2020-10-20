@@ -96,6 +96,7 @@ class Brain(object):
             "lying_down": self.lying_down,
             "hold_dumbbel_shoulder": self.hold_dumbbel_shoulder,
             "raised_with_one_hand": self.raised_with_one_hand,
+            "raised_with_one_hand_simple": self.raised_with_one_hand_simple,
             "hold_dumbbells_on_chest": self.hold_dumbbells_on_chest,
             "hold_dumbbells_on_abdomen": self.hold_dumbbells_on_abdomen,
             "spread_feet": self.spread_feet,
@@ -106,6 +107,7 @@ class Brain(object):
             "hand_too_straight": self.hand_too_straight,
             "left_elbow_moved": self.left_elbow_moved,
             "right_elbow_moved": self.right_elbow_moved,
+            "hands_lower_than_shoulder": self.hands_lower_than_shoulder,
             "hands_up": self.hands_up,
             "hands_up_down": self.hands_up_down,
             "hands_up_left": self.hands_up_left,
@@ -195,6 +197,10 @@ class Brain(object):
     def hand_too_straight(self):  # 手打太直了
         return self.human.angles["right_elbow_angle"] > 170
 
+    def hands_lower_than_shoulder(self):
+        return self.noabs_compare("right_elbow_y", "right_shoulder", ">", 50) or \
+            self.noabs_compare("left_elbow_y", "left_shoulder", ">", 50)
+
     def left_elbow_moved(self):
         return self.abs_compare("left_elbow_y", "left_elbow_y_temp", ">", 40) or \
             self.abs_compare("left_elbow_x", "left_elbow_x_temp", ">", 40)
@@ -212,6 +218,10 @@ class Brain(object):
     def raised_with_one_hand(self):  # 持啞鈴手舉起並貼緊耳朵
         return self.human.angles["right_shoulder_angle"] < 120 and \
             self.human.angles["left_shoulder_angle"] < 120
+    
+    def raised_with_one_hand_simple(self): 
+        return self.noabs_compare("left_wrist_y", "left_shoulder_y", ">", -50)  and \
+            self.noabs_compare("right_wrist_y", "right_shoulder_y", ">", -50)
 
     def hold_dumbbells_on_chest(self):  # 持啞鈴於胸口
         c1 = self.abs_compare("left_wrist_x", "right_wrist_x", ">", 100)
@@ -265,16 +275,16 @@ class Brain(object):
         return self.human.points["right_hip_x"] < self.human.points["right_hip_x_temp"] - param
 
     def hands_down(self):
-        param = 30
+        param = 50
         return self.human.points["left_wrist_y"] < self.human.points["left_shoulder_y"] + param and \
             self.human.points["right_wrist_y"] < self.human.points["right_shoulder_y"] + param
 
     def hands_down_left(self):
-        param = 30
+        param = 50
         return self.human.points["left_wrist_y"] < self.human.points["left_shoulder_y"] + param
 
     def hands_down_right(self):
-        param = 30
+        param = 50
         return self.human.points["right_wrist_y"] < self.human.points["right_shoulder_y"] + param
 
     def hands_down_downleft(self):

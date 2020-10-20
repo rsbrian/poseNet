@@ -12,6 +12,9 @@ class Template(object):
         self.change_state_thres = 70
         self.scope = 10
 
+    def both_hand_move(self, left_wrist_elbow, right_wrist_elbow):
+        return left_wrist_elbow < self.thres, right_wrist_elbow < self.thres
+
     def analyze(self):
         data = self.tool.data
         self.features.append(data)
@@ -63,8 +66,7 @@ class NoAction(Template):
         self.weight = 0.8
 
     def render_state(self, data):
-        thres = -90
-        moved_thres = abs(thres) * self.weight
+        moved_thres = abs(self.tool.thres) * self.weight
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
         if (left_gradient + right_gradient) == 0:
             return self.behavior
@@ -73,17 +75,22 @@ class NoAction(Template):
 
         left_distance, right_distance = data[0][2], data[1][2]
 
+        left_gradient_x = [f[0][0] for f in self.features]
+        right_gradient_x = [f[1][0] for f in self.features]
+        left_gradient_x = self.calcGradient(left_gradient_x)
+        right_gradient_x = self.calcGradient(right_gradient_x)
+
         left_wrist_elbow = [f[0][4] for f in self.features]
         right_wrist_elbow = [f[1][4] for f in self.features]
         left_wrist_elbow = self.calcGradient(left_wrist_elbow)
         right_wrist_elbow = self.calcGradient(right_wrist_elbow)
 
-        left_hand_moved = left_wrist_elbow < thres
-        right_hand_moved = right_wrist_elbow < thres
+        self.tool.set_moved_points(left_gradient, right_gradient)
+        left_hand_moved = left_wrist_elbow < self.tool.thres
+        right_hand_moved = right_wrist_elbow < self.tool.thres
 
         if left_hand_moved or right_hand_moved:
             diff = abs(left_wrist_elbow) - abs(right_wrist_elbow)
-            print(diff)
             if diff > moved_thres:
                 self.tool.change(LeftHandsUp(self.tool, left_distance))
             elif diff < (-moved_thres):
@@ -98,7 +105,8 @@ class NoAction(Template):
 class RightHandsUp(Template):
     def __init__(self, tool, right_distance):
         super().__init__(tool)
-        self.stop_record = right_distance / 3
+        self.scope = 8
+        self.stop_record = right_distance / 6
 
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
@@ -118,18 +126,18 @@ class RightHandsUp(Template):
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(right_gradient_x)
         click = max(pos, neg)
-        if click < 40:
+        if click < 15:
             return "右手彎舉"
         elif pos > neg:
             return "向左選取"
         else:
             return "向右選取"
 
-
 class LeftHandsUp(Template):
     def __init__(self, tool, left_distance):
         super().__init__(tool)
-        self.stop_record = left_distance / 3
+        self.scope = 8
+        self.stop_record = left_distance / 6
 
     def render_state(self, data):
         left_gradient, right_gradient, left_y, right_y = self.cut_interval()
@@ -149,17 +157,17 @@ class LeftHandsUp(Template):
         right_gradient_y = [f[1][1] for f in self.features]
         pos, neg = self.calcPosNegGradient(left_gradient_x)
         click = max(pos, neg)
-        if click < 40:
+        if click < 15:
             return "左手彎舉"
-        if pos > neg:
+        elif pos > neg:
             return "向左選取"
         else:
             return "向右選取"
 
-
 class BothHandsUp(Template):
     def __init__(self, tool, right_distance, left_distance, past_features):
         super().__init__(tool)
+        self.scope = 8
         self.stop_right = right_distance / 3
         self.stop_left = left_distance / 3
         self.click_cancel_param = self.tool.dynamic_thres_by_camera * \
@@ -194,6 +202,8 @@ class BothHandsUp(Template):
 
         mean = self.calcMean(new_left_wrist_gradient, new_right_wrist_gradient)
         if mean > self.click_cancel_param:
+            if abs(left_wrist_x[-1] - right_wrist_x[-1]) > 150:
+                return ""
             return "雙手交叉"
         else:
             return "雙手彎舉"
@@ -204,6 +214,18 @@ class Analysis(object):
         self.temp = []
         self.state = NoAction(self)
         self.dynamic_thres_by_camera = None
+        self.left_wrist_elbow = None
+        self.right_wrist_elbow = None
+        self.thres = -90
+
+    def both_hand_move(self):
+        print(self.left_wrist_elbow, self.right_wrist_elbow)
+        param = 30
+        return self.left_wrist_elbow > param or self.right_wrist_elbow > param
+
+    def set_moved_points(self, left_wrist_elbow, right_wrist_elbow):
+        self.left_wrist_elbow = left_wrist_elbow
+        self.right_wrist_elbow = right_wrist_elbow
 
     def load_data(self, data):
         self.data = data
