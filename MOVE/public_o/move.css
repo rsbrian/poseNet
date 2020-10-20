@@ -1,0 +1,2599 @@
+@font-face {
+font-family: 'Adventure Subtitles';
+src: url('./assets/Adventure Subtitles.ttf') format('truetype');
+}
+
+.home_pageTitle {
+    position: absolute;
+    top: 312px;
+    left: 360px;
+    width: 360px;
+    height: 96px;
+    text-align: center;
+    font-size: 72px;
+    font: Regular 72px/81px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.home_selectCoach {
+    position: absolute;
+    /*top: 550px;*/
+    top: 213px;
+    /*left: 400px;*/
+    width: 1080px;
+    height: 74px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 56px/74px Segoe UI;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: center;
+    /*font: normal normal normal 56px/74px Segoe UI; */
+    font: Bold 57px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    /*color: #FFFFFF;*/
+    font-size: 60px;
+    color:#74E0FC;
+    opacity: 1;
+}
+
+.home_selectCoachAreaSize {
+    position: absolute;
+    top: 375px;
+    left: 130px;
+    width: 840px;
+    height: 1000px;
+    display: inline;
+    /*top: 621px;
+    left: 185px;
+    width: 710px;
+    height: 848px;*/
+}
+
+.home_coachArea {
+    width: 380px;
+    float: left;
+    padding: 10px;
+    margin-right: 20px;
+
+    /*width: 710px;
+    height: 424px;*/
+}
+
+.home_coachArea:focus {
+    outline:none
+}
+
+.home_coachArea:focus-within {
+    /*background-image: url('./assets/pic_vselectframe.png');*/
+    background-image: url('./assets/pic_cselected.png');
+    background-repeat: no-repeat;
+    opacity: 1;
+    background-size: 400px 1020px;
+}
+
+.home_videoArea {
+    height: 1000px;
+    mix-blend-mode: lighten;
+
+    position: relative;
+    width: 900px;
+    left: -254px;
+
+    /*position: relative;
+    mix-blend-mode: lighten;
+    top: 44px;
+    left: 37px;
+    width: 636px;
+    z-index:5;
+    height: 357px;*/
+}
+
+.home_coach_title {
+    position: relative;
+    top:-29px;
+    width:100%;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 54px/74px Segoe UI;
+    font-size: 54px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: center;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    z-index:10;
+}
+
+.home_image1{
+    position: absolute;
+    top: 1573px;
+    left: 37px;
+    width: 134px;
+    height: 134px;
+    background-image: url('./assets/pic_tcurl.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea1{
+    position: absolute;
+    top: 1583px;
+    left: 188px;
+    width: 172px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
+}
+
+.home_dot1{
+    position: absolute;
+    top: 1354px;
+    left: 352px;
+    width: 19px;
+    height: 19px;
+    background: #17FF21 0% 0% no-repeat padding-box;
+    border-radius:10px;
+    opacity: 1;
+}
+
+.home_image2{
+    position: absolute;
+    top: 1573px;
+    left: 378px;
+    width: 172px;
+    height: 134px;
+    background-image: url('./assets/pic_cross.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea2{
+    position: absolute;
+    top: 1583px;
+    left: 530px;
+    width: 185px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
+}
+
+.home_dot2{
+    position: absolute;
+    top: 1354px;
+    left: 746px;
+    width: 19px;
+    height: 19px;
+    background: #17FF21 0% 0% no-repeat padding-box;
+    border-radius:10px;
+    opacity: 1;
+}
+
+.home_image3{
+    position: absolute;
+    top: 1573px;
+    left: 720px;
+    width: 134px;
+    height: 134px;
+    background-image: url('./assets/pic_lc.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea3{
+    position: absolute;
+    top: 1583px;
+    left: 871px;
+    width: 172px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
+}
+
+.home_dot3{
+    position: absolute;
+    top: 1556px;
+    left: 352px;
+    width: 19px;
+    height: 19px;
+    background: #17FF21 0% 0% no-repeat padding-box;
+    border-radius:10px;
+    opacity: 1;
+}
+
+.home_image4{
+    position: absolute;
+    top: 1738px;
+    left: 37px;
+    width: 134px;
+    height: 134px;
+    background-image: url('./assets/pic_rc.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea4{
+    position: absolute;
+    top: 1750px;
+    left: 188px;
+    width: 172px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
+}
+
+.home_image5{
+    position: absolute;
+    top: 1738px;
+    left: 378px;
+    width: 134px;
+    height: 134px;
+    background-image: url('./assets/pic_next.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea5{
+    position: absolute;
+    top: 1750px;
+    left: 530px;
+    width: 172px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
+}
+
+.home_image6{
+    position: absolute;
+    top: 1738px;
+    left: 720px;
+    width: 134px;
+    height: 134px;
+    background-image: url('./assets/pic_previous.png');
+    background-size: 134px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.home_textArea6{
+    position: absolute;
+    top: 1750px;
+    left: 871px;
+    width: 172px;
+    height: 94px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 43px;
+}
+
+.home_dot4{
+    position: absolute;
+    top: 1556px;
+    left: 746px;
+    width: 19px;
+    height: 19px;
+    background: #17FF21 0% 0% no-repeat padding-box;
+    border-radius:10px;
+    opacity: 1;
+}
+
+.home_pageTitle2 {
+    position: absolute;
+    top: 404px;
+    left: 379px;
+    width: 322px;
+    height: 62px;
+    text-align: center;
+    font-size: 46px;
+    font: Regular 46px/52px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #93D5FF;
+    opacity: 0.82;
+}
+
+@keyframes moveSlideshow {
+    /*0%{ transform: translateX(0); }*/
+
+    100% { transform: translateX(-466.666%); }
+
+
+    /*100% {*/
+      /*transform: translateX(-100%);*/
+      /*transform: translateX(100%);*/
+    /*}*/
+  }
+.page_tip_area2 {
+    position: absolute;
+    top: 1720px;
+    width: 1080px;
+    height: 132px;
+
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.page_tip_area {
+    position: absolute;
+    top: 1770px;
+    /*width: 1675px;*/
+    width: 1080px;
+    height: 82px;
+    /*display: table;*/
+    /*overflow-y: hidden;*/
+    overflow-x: hidden;
+
+    /*animation: tipanimation 2s linear infinite;*/
+}
+
+.page_tip_container {
+    /*width: 1630px;*/
+    width: 3240px;
+    /*width: 2180px;*/
+    height: 82px;
+    display: table;
+}
+
+
+.page_tip_area_group {
+    display: table-cell;
+    padding-left:20px;
+
+    /*transform: translate3d(0, 0, 0);*/
+
+    /*animation: moveSlideshow 8s linear infinite;*/
+}
+
+.page_tip_image1 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_tcurl.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image2 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_cross.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image3 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_lc.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image4 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_rc.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image5 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_next.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_image6 {
+    display: table-cell;
+
+    height:82px;
+    width:82px;
+    background-image: url('./assets/pic_previous.png');
+    background-size: 82px;
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.page_tip_text {
+    display: table-cell;
+
+    width: 110px;
+    height: 82px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 26px;
+
+    padding-left:10px
+}
+
+
+/*.home_tip{
+    position: absolute;
+    top: 1113px;
+    / *left: 441px;* /
+    width: 100%;
+    height: 35px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font-size: 26px;
+    font: Regular 26px/40px Microsoft JhengHei;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}*/
+
+.home_pageButton {
+    position: absolute;
+
+    top: 997px;
+    left: 308px;
+    width: 468px;
+    height: 81px;
+
+    background: transparent ;
+    opacity: 0.84;
+    border: 3px solid #57B4FB;
+
+    border-radius:60px;
+
+    text-align: center;
+    font-size: 56px;
+    /*font: Regular 74px/81px Microsoft Sans Serif;*/
+    font: Regular 56px/81px Microsoft JhengHei;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.home_pageButton:focus {
+    outline:none
+}
+
+.home_pageButton:focus-within {
+    border: 6px solid #79E0FA;
+}
+
+.class2_col_move {
+    animation: move 2s linear;
+}
+
+
+@keyframes move {
+from {
+    opacity:.2;
+}
+
+to {
+    opacity:1;
+}
+}
+
+.class2_area{
+    position: absolute;
+    top: 302px;
+    left: 0px;
+    width: 1080px;
+    height: 1364px;
+    max-height: 1364px;
+    min-height: 1364px;
+    overflow-y: hidden;
+
+}
+
+.class2_catalog_area{
+    height: 354px;
+    width: 100%;
+    display: flex;
+    margin-bottom: 47px;
+}
+
+.class2_catalog{
+    width:269px;
+}
+
+.class2_catalog_Name1{
+    position: relative;
+
+    left: 94px;
+    top: 89px;
+    height: 160px;
+    width: 112px;
+
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 164px/42px Adventure Subtitles;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-74e0fc);
+    text-align: center;
+    font: normal normal normal 164px/42px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #FBFBFB;
+    opacity: 0.44;
+}
+
+.class2_catalog_Name2{
+    position: relative;
+
+    top: 0px;
+    width: 269px;
+    height: 29px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 30px/var(--unnamed-line-spacing-41) Adventure Subtitles;
+    text-align: center;
+    font: normal normal normal 30px/41px Adventure Subtitles;
+    letter-spacing: 1.86px;
+    color: #FBFBFB;
+    opacity: 0.7;
+}
+
+.class2_catalog_Name3 {
+    position: relative;
+    top: -120px;
+    left: 165px;
+    width: 53px;
+    height: 70px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-74e0fc);
+    text-align: left;
+    font-size: 53px;
+    font: Regular 53px/52px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+}
+
+.class2_course_area {
+    display: flex;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.class2_courseItem {
+
+    width: 630px;
+    height: 354px;
+    min-width: 630px;
+    min-height: 354px;
+    max-width: 630px;
+    max-height: 354px;
+
+    background: #001620 0% 0% no-repeat padding-box;
+    opacity: 1;
+    margin-right: 47px;
+}
+
+.class2_courseWrappImage_area {
+    position: relative;
+
+    display: none;
+    top: -502px;
+    overflow-y: hidden;
+
+    width: 630px;
+    height: 354px;
+    min-width: 630px;
+    min-height: 354px;
+    max-width: 630px;
+    max-height: 354px;
+
+    background: #001620 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.class2_courseWrappImage_border {
+    position: relative;
+
+    left: 157.5px;
+
+    width: 315px;
+    height: 345px;
+    min-width: 315px;
+    min-height: 345px;
+    max-width: 315px;
+    max-height: 345px;
+
+    border-top: 5px #74E0FC solid;
+    border-bottom: 5px #74E0FC solid;
+}
+
+.class2_courseWrapperImage {
+    position: relative;
+    top: -344px;
+    height: 337px;
+    mix-blend-mode:screen;
+}
+
+.class2_courseItem:focus {
+    outline:none
+}
+
+.class2_courseItem:focus-within{
+    /*width: 630px;
+    height: 354px;
+    min-width: 630px;
+    min-height: 354px;
+    max-width: 630px;
+    max-height: 354px;
+
+    background-image: url('./assets/pic_leg_selected.png');
+    opacity: 1;
+    margin-right: 47px;*/
+
+    /*position: absolute;
+    top: 1144px;
+    left: 124px;
+    width: 385px;
+    height: 150px;
+    background-image: url('./assets/pic_leg_selected.png');
+    opacity: 1;*/
+}
+
+.class2_courseImage {
+    margin-top: 49px;
+}
+
+.class2_courseName_wrapper {
+    position: relative;
+    top: -176px;
+    width: 100%;
+    height: 110px;
+
+    background: #000000 0% 0% no-repeat padding-box;
+    opacity: 0.49;
+}
+
+.class2_courseName_title {
+    position: relative;
+    top: -275px;
+    width: 100%;
+
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-74e0fc);
+    text-align: center;
+    font-size: 69px;
+    font: Regular 69px/52px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #d4d4d4;
+    opacity: 1;
+}
+
+.catalog_dotImg{
+    position: absolute;
+    top: 517px;
+    left: 583px;
+    width:53px;
+    height:53px;
+    background-image: url('./assets/pic_dot_2.png');
+    /*border-radius: 50%;
+  background-color: rgb(255, 136, 115);*/
+    box-shadow: inset 0px 1px 0px rgba(0,0,0,.1);
+    /*opacity: 1;*/
+
+    -webkit-animation: led .8s infinite;
+    -moz-animation: led .8s infinite;
+    -ms-animation: led .8s infinite;
+    -o-animation: led .8s infinite;
+    animation: led .8s infinite;
+
+    background-repeat: no-repeat;
+    background-size: 53px 53px;
+    z-index: 10;
+}
+
+@-webkit-keyframes led {
+    from {
+      opacity:.2;
+    }
+
+    to {
+      opacity:1;
+    }
+  }
+
+  @-moz-keyframes led {
+    from {
+      opacity:.2;
+    }
+
+    to {
+      opacity:1;
+    }
+  }
+
+  @-ms-keyframes led {
+    from {
+      opacity:.2;
+    }
+
+    to {
+      opacity:1;
+    }
+  }
+
+  @-o-keyframes led {
+    from {
+      opacity:.2;
+    }
+
+    to {
+      opacity:1;
+    }
+  }
+
+  @keyframes led {
+    from {
+      opacity:.2;
+    }
+
+    to {
+      opacity:1;
+    }
+  }
+
+.catalog_bodyImage{
+    position: absolute;
+    top: 328px;
+    left: 410px;
+    width: 261px;
+    height: 1315px;
+}
+
+.catalog_shoulder {
+    position: absolute;
+    top: 372px;
+    left: 608px;
+    width: 334px;
+    height: 174px;
+    background-image: url('./assets/pic_shoulder.png');
+    opacity: 1;
+}
+
+.catalog_shoulder:focus {
+    outline:none
+}
+
+.catalog_shoulder:focus-within {
+    position: absolute;
+    top: 372px;
+    left: 608px;
+    width: 334px;
+    height: 174px;
+    background-image: url('./assets/pic_shoulder_selected.png');
+    opacity: 1;
+}
+
+.catalog_arm{
+    position: absolute;
+    top: 489px;
+    left: 187px;
+    width: 377px;
+    height: 150px;
+    background-image: url('./assets/pic_arm.png');
+    opacity: 1;
+}
+
+.catalog_arm:focus {
+    outline:none
+}
+
+.catalog_arm:focus-within{
+    position: absolute;
+    top: 489px;
+    left: 187px;
+    width: 377px;
+    height: 150px;
+    background-image: url('./assets/pic_arm_selected.png');
+    opacity: 1;
+}
+
+.catalog_back{
+    position: absolute;
+    top: 636px;
+    left: 645px;
+    width: 319px;
+    height: 150px;
+    background-image: url('./assets/pic_back.png');
+    opacity: 1;
+}
+
+.catalog_back:focus {
+    outline:none
+}
+
+.catalog_back:focus-within{
+    position: absolute;
+    top: 636px;
+    left: 645px;
+    width: 319px;
+    height: 150px;
+    background-image: url('./assets/pic_back_selected.png');
+    opacity: 1;
+}
+
+.catalog_leg{
+    position: absolute;
+    top: 1144px;
+    left: 124px;
+    width: 385px;
+    height: 150px;
+    background-image: url('./assets/pic_leg.png');
+    opacity: 1;
+}
+
+.catalog_leg:focus {
+    outline:none
+}
+
+.catalog_leg:focus-within{
+    position: absolute;
+    top: 1144px;
+    left: 124px;
+    width: 385px;
+    height: 150px;
+    background-image: url('./assets/pic_leg_selected.png');
+    opacity: 1;
+}
+
+.catalog_hip{
+    position: absolute;
+    top: 931px;
+    left: 601px;
+    width: 331px;
+    height: 150px;
+    background-image: url('./assets/pic_hip.png');
+    opacity: 1;
+}
+
+.catalog_hip:focus {
+    outline:none
+}
+
+.catalog_hip:focus-within{
+    position: absolute;
+    top: 931px;
+    left: 601px;
+    width: 331px;
+    height: 150px;
+    background-image: url('./assets/pic_hip_selected.png');
+    opacity: 1;
+}
+
+.catalog_test{
+    top: 372px;
+    left: 677px;
+    width: 82px;
+    height: 150px;
+    background: #74E0FC 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.catalog_pageTitle {
+    position: absolute;
+    top: 685px;
+    left: 324px;
+    width: 432px;
+    height: 96px;
+    text-align: center;
+    font-size: 72px;
+    font: Regular 72px/81px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.catalog_pageTitle2 {
+    position: absolute;
+    top: 805px;
+    left: 103px;
+    width: 874px;
+    height: 62px;
+    text-align: center;
+    font-size: 46px;
+    font: Regular 46px/52px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #93D5FF;
+    opacity: 0.82;
+}
+
+.catalog_pageButton {
+    position: absolute;
+
+    left: 183px;
+    width: 300px;
+    height: 216px;
+    border: 3px solid #57B4FB;
+    opacity: 1;
+
+    background: transparent ;
+    border-radius:44px;
+
+    text-align: center;
+    font-size: 72px;
+    font: Regular 72px/81px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.catalog_pageButton_descript{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    font-size: 30px;
+    font: Regular 30px/39px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+
+    position: relative;
+}
+
+.level_pageTitle {
+    position: absolute;
+    top: 685px;
+    left: 252px;
+    width: 576px;
+    height: 177px;
+    text-align: center;
+    font-size: 72px;
+    font: Regular 72px/81px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.level_pageTitle2 {
+    position: absolute;
+    top: 800px;
+    left: 238px;
+    width: 610px;
+    height: 177px;
+    text-align: center;
+    font-size: 46px;
+    font: Regular 46px/52px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #93D5FF;
+    opacity: 0.82;
+}
+
+.level_pageButton {
+    position: absolute;
+
+    left: 170px;
+    width: 741px;
+    height: 184px;
+
+    background: transparent ;
+    border: 3px solid #57B4FB;
+    border-radius: 44px;
+    opacity: 1;
+
+    text-align: center;
+    font-size: 72px;
+    font: Regular 72px/81px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+
+.level_pageButton_title {
+    position: relative;
+
+    /*top: 975px;
+    left: 482px;*/
+    width: 100%;
+    height: 72px;
+    text-align: center;
+    font-size: 54px;
+    font: Bold 54px/71px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-top: -18px;
+}
+
+.level_pageButton_descript {
+    float: inline-end;
+    position: relative;
+    /*top: 1073px;
+    left: 448px;*/
+    width: 100%;
+    height: 49px;
+    text-align: center;
+    font-size: 37px;
+    font: Regular 37px/63px Segoe UI;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.level_parent {
+    width: 150px;
+    margin: 0 auto;
+}
+
+.level_full {
+    float:left;
+    /*top: 1055px;
+    left: 461px;*/
+    width: 49px;
+    height: 12px;
+    background: #FE59A5 0% 0% no-repeat padding-box;
+    border-radius: 14px;
+    opacity: 1;
+}
+
+.level_no_full {
+    float:left;
+    /*top: 1055px;
+    left: 461px;*/
+    width: 49px;
+    height: 12px;
+    background: #FE59A5 0% 0% no-repeat padding-box;
+    border-radius: 14px;
+    opacity: 0.31;
+}
+
+.classSelect_pageSize{
+    position: absolute;
+
+    top: 274px;
+    left: 96px;
+    width: 889px;
+    height: 1423px;
+
+    z-index: 10;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    /*border-width: 200px;
+    border-color: crimson;*/
+
+}
+
+.classSelect_pageButton {
+
+    height: 419px;
+
+    background-image: url('./assets/class_bg.png');
+
+    /*background: transparent ;
+    border: 3px solid #57B4FB;
+    border-radius: 44px;
+    opacity: 1;
+
+    text-align: center;
+    font-size: 72px;
+    font: Regular 72px/81px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;*/
+    margin-bottom: 71px;
+}
+
+.classSelect_pageButton:focus{
+    outline:none
+}
+
+.classSelect_pageButton:focus-within {
+    /*border: 6px solid #79E0FA;*/
+    background-image: url('./assets/class_bg_selected.png');
+}
+
+.classSelect_pageButton_title {
+    position: relative;
+
+    top: 0px;
+    left: 69px;
+    width: 751px;
+    height: 53px;
+
+    text-align: left;
+    font-size: 76px;
+    font: Regular 76px/76px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+    /*margin-top: 10px;*/
+}
+
+.classSelect_pageButton_line {
+    position: relative;
+
+    top: 49px;
+    left: 69px;
+    width: 751px;
+    height: 20px;
+    border-top: 6px solid #74E0Fc ;
+    border-bottom: 2px solid #74E0Fc ;
+    border-color: #74E0FC;
+}
+
+.classSelect_pageButton_imageSpace {
+    position: relative;
+
+    top: 68px;
+    left: 73px;
+    width: 324px;
+    height: 244px;
+    border: 1px solid #74E0FC;
+    opacity: 1;
+    /*margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;*/
+}
+
+.classSelect_pageButton_dot1 {
+    position: relative;
+
+    top: -167px;
+    left: 410px;
+    width: 40px;
+    height: 40px;
+    background-image: url('./assets/pic_dot.png');
+}
+
+.classSelect_pageMuscle{
+    position: relative;
+    top: -250px;
+    left: 457px;
+    width: 370px;
+    height: 24px;
+    text-align: left;
+    font-size: 30px;
+    font: Regular 30px/31px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+}
+
+.classSelect_pageMuscleData{
+    position: relative;
+    top: -237px;
+    left: 457px;
+    width: 370px;
+    height: 24px;
+    text-align: left;
+    font-size: 35px;
+    font: Regular 35px/35px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+}
+
+.classSelect_pageDescript {
+    position: relative;
+    top: -170px;
+    left: 457px;
+    width: 370px;
+    height: 24px;
+    text-align: left;
+    font-size: 30px;
+    font: Regular 30px/31px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #F7F7F7;
+    opacity: 1;
+    /*position: relative;*/
+}
+
+.classSelect_pageDescriptData {
+    position: relative;
+    top: -146px;
+    left: 457px;
+    width: 370px;
+    height: 24px;
+    text-align: left;
+    font-size: 35px;
+    font: Regular 35px/35px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #F7F7F7;
+    opacity: 1;
+    /*position: relative;*/
+}
+
+.classIntro_ImageSpace {
+    position: absolute;
+
+    top: 184px;
+    left: 150px;
+    width: 780px;
+    height: 440px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classIntro_ClassName {
+    position: absolute;
+
+    top: 654px;
+    width: 100%;
+    height: 67px;
+    text-align: center;
+    font-size: 50px;
+    font: Bold 50px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_ClassDescriptArea {
+    position: absolute;
+
+    top: 758px;
+    left: 151px;
+    width: 779px;
+    height: 102px;
+    background: rgba(255,255,255,0.18) 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 15px;
+}
+
+.classIntro_ClassDescriptData {
+    position: absolute;
+
+    top: 28px;
+    width: 100%;
+    height: 41px;
+    text-align: center;
+    font-size: 28px;
+    font: Bold 28px/37px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_classDataArea {
+    position: absolute;
+
+    top: 885px;
+    left: 160px;
+    width: 100px;
+    height: 101px;
+    text-align: left;
+    letter-spacing: NaNpx;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_classData_1 {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 42px;
+
+    text-align: center;
+
+    font-size: 29px;
+    font: Regular 29px/60px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classIntro_parent {
+    position: absolute;
+    top: 47px;
+    left: 0px;
+    width: 100px;
+    margin: 0 auto;
+}
+
+.classIntro_full {
+    float:left;
+    /*top: 1055px;
+    left: 461px;*/
+    width: 33.3px;
+    height: 12px;
+    background: #FE59A5 0% 0% no-repeat padding-box;
+    border-radius: 14px;
+    opacity: 1;
+}
+
+.classIntro_no_full {
+    float:left;
+    /*top: 1055px;
+    left: 461px;*/
+    width: 33.3px;
+    height: 12px;
+    background: #FE59A5 0% 0% no-repeat padding-box;
+    border-radius: 14px;
+    opacity: 0.31;
+}
+
+.classIntro_classData_2 {
+    position: absolute;
+    top: 64px;
+    left: 0px;
+    width: 100%;
+    height: 37px;
+    text-align: left;
+    font-size: 25px;
+    font: Regular 25px/60px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classIntro_CALData {
+    position: absolute;
+    top: 885px;
+    left: 270px;
+    width: 102px;
+    height: 102px;
+    border-radius: 61px;
+    border: 1px solid #FFFFFF;
+    opacity: 1;
+}
+.classIntro_CAL_Data {
+    position: absolute;
+    top: 900px;
+    left: 292px;
+    width: 58px;
+    height: 74px;
+    text-align: left;
+    letter-spacing: NaNpx;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-top: -7px;
+}
+
+.classIntro_CAL_Data_S1{
+    top: 0px;
+    left: 0px;
+    width: 55px;
+    height: 45px;
+    text-align: left;
+    font-size: 34px;
+    font: Regular 34px/35px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classIntro_CAL_Data_S2{
+    top: 36px;
+    left: 0px;
+    width: 58px;
+    height: 38px;
+    text-align: left;
+    font-size: 29px;
+    font: Regular 29px/35px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classIntro_samePeople {
+    position: absolute;
+
+    top: 919px;
+    right: 148px;
+    width: 100%;
+    height: 42px;
+    text-align: right;
+    font-size: 29px;
+    font: Regular 29px/35px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_StartButton {
+    position: absolute;
+
+    top: 1032px;
+    left: 173px;
+    width: 735px;
+    height: 95px;
+    background: transparent radial-gradient(closest-side at 50% 50%, #25528D 0%, #1CA7F6 100%) 0% 0% no-repeat padding-box;
+    border-radius: 48px;
+
+    text-align: center;
+    font-size: 50px;
+    font: Bold 50px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_drawLine {
+    top: 1172px;
+    left: 150px;
+    width: 785px;
+    height: 30px;
+    border-top: 5px solid white;
+    position: absolute;
+}
+
+.classIntro_coachArea {
+    position: absolute;
+
+    top: 1214px;
+    left: 172px;
+    width: 735px;
+    height: 193px;
+}
+
+.classIntro_coachImageArea {
+    position: absolute;
+
+    width: 193px;
+    height: 193px;
+}
+
+.classIntro_coachDataArea {
+    position: absolute;
+
+    top: 24px;
+    left: 227px;
+    width: 100%;
+    height: 153px;
+}
+
+.classIntro_coachDataTitle {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 78px;
+    height: 57px;
+    text-align: left;
+    font-size: 39px;
+    font: Bold 39px/48px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classIntro_coachDataName {
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    width: 100%;
+    height: 56px;
+    text-align: left;
+    font-size: 43px;
+    font: Bold 43px/48px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classIntro_coachData2 {
+    position: absolute;
+
+    top: 106px;
+    left: 0px;
+    width: 100%;
+    height: 47px;
+    text-align: left;
+    font-size: 32px;
+    font: Regular 32px/35px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_courseStepTitle {
+    position: absolute;
+
+    top: 1462px;
+    left: 205px;
+    width: 132px;
+    height: 44px;
+    text-align: left;
+    font: Bold 33px/36px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_courseStep {
+    position: absolute;
+
+    width: 239px;
+    height: 239px;
+    border-radius: 120px;
+    border: 7px solid #FFFFFF;
+}
+
+.classIntro_courseStepArea {
+    position: absolute;
+
+    top: 70px;
+    left: 77px;
+    width: 74px;
+    height: 113px;
+    text-align: left;
+    letter-spacing: NaNpx;
+    color: #FFFFFF;
+    opacity: unset;
+}
+
+.classIntro_courseStepArea_title {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 74px;
+    height: 54px;
+    text-align: left;
+    font-size: 37px;
+    font: Regular 37px/31px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classIntro_courseStepArea_value {
+    position: absolute;
+
+    top: 45px;
+    left: 0px;
+    width: 72px;
+    height: 37px;
+    text-align: left;
+    font-size: 28px;
+    font: Bold 28px/31px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+
+.classBegin_ClassName {
+    position: absolute;
+
+    top: 213px;
+    /*left: 440px;*/
+    width: 1080px;
+    height: 67px;
+    text-align: center;
+    font: Bold 57px/42px Microsoft Tai Le;
+    font-size: 60px;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+    z-index: 10;
+}
+
+.classBegin_backgroundImg {
+    position: absolute;
+
+    top: 1236px;
+    /*left: -178.67138671875px;*/
+    width: 417px;
+    height: 411px;
+    background: #74E0FC 0% 0% no-repeat padding-box;
+    background: transparent url('./assets/pic_deco1.png') 0% 0% no-repeat padding-box;
+    opacity: 1;
+    z-index: 20;
+}
+
+.chanetransition{
+    position: absolute;
+    top:0px;
+    left:0px;
+    list-style: none;
+    width: 1080px;
+    height: 100%;
+    background-color: #000000;
+    border-radius: 5px;
+    margin: 0 0 20px;
+    letter-spacing: 1px;
+    font-weight: 100%;
+    text-align: center;
+    line-height: 60px;
+    opacity: 0.8;
+    z-index: 100;
+    display:none;
+}
+
+
+.classBegin_StartImg{
+    position: absolute;
+
+    top: 296px;
+    left: 0px;
+    width: 1080px;
+    height: 1080px;
+    /*background: transparent url('./assets/start.png') 0% 0% no-repeat padding-box;*/
+    opacity: 1;
+
+    z-index: 110;
+}
+
+.classBegin_HoldImg{
+    position: absolute;
+
+    top: 800px;
+    left: 66px;
+    width: 933px;
+    height: 249px;
+    background: transparent url('./assets/pic_holdtimebg_2.png') 0% 0% no-repeat padding-box;
+    opacity: 1;
+
+    z-index: 100;
+}
+
+.classBegin_HoldImg_progressBar_base{
+    position: relative;
+
+    top: 10px;
+    left: 37px;
+    width: 597px;
+    height: 0px;
+
+    border: 20px solid #FFFFFF55;
+    /*opacity: 0.33;*/
+    border-radius: 60px;
+}
+
+.classBegin_HoldImg_progressBar_value{
+    width: 500px;
+    height: 0px;
+
+    border: 20px solid #17FF21;
+    border-radius: 60px;
+    margin-top: -20px;
+    margin-left: -20px;
+}
+
+.classBegin_HoldImg_Title{
+    position: relative;
+    top: 65px;
+    left: 756px;
+    width: 110px;
+    font-size: 26px;
+    font: Bold 26px/31px Microsoft New Tai Lue;
+    color :#17FF21;
+    opacity: 1;
+}
+
+.classBegin_HoldImg_value_area{
+    position: relative;
+
+    top: 72px;
+    left: 761px;
+    width: 100px;
+    text-align: center;
+}
+
+.classBegin_HoldImg_Value{
+    position: relative;
+
+    width: 100px;
+    font-size: 60px;
+    font: Bold 60px/65px Microsoft New Tai Lue;
+    color :#17FF21;
+    opacity: 1;
+    display:inline;
+}
+
+.classBegin_HoldImg_Sec{
+    position: relative;
+
+    width: 100px;
+    font-size: 26px;
+    font: Bold 26px/31px Microsoft New Tai Lue;
+    color :#17FF21;
+    opacity: 1;
+    display:inline;
+}
+.classBegin_noticeboard_title{
+    position: relative;
+
+    top: 87px;
+    left: 50px;
+    width: 511px;
+    height: 229px;
+    line-height: 229px;
+    font-size: 63px;
+    font: Bold 63px/73px Microsoft New Tai Lue;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #17FF21;
+    opacity: 1;
+    display: grid;
+    place-content: center;
+}
+
+.classBegin_video{
+    position: absolute;
+    top: 200px;
+    /*left: 215px;*/
+    height: 1450px;
+    mix-blend-mode:screen;
+    /*width:150%;*/
+}
+
+.classBegin_actionTip{
+    position: absolute;
+    top: 813px;
+    left: 179px;
+    width: 800px;
+    height: 226px;
+
+    opacity: 1;
+}
+
+.classBegin_actionTip2{
+    display: inline-block;
+    vertical-align: middle;
+    width: 800px;
+    height: 226px;
+}
+
+.classBegin_actionTip_img{
+    width: 167px;
+    height: 226px;
+    background: transparent url('./assets/pic_deco2.png') 0% 0% no-repeat padding-box;
+    display: table-cell;
+}
+
+.classBegin_actionTip_text{
+    /*display: inline;*/
+    /*vertical-align: middle;
+
+    line-height: 226px;*/
+
+    display: table-cell;
+    /*height: 226px;*/
+    width: 602px;
+    margin: 0 auto;
+    place-content: center;
+    text-align: left;
+    font: Bold 45px/42px Adventure Subtitles;
+    background-color: rgba(0, 0, 0, 0.7);
+    font-size: 45px;
+    letter-spacing: 0px;
+    color: #17FF21;
+    opacity: 1;
+    line-height: 60px;
+    vertical-align: middle;
+}
+
+/*.classBegin_noticeboard{
+    position: absolute;
+
+    top: 1120px;
+    left: 100px;
+    width: 610px;
+    height: 340px;
+    background: transparent url('./assets/noticeboard_2.gif') 0% 0% no-repeat padding-box;
+    opacity: 1;
+}*/
+
+
+.classBegin_noticeboard{
+    position: absolute;
+
+    top: 1120px;
+    left: 100px;
+    width: 610px;
+    height: 340px;
+    background: transparent url('./assets/noticeboard_2.gif') 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+.classBegin_newTimer {
+    position: absolute;
+
+    top: 448px;
+    left: 871px;
+    width: 98px;
+    height: 138px;
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 142px/42px Adventure Subtitles;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 142px/42px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #FAFAFA;
+    opacity: 1;
+}
+
+.classBegin_Timer {
+    position: absolute;
+
+    top: 304px;
+    /*left: 389px;*/
+    width: 1080px;
+    height: 100px;
+    text-align: center;
+    font: Normal 103px/42px Adventure Subtitles;
+    font-size: 103px;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+    z-index: 10;
+}
+
+.classBegin_counter {
+    position: absolute;
+
+    top: 355px;
+    left: 761px;
+    width: 219px;
+    height: 217px;
+    background: transparent url('./assets/pic_timecount_bg.png') 0% 0% no-repeat padding-box;
+
+    opacity: 1;
+    z-index: 5;
+}
+
+.classBegin_CAL_Icon {
+    position: absolute;
+
+    top: 598px;
+    left: 91px;
+    width: 32px;
+    height: 37px;
+    /*background: #FEB028 0% 0% no-repeat padding-box;*/
+    opacity: 1;
+}
+
+.classBegin_CAL_Title {
+    position: absolute;
+
+    top: 609px;
+    left: 129px;
+    width: 38px;
+    height: 28px;
+    text-align: left;
+    font: Regular 22px/66px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classBegin_CAL_Value {
+    position: absolute;
+
+    top: 656px;
+    left: 93px;
+    width: 125px;
+    height: 89px;
+    text-align: left;
+    font: Normal 91px/88px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classBegin_BPM_Icon {
+    position: absolute;
+
+    top: 801px;
+    left: 94px;
+    width: 35px;
+    height: 30px;
+    /*background: #FE59A5 0% 0% no-repeat padding-box;*/
+    opacity: 1;
+}
+
+.classBegin_BPM_Title {
+    position: absolute;
+
+    top: 807px;
+    left: 138px;
+    width: 45px;
+    height: 28px;
+    text-align: left;
+    font: Regular 22px/66px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classBegin_BPM_Value {
+    position: absolute;
+
+    top: 854px;
+    left: 90px;
+    width: 133px;
+    height: 94px;
+    font: Normal 96px/88px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+
+}
+
+.classBegin_REPS_Title {
+    position: absolute;
+
+    top: 470px;
+    left: 820px;
+    width: 50px;
+    height: 29px;
+    text-align: left;
+    font: Regular 23px/68px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classBegin_REPS_Value {
+    position: absolute;
+
+    top: 510px;
+    left: 820px;
+    width: 168px;
+    height: 68px;
+    text-align: left;
+    font: Normal 70px/68px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+}
+
+.classBegin_SET_Title {
+    position: absolute;
+
+    top: 411px;
+    /*left: 848px;
+    width: 46px;*/
+    left: 826px;
+    width: 92px;
+    height: 108px;
+    text-align: left;
+    font-size: 23px;
+    font: Regular 23px/68px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+    z-index: 5;
+}
+
+.classBegin_SET_Value {
+    position: absolute;
+
+    top: 449px;
+    left: 811px;
+    width: 121px;
+    height: 68px;
+    text-align: center;
+    font-size: 70px;
+    font: Normal 70px/68px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #74E0FC;
+
+    z-index: 5;
+}
+
+.classBegin_drawLine {
+    width: 165px;
+    height: 30px;
+    border-top: 5px solid white;
+    position: absolute;
+}
+
+.classBegin_stopCircleProgress{
+    position: absolute;
+    top: 1800px;
+    left: 962px;
+    width: 80px;
+    height: 80px;
+    z-index: 90;
+}
+.classBegin_stopCircleProgress_value{
+    font-size: 26px;
+    font: Normal 26px/68px Adventure Subtitles;
+    letter-spacing: 0px;
+    color:#17FF21;
+}
+
+.classBegin_circleProgress{
+    position: absolute;
+    top: 781px;
+    left: 395px;
+    width: 290px;
+    height: 290px;
+    z-index: 90;
+}
+
+.classBegin_circleProgress_title{
+    font-size: 50px;
+    font: Normal 50px/68px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color:#17FF21;
+}
+.classBegin_circleProgress_value{
+    font-size: 83px;
+    font: Normal 83px/68px Adventure Subtitles;
+    letter-spacing: 0px;
+    color:#17FF21;
+}
+
+.classBegin_circleProgress_sec{
+    font-size: 37px;
+    font: Normal 37px/68px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color:#17FF21;
+}
+
+.classBegin_progressBase_area{
+    position: absolute;
+    top: 1204px;
+    left: 89px;
+    width: 886px;
+    height: 110px;
+    background: #000000 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classBegin_progressBase_textArea{
+    position: absolute;
+    left: 410px;
+    width: 168px;
+    height: 37px;
+    text-align: left;
+    font: Bold 28px/37px Microsoft New Tai Lue;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classBegin_progressBase_colorArea{
+    position: absolute;
+    top: 51px;
+    width: 100%;
+    height: 59px;
+    background: transparent linear-gradient(90deg, #333391 0%, #00A8DE 18%, #009E54 40%, #FDE92B 58%, #FFA617 80%, #E91388 100%, #EB2D2E 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+
+.classBegin_progressBase_marskArea_1{
+    position: absolute;
+    top: 50px;
+    left: 0px;
+    width: 412px;
+    height: 61px;
+    background: #000000 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classBegin_progressBase_marskArea_2{
+    position: absolute;
+    top: 50px;
+    left: 578px;
+    width: 308px;
+    height: 61px;
+    background: #000000 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classBegin_progressBase_colorbarArea {
+    position: absolute;
+    top: 74px;
+    left: 0px;
+    width: 100%;
+    height: 12px;
+    background: transparent linear-gradient(90deg, #333391 0%, #00A8DE 18%, #009E54 40%, #FDE92B 58%, #FFA617 80%, #E91388 100%, #EB2D2E 100%) 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classBegin_progressBase_marskBaseBPMArea {
+    position: absolute;
+    top: 39px;
+    /*top: 1300px;*/
+    left: 400px;
+    width: 190px;
+    height: 83px;
+    border: 12px solid #000000;
+    border-radius:65px;
+    opacity: 1;
+}
+
+.classBegin_progressBase_baseBPMArea {
+    position: absolute;
+
+    top: 51px;
+    /*top: 1300px;*/
+    left: 412px;
+    width: 166px;
+    height: 59px;
+    border: 6px solid #FFFFFF;
+    border-radius:65px;
+    opacity: 1;
+}
+
+.classBegin_progressBase_currentBPMArea {
+    position: absolute;
+    top: 46px;
+    left: 0px;
+    width: 65px;
+    height: 65px;
+    background: #000000 0% 0% no-repeat padding-box;
+    border: 6px solid #FFFFFF;
+    border-radius:65px;
+    opacity: 1;
+}
+
+.classBegin_QuickImage{
+    position: absolute;
+    top: 1721px;
+    left: 70px;
+    width: 136px;
+    height: 136px;
+    background-size: 136px 136px;
+    background-image: url('./assets/pic_cross.png');
+    background-repeat: no-repeat;
+    opacity: 1;
+}
+
+.classBegin_QuickTextArea{
+    position: absolute;
+    top: 1734px;
+    left: 229px;
+    width: 350px;
+    height: 94px;
+    font-size: 37%;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    font-size: 37px;
+}
+
+
+
+.classDone_Title {
+    position: absolute;
+
+    top: 342px;
+    /*left: 197px;*/
+    width: 1080px;
+    height: 136px;
+    text-align: center;
+    font: Bold 66px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1
+}
+
+.classDone_QRCodeTitle {
+
+    position: absolute;
+
+    top: 863px;
+    width: 1080px;
+    height: 49px;
+    text-align: center;
+    font-size: 37px;
+    font: Regular 37px/63px Segoe UI;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_QRCode_base {
+    position: absolute;
+
+    top: 611px;
+    left: 415px;
+    width: 249px;
+    height: 249px;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    opacity: 0.09;
+}
+
+.classDone_QRCode {
+    position: absolute;
+
+    top: 622px;
+    left: 428px;
+    width: 224px;
+    height: 224px;
+    background: transparent url('./assets/Image 15.png') 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classDone_TotalCAL_icon {
+    position: absolute;
+
+    top: 980px;
+    left: 198px;
+    width: 32px;
+    height: 37px;
+    /*background: #FEB028 0% 0% no-repeat padding-box;*/
+    opacity: 1;
+}
+
+.classDone_AverageBPM_icon{
+    position: absolute;
+    top: 980px;
+    left: 450px;
+    width: 35px;
+    height: 30px;
+    /*background: #FE59A5 0% 0% no-repeat padding-box;*/
+    opacity: 1;
+}
+
+.classDone_TotalTime_icon{
+    position: absolute;
+
+    top: 980px;
+    left: 722px;
+    width: 30px;
+    height: 30px;
+    /*background: #00A7FF 0% 0% no-repeat padding-box;*/
+    opacity: 1;
+}
+
+.classDone_TotalCAL_title{
+    position: absolute;
+
+    top: 982px;
+    left: 236px;
+    width: 93px;
+    height: 28px;
+    text-align: left;
+    font-size: 22px;
+    font: Regular 22px/66px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_TotalCAL_value{
+    position: absolute;
+
+    top: 1048px;
+    left: 217px;
+    width: 176px;
+    height: 83px;
+    text-align: left;
+    font-size: 85px;
+    font: Normal 85px/82px Adventure Subtitles;
+    letter-spacing: NaNpx;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_AverageBPM_title{
+    position: absolute;
+
+    top: 982px;
+    left: 494px;
+    width: 130px;
+    height: 28px;
+    text-align: left;
+    font-size: 22px;
+    font: Regular 22px/66px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_AverageBPM_value{
+    position: absolute;
+
+    top: 1043px;
+    left: 485px;
+    width: 135px;
+    height: 87px;
+    text-align: left;
+    font-size: 89px;
+    font: Normal 89px/82px Adventure Subtitles;
+    letter-spacing: NaNpx;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_Counter_Area{
+    position: absolute;
+    top: 495px;
+    left: 404px;
+    width: 280px;
+    height: 278px;
+    background: transparent url('./assets/pic_timescounter_b.png') 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classDone_Counter_Title{
+    position: relative;
+    top: 66px;
+    left: 116px;
+    width: 52px;
+    height: 35px;
+    text-align: left;
+    font-size: 26px;
+    font: Regular 26px/78px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_Counter_value{
+    position: relative;
+    top: 90px;
+    left: 62px;
+    width: 154px;
+    height: 84px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font-size: 86px;
+    font: Normal 86px/68px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #17FF21;
+}
+
+
+
+.classDone_AvgTime_title{
+    position: absolute;
+    top: 803px;
+    left: 150px;
+    width: 328px;
+    height: 54px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font-size: 41px;
+    font: Regular 41px/78px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+}
+
+.classDone_AvglTime_value{
+    position: absolute;
+    top: 880px;
+    /*left: 315px;
+    width: 155px;
+    text-align: left;*/
+    left: 196px;
+    width: 333px;
+    text-align: center;
+
+    height: 114px;
+    letter-spacing: NaNpx;
+    font-size: 109px;
+    font: Normal 109px/83px Adventure Subtitles;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_TotalTime_title{
+    position: absolute;
+
+    /*top: 982px;
+    left: 757px;
+    width: 102px;
+    height: 28px;
+    text-align: left;
+    font-size: 22px;
+    font: Regular 22px/66px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;*/
+    top: 803px;
+    left: 696px;
+    width: 205px;
+    height: 54px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font-size: 41px;
+    font: Regular 41px/78px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #74E0FC;
+    opacity: 1;
+}
+
+.classDone_TotalTime_value{
+    position: absolute;
+
+    /*top: 1043px;
+    left: 722px;
+    width: 161px;
+    height: 88px;*/
+    top: 880px;
+    left: 601px;
+    width: 333px;
+    height: 114px;
+    font-size: 109px;
+    font: Normal 109px/83px Adventure Subtitles;
+
+    text-align: center;
+    letter-spacing: NaNpx;
+    /*font-size: 90px;
+    font: Normal 90px/83px Adventure Subtitles;*/
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_qrcode_area{
+    position: absolute;
+
+    top: 1021px;
+    left: 0px;
+    width: 1080px;
+    height: 286px;
+
+    background: var(--unnamed-color-74e0fc) 0% 0% no-repeat padding-box;
+    background: #74E0FC 0% 0% no-repeat padding-box;
+    border: 1px solid #707070;
+    border-radius: 143px;
+    opacity: 0.23;
+
+    /*background: #000000 0% 0% no-repeat padding-box;*/
+    /*background: transparent url('./assets/Rectangle 102.png') 0% 0% no-repeat padding-box;*/
+    /*border: 1px solid #707070;
+    border-radius: 143px;
+    opacity: 0.23;*/
+}
+
+.classDone_newCountArea {
+    position: absolute;
+
+    top:505px;
+    width:1080px;
+}
+
+.classDone_innerArea{
+    display: table;
+    margin: 0 auto;
+}
+
+.classDone_inner2Area{
+    display: flex;
+}
+
+.classDone_newNumberFons{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 143px/95px Adventure Subtitles;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: center;
+    font: normal normal normal 143px/95px Adventure Subtitles;
+    letter-spacing: 0px;
+    color: #17FF21;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.classDone_Star {
+    color: #74E0FC;
+    font-size: 55px;
+    margin: 0 auto 20px 40%;
+}
+
+.classDone_newFons {
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 53px/108px var(--unnamed-font-family-microsoft-sans-serif);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 53px/108px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_newFons2{
+    font: var(--unnamed-font-style-normal) normal var(--unnamed-font-weight-normal) 53px/108px var(--unnamed-font-family-microsoft-sans-serif);
+    letter-spacing: var(--unnamed-character-spacing-0);
+    text-align: left;
+    font: normal normal normal 108px/108px Microsoft Sans Serif;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+    margin-right: 20px;
+}
+
+.classDone_qrcode_title{
+    position: absolute;
+    top: 1044px;
+    left: 397px;
+    width: 287px;
+    height: 35px;
+    letter-spacing: var(--unnamed-character-spacing-0);
+    color: var(--unnamed-color-ffffff);
+    text-align: center;
+    font: Bold 26px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_qrcode_value{
+    position: absolute;
+    top: 1092px;
+    left: 449px;
+    width: 183px;
+    height: 183px;
+    background: transparent url('./assets/MOVE_QRCode.png') 0% 0% no-repeat padding-box;
+    opacity: 1;
+}
+
+.classDone_okButton {
+    position: absolute;
+    top: 1348px;
+    left: 173px;
+    width: 735px;
+    height: 95px;
+    background: transparent;
+    /*background: transparent radial-gradient(closest-side at 50% 50%, #25528D 0%, #1CA7F6 100%) 0% 0% no-repeat padding-box;*/
+    border-radius: 48px;
+    border: 3px solid #57B4FB;
+
+    text-align: center;
+    font: Bold 50px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;
+}
+
+.classDone_okButton:focus{
+    outline: none;
+}
+
+.classDone_okButton:focus-within{
+    border: 6px solid #79E0FA;
+}
+
+.classDone_endButton {
+    position: absolute;
+
+    /*top: 1482px;
+    left: 173px;
+    width: 735px;
+    height: 95px;
+    background: transparent radial-gradient(closest-side at 50% 50%, #F15A24 0%, #6A5EA9 100%) 0% 0% no-repeat padding-box;
+    border-radius: 48px;
+
+    text-align: center;
+    font: Bold 50px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+    opacity: 1;*/
+    top: 1488px;
+    left: 173px;
+    width: 735px;
+    height: 95px;
+    border: 3px solid #57B4FB;
+    background: transparent;
+    /*background: #17FF21 0% 0% no-repeat padding-box;*/
+    border-radius: 48px;
+
+    text-align: center;
+    font: Bold 50px/42px Microsoft Tai Le;
+    letter-spacing: 0px;
+    color: #FFFFFF;
+
+    opacity: 1;
+}
+
+
+.classDone_endButton:focus{
+    outline: none;
+}
+
+.classDone_endButton:focus-within{
+    border: 6px solid #79E0FA;
+}
+
+.classDone_drawLine {
+    width: 30px;
+    height: 165px;
+    border-left: 5px solid white;
+    position: absolute;
+}
