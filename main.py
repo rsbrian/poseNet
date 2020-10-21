@@ -4,6 +4,7 @@
 import cv2
 import json
 import time
+import copy
 import posenet
 import datetime
 import argparse
@@ -18,12 +19,14 @@ from websocket_server import WebsocketServer
 
 import pickle
 
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
+parser.add_argument('--save', type=int, default=1)
+parser.add_argument('--cam_id', type=int, default=0)
+parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
-parser.add_argument('--socket', type=int, default=1)
-parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--cam_width', type=int, default=540)
 parser.add_argument('--cam_height', type=int, default=960)
 parser.add_argument('--scale_factor', type=float, default=0.7125)
@@ -36,33 +39,35 @@ print("Num of GPUs", physical_devices)
 if len(physical_devices):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-camera = Camera(args)
+video_name = "output1.avi"
+saved_names = ["output1.avi", "output2.avi"]
+camera = Camera(args, video_name, saved_names)
 control = Controller(args)
 third_party = ThirdParty()
-
-video_name = "videos/behavior.MOV"
-cap = cv2.VideoCapture(0)
 
 
 def main():
     with tf.Session() as sess:
         global server
         third_party.load_model(args.model, sess)
-        while True:
-            res, img = cap.read()
+        while (camera.isOpened()):
+            res, img = camera.read()
             if not res:
                 print("Camera Failed")
                 break
 
             img = camera.preprocessing(img)
-
             img, multi_points = camera.get_multi_skeleton_from(
                 img, third_party)
             img, points, face = camera.multi_person_filter(img, multi_points)
+            control.loading(face)
 
-            control.update_model(img, points)
+            origin_img = camera.get_original_img()
+            camera.save(origin_img, "output1")
 
-            control.test_loading(face)
+            if control.update_model(points):
+                camera.save(img, "output2")
+                control.draw_by_points(img)
 
             course = control.choose_course()
             api = course().get_api()
@@ -77,8 +82,8 @@ def main():
         # pickle.dump(points, pickle_out)
         # pickle_out.close()
 
+        camera.release()
         control.destroy()
-        cap.release()
 
 
 def new_client(client, server):

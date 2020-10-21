@@ -1,5 +1,6 @@
 import cv2
 import json
+import copy
 import posenet
 import numpy as np
 
@@ -19,7 +20,7 @@ class Controller(object):
             self.args.cam_height,
             self.args.rotate)
 
-    def test_loading(self, face):
+    def loading(self, face):
         self.brain.face = face
 
     def update_view(self, width, height, rotate):
@@ -27,12 +28,13 @@ class Controller(object):
         self.view.height = height
         self.view.rotate = rotate
 
-    def update_model(self, img, points):
+    def update_model(self, points):
         if points != []:
             angles = self.calculate_angles(points)
             if not self.is_angles_none(angles):
                 self.brain.reset_state(points, angles)
-                self.draw_by_points(img)
+                return True
+        return False
 
     def update_server(self, api):
         self.my_server.set_api(api)
