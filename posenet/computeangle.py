@@ -55,10 +55,15 @@ def calculateangle_all_body(keypoints):
         keypoints[11], keypoints[8])
     right_knee_startpoint, right_knee_angle = startpoint_twovector(
         keypoints[8], keypoints[9])
-    startpoint_and_angle = np.array([[left_shoulder_startpoint, left_shoulder_angle], [left_elbow_startpoint, left_elbow_angle], [
-                                    right_shoulder_startpoint, right_shoulder_angle], [right_elbow_startpoint, right_elbow_angle],
-        [left_hip_startpoint, left_hip_angle], [left_knee_startpoint, left_knee_angle], [
-        right_hip_startpoint, right_hip_angle], [right_knee_startpoint, right_knee_angle]])
+    startpoint_and_angle = np.array([
+        [left_shoulder_startpoint, left_shoulder_angle],
+        [left_elbow_startpoint, left_elbow_angle],
+        [right_shoulder_startpoint, right_shoulder_angle],
+        [right_elbow_startpoint, right_elbow_angle],
+        [left_hip_startpoint, left_hip_angle],
+        [left_knee_startpoint, left_knee_angle],
+        [right_hip_startpoint, right_hip_angle],
+        [right_knee_startpoint, right_knee_angle]])
     return startpoint_and_angle
 
 
@@ -115,6 +120,7 @@ def startpoint_twovector(line1, line2):
         degree = round(np.degrees(angle))
         return startpoint, degree
     except Exception as e:
+        raise e
         return None, None
 
 

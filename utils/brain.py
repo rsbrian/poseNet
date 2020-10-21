@@ -6,16 +6,11 @@ class Brain(object):
     def __init__(self):
         self.human = Human()
 
-        self.test_points = []
-
         self.stored_points = []
         self.stored_angles = []
 
         self.count_next = 0
         self.count_back = 0
-
-    def get_test_points(self):
-        return self.test_points
 
     def get_points(self, name):
         return self.human.points[name]
@@ -27,15 +22,14 @@ class Brain(object):
         self.human.points = points
         self.human.angles = angles
 
-        self.stored_points.append(copy.deepcopy(self.human.points))
-        self.stored_angles.append(copy.deepcopy(self.human.angles))
+        # self.stored_points.append(copy.deepcopy(self.human.points))
+        # self.stored_angles.append(copy.deepcopy(self.human.angles))
 
-        if len(self.stored_points) > 8:
-            self.stored_points = self.stored_points[1:]
-            self.stored_angles = self.stored_angles[1:]
-            self.median_filter(self.stored_points, self.human.points)
-            self.median_filter(self.stored_angles, self.human.angles)
-            self.test_points = copy.deepcopy(self.human.points)
+        # if len(self.stored_points) > 8:
+        #     self.stored_points = self.stored_points[1:]
+        #     self.stored_angles = self.stored_angles[1:]
+        #     self.median_filter(self.stored_points, self.human.points)
+        #     self.median_filter(self.stored_angles, self.human.angles)
 
     def median_filter(self, listed_points, new_list):
         median = len(listed_points) // 2
@@ -84,11 +78,6 @@ class Brain(object):
 
     def pose_template(self):
         return {
-            "click": self._click,
-            "cancel": self._cancel,
-            "next": self._next,
-            "back": self._back,
-
             "prepare_action": self.prepare_action,
             "shoulder_width_apart": self.shoulder_width_apart,
             "drop_hand_natrually": self.drop_hand_natrually,
@@ -134,32 +123,6 @@ class Brain(object):
             "ending_downleft": self.ending_downleft,
             "ending_downright": self.ending_downright
         }
-
-    def _click(self):
-        c1 = self.human.angles["left_elbow_angle"] < 30
-        c2 = self.human.angles["right_elbow_angle"] < 30
-        c3 = self.hands_down()
-        return (c1 and c2) or c3
-
-    def _cancel(self):
-        c1 = self.abs_compare("left_wrist_x", "right_wrist_x", "<", 50)
-        c2 = self.human.angles["left_elbow_angle"] < 45
-        c3 = self.human.angles["right_elbow_angle"] < 45
-        return c1 and c2 and c3
-
-    def _next(self):
-        if self.human.points["right_wrist_y"] < (self.human.points["right_shoulder_y"] + 30):
-            self.count_next += 1
-        else:
-            self.count_next = 0
-        return self.count_next > 3
-
-    def _back(self):
-        if self.human.points["left_wrist_y"] < (self.human.points["left_shoulder_y"] + 30):
-            self.count_back += 1
-        else:
-            self.count_back = 0
-        return self.count_back > 3
 
     def prepare_action(self):  # 與預備動作差異太大
         return self.abs_compare("left_shoulder_x", "left_shoulder_x_temp", ">", 30) or \
@@ -218,9 +181,9 @@ class Brain(object):
     def raised_with_one_hand(self):  # 持啞鈴手舉起並貼緊耳朵
         return self.human.angles["right_shoulder_angle"] < 120 and \
             self.human.angles["left_shoulder_angle"] < 120
-    
-    def raised_with_one_hand_simple(self): 
-        return self.noabs_compare("left_wrist_y", "left_shoulder_y", ">", -50)  and \
+
+    def raised_with_one_hand_simple(self):
+        return self.noabs_compare("left_wrist_y", "left_shoulder_y", ">", -50) and \
             self.noabs_compare("right_wrist_y", "right_shoulder_y", ">", -50)
 
     def hold_dumbbells_on_chest(self):  # 持啞鈴於胸口

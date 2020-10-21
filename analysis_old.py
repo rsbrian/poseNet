@@ -60,6 +60,48 @@ class Template(object):
         return pos, neg
 
 
+class NoAction(Template):
+    def __init__(self, tool):
+        super().__init__(tool)
+        self.weight = 0.8
+
+    def render_state(self, data):
+        moved_thres = abs(self.tool.thres) * self.weight
+        left_gradient, right_gradient, left_y, right_y = self.cut_interval()
+        if (left_gradient + right_gradient) == 0:
+            return self.behavior
+        proportion = abs(left_gradient) / \
+            (abs(left_gradient) + abs(right_gradient))
+
+        left_distance, right_distance = data[0][2], data[1][2]
+
+        left_gradient_x = [f[0][0] for f in self.features]
+        right_gradient_x = [f[1][0] for f in self.features]
+        left_gradient_x = self.calcGradient(left_gradient_x)
+        right_gradient_x = self.calcGradient(right_gradient_x)
+
+        left_wrist_elbow = [f[0][4] for f in self.features]
+        right_wrist_elbow = [f[1][4] for f in self.features]
+        left_wrist_elbow = self.calcGradient(left_wrist_elbow)
+        right_wrist_elbow = self.calcGradient(right_wrist_elbow)
+
+        self.tool.set_moved_points(left_gradient, right_gradient)
+        left_hand_moved = left_wrist_elbow < self.tool.thres
+        right_hand_moved = right_wrist_elbow < self.tool.thres
+
+        if left_hand_moved or right_hand_moved:
+            diff = abs(left_wrist_elbow) - abs(right_wrist_elbow)
+            if diff > moved_thres:
+                self.tool.change(LeftHandsUp(self.tool, left_distance))
+            elif diff < (-moved_thres):
+                self.tool.change(RightHandsUp(self.tool, right_distance))
+            else:
+                self.tool.change(BothHandsUp(
+                    self.tool, right_distance, left_distance, self.features))
+
+        return self.behavior
+
+
 class RightHandsUp(Template):
     def __init__(self, tool, right_distance):
         super().__init__(tool)
@@ -91,7 +133,6 @@ class RightHandsUp(Template):
         else:
             return "向右選取"
 
-
 class LeftHandsUp(Template):
     def __init__(self, tool, left_distance):
         super().__init__(tool)
@@ -122,7 +163,6 @@ class LeftHandsUp(Template):
             return "向左選取"
         else:
             return "向右選取"
-
 
 class BothHandsUp(Template):
     def __init__(self, tool, right_distance, left_distance, past_features):
@@ -169,31 +209,39 @@ class BothHandsUp(Template):
             return "雙手彎舉"
 
 
-class NoAction(Template):
-    def __init__(self, tool):
-        super().__init__(tool)
-        self.weight = 0.8
-
-    def render_state(self, data):
-        return self.behavior
-
-
 class Analysis(object):
-    def __init__(self, brain):
-        self.temp = None
-        self.brain = brain
+    def __init__(self):
+        self.temp = []
+        self.state = NoAction(self)
+        self.dynamic_thres_by_camera = None
+        self.left_wrist_elbow = None
+        self.right_wrist_elbow = None
+        self.thres = -90
 
-    def predict(self):
-        face = self.brain.face
-        points = self.brain.human.points
-        if self.temp is None:
-            self.temp = points.copy()
+    def both_hand_move(self):
+        print(self.left_wrist_elbow, self.right_wrist_elbow)
+        param = 30
+        return self.left_wrist_elbow > param or self.right_wrist_elbow > param
+
+    def set_moved_points(self, left_wrist_elbow, right_wrist_elbow):
+        self.left_wrist_elbow = left_wrist_elbow
+        self.right_wrist_elbow = right_wrist_elbow
+
+    def load_data(self, data):
+        self.data = data
+
+    def change(self, state):
+        self.state = state
+
+    def predict(self, points, face):
+        if len(self.temp) == 0 or len(points) == 0 or face[0] is None:
+            self.temp = copy.deepcopy(points)
             return ""
-        # name = self.state.__class__.__name__
-        # if (name != "NoAction"):
-        #     print(name)
-        # behavior = self.state.analyze(points)
-        return ""
+        name = self.state.__class__.__name__
+        if (name != "NoAction"):
+            print(name)
+        self.calcPast(points, face)
+        return self.state.analyze()
 
     def calcPast(self, points, face):
         left_wrist_x_temp = self.temp["left_wrist_x"]
@@ -203,6 +251,7 @@ class Analysis(object):
 
         left_elbow_y = points["left_elbow_y"]
         right_elbow_y = points["right_elbow_y"]
+
         left_wrist_x = points["left_wrist_x"]
         right_wrist_x = points["right_wrist_x"]
         left_wrist_y = points["left_wrist_y"]

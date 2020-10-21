@@ -7,7 +7,6 @@ class Camera(object):
     def __init__(self, args, video_name, saved_names):
         self.args = args
         self.outs = {}
-        self.original_img = None
 
         if self.args.cam_id != -1:
             self.cap = cv2.VideoCapture(self.args.cam_id)
@@ -40,9 +39,6 @@ class Camera(object):
                 out.release()
         self.cap.release()
 
-    def get_original_img(self):
-        return self.original_img
-
     def preprocessing(self, img):
         h, w, c = img.shape
 
@@ -52,7 +48,6 @@ class Camera(object):
             #     img[:, :, c] = cv2.equalizeHist(img[:, :, c])
 
         img = cv2.resize(img, (self.args.cam_width, self.args.cam_height))
-        self.original_img = img.copy()
         return img
 
     def get_multi_skeleton_from(self, img, third_party):
@@ -62,25 +57,21 @@ class Camera(object):
         result = []
         minmimum = np.inf
         center = self.args.cam_width // 2
-        (x, y, r) = (None, None, None)
+        (rx, ry, rr) = (None, None, None)
         for i in range(len(points)):
-            face_points = points[i][1]
+            face_points = points[i][1].copy()
 
-            x = np.mean([point[0] for point in face_points])
-            y = np.mean([point[1] for point in face_points])
-            r = np.mean([point[2] for point in face_points])
-
-            try:
-                cv2.circle(img, (int(x), int(y)), int(r), (255, 255, 0), -1)
+            if len(face_points) > 0:
+                x = np.mean([point[0] for point in face_points])
+                y = np.mean([point[1] for point in face_points])
+                r = np.mean([point[2] for point in face_points])
+                cv2.circle(img, (int(x), int(y)), int(r), (150, 150, 0), -1)
                 diff = abs(x - center)
                 if diff < minmimum:
                     result = points[i][0].copy()
-                    x = np.mean([point[0] for point in points[i][1]])
-                    y = np.mean([point[1] for point in points[i][1]])
-                    r = np.mean([point[2] for point in points[i][1]])
+                    rx, ry, rr = x, y, r
+                    cv2.circle(img, (int(rx), int(ry)),
+                               int(rr), (255, 255, 0), -1)
                     minmimum = diff
 
-            except Exception as e:
-                print(x, y, r, e)
-
-        return img, result, (x, y, r)
+        return img, result, (rx, ry, rr)

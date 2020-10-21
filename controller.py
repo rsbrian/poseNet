@@ -29,12 +29,14 @@ class Controller(object):
         self.view.rotate = rotate
 
     def update_model(self, points):
-        if points != []:
-            angles = self.calculate_angles(points)
-            if not self.is_angles_none(angles):
-                self.brain.reset_state(points, angles)
-                return True
-        return False
+        if len(points) == 0:
+            return False
+        angles = self.calculate_angles(points)
+        # if not self.is_angles_none(angles):
+        # TODO: KALMAN FILTER
+        # points = add_kalman_filter(points)
+        self.brain.reset_state(points, angles)
+        return True
 
     def update_server(self, api):
         self.my_server.set_api(api)

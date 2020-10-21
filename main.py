@@ -23,7 +23,7 @@ import pickle
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=1)
-parser.add_argument('--cam_id', type=int, default=2)
+parser.add_argument('--cam_id', type=int, default=-1)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
@@ -57,23 +57,26 @@ def main():
                 break
 
             img = camera.preprocessing(img)
+            original_img = img.copy()
+
             img, multi_points = camera.get_multi_skeleton_from(
                 img, third_party)
             img, points, face = camera.multi_person_filter(img, multi_points)
             control.loading(face)
 
-            origin_img = camera.get_original_img()
-            camera.save(origin_img, "all")
+            camera.save(original_img, "all")
 
             if control.update_model(points):
-                camera.save(img, "only_in_box")
+                camera.save(original_img, "only_in_box")
                 control.draw_by_points(img)
 
-            course = control.choose_course()
-            api = course().get_api()
-            control.send(server, api)
+                # course = control.choose_course()
+                # course()
+                # api = course().get_api()
+                # control.send(server, api)
 
             control.show(img)
+            # cv2.imshow("show", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
