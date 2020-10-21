@@ -39,8 +39,8 @@ print("Num of GPUs", physical_devices)
 if len(physical_devices):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-video_name = "output1.avi"
-saved_names = ["output1.avi", "output2.avi"]
+video_name = "all.avi"
+saved_names = ["all.avi", "only_in_box.avi"]
 camera = Camera(args, video_name, saved_names)
 control = Controller(args)
 third_party = ThirdParty()
@@ -63,10 +63,10 @@ def main():
             control.loading(face)
 
             origin_img = camera.get_original_img()
-            camera.save(origin_img, "output1")
+            camera.save(origin_img, "all")
 
             if control.update_model(points):
-                camera.save(img, "output2")
+                camera.save(img, "only_in_box")
                 control.draw_by_points(img)
 
             course = control.choose_course()
