@@ -1,7 +1,7 @@
 from operator import getitem
 from functools import reduce
 from api.socket import Api
-from analysis import Analysis
+from behavior.analysis import Analysis
 import datetime
 import time
 

@@ -1,4 +1,5 @@
 import copy
+import numpy as np
 from api.human import Human
 
 
@@ -22,14 +23,25 @@ class Brain(object):
         self.human.points = points
         self.human.angles = angles
 
-        # self.stored_points.append(copy.deepcopy(self.human.points))
-        # self.stored_angles.append(copy.deepcopy(self.human.angles))
+    def add_filter(self, kalman):
+        x = self.human.points["right_wrist_x"]
+        y = self.human.points["right_wrist_y"]
+        current_position = np.array([[np.float32(x)], [np.float32(y)]])
+        kalman.correct(current_position)
+        current_prediction = kalman.predict()
+        px, py = current_prediction[0], current_prediction[1]
+        self.human.points["right_wrist_x"] = px
+        self.human.points["right_wrist_y"] = py
 
-        # if len(self.stored_points) > 8:
-        #     self.stored_points = self.stored_points[1:]
-        #     self.stored_angles = self.stored_angles[1:]
-        #     self.median_filter(self.stored_points, self.human.points)
-        #     self.median_filter(self.stored_angles, self.human.angles)
+    def add_median_filter(self):
+        self.stored_points.append(copy.deepcopy(self.human.points))
+        self.stored_angles.append(copy.deepcopy(self.human.angles))
+
+        if len(self.stored_points) > 8:
+            self.stored_points = self.stored_points[1:]
+            self.stored_angles = self.stored_angles[1:]
+            self.median_filter(self.stored_points, self.human.points)
+            self.median_filter(self.stored_angles, self.human.angles)
 
     def median_filter(self, listed_points, new_list):
         median = len(listed_points) // 2

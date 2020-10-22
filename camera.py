@@ -53,7 +53,7 @@ class Camera(object):
     def get_multi_skeleton_from(self, img, third_party):
         return third_party.get_multi_skeleton(img, self.args)
 
-    def multi_person_filter(self, img, points):
+    def one_person_filter(self, img, points):
         result = []
         minmimum = np.inf
         center = self.args.cam_width // 2

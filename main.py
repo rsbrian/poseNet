@@ -61,20 +61,22 @@ def main():
 
             img, multi_points = camera.get_multi_skeleton_from(
                 img, third_party)
-            img, points, face = camera.multi_person_filter(img, multi_points)
+            img, points, face = camera.one_person_filter(img, multi_points)
             control.loading(face)
-
             camera.save(original_img, "all")
 
             if control.update_model(points):
                 camera.save(original_img, "only_in_box")
-                control.draw_by_points(img)
+                control.draw_by_points(img, (200, 200, 0))
 
-                # course = control.choose_course()
-                # course()
+                course = control.choose_course()
+                course()
+                circle = course.get_circle()
+                control.view.draw_circle(img, circle)
                 # api = course().get_api()
                 # control.send(server, api)
 
+            time.sleep(0.02)
             control.show(img)
             # cv2.imshow("show", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):

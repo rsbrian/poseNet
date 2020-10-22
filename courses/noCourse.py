@@ -1,5 +1,5 @@
 from api.socket import Api
-from analysis import Analysis
+from behavior.analysis import Analysis
 
 
 class NoCourse(object):
@@ -23,3 +23,6 @@ class NoCourse(object):
 
     def set_api(self, column_name, behavior_name):
         self.api.behavior[column_name] = behavior_name
+
+    def get_circle(self):
+        return self.analysis.get_circle()

@@ -7,6 +7,7 @@ import numpy as np
 from utils.view import View
 from utils.brain import Brain
 from utils.server import Server
+from utils.kalman import Kalman
 
 
 class Controller(object):
@@ -15,6 +16,7 @@ class Controller(object):
         self.brain = Brain()
         self.view = View(self.brain)
         self.my_server = Server()
+        self.kalman = Kalman()
         self.update_view(
             self.args.cam_width,
             self.args.cam_height,
@@ -33,9 +35,9 @@ class Controller(object):
             return False
         angles = self.calculate_angles(points)
         # if not self.is_angles_none(angles):
-        # TODO: KALMAN FILTER
-        # points = add_kalman_filter(points)
+        # TODO: KALMAN FILTER # Not good
         self.brain.reset_state(points, angles)
+        self.brain.add_median_filter()
         return True
 
     def update_server(self, api):
@@ -85,7 +87,7 @@ class Controller(object):
     def calculate_angles(self, points):
         return posenet.computeangle.calculateangle_all_body(points)
 
-    def draw_by_points(self, img):
+    def draw_by_points(self, img, clr):
         new_points = [np.zeros((2, 2), dtype="int32") for i in range(12)]
         new_points[0][0][0] = self.brain.human.points["left_hip_x"]
         new_points[0][0][1] = self.brain.human.points["left_hip_y"]
@@ -147,4 +149,4 @@ class Controller(object):
         new_points[10][1][0] = self.brain.human.points["right_shoulder_x"]
         new_points[10][1][1] = self.brain.human.points["right_shoulder_y"]
 
-        self.draw_skeleton(img, new_points, (200, 200, 0), 5)
+        self.draw_skeleton(img, new_points, clr, 5)

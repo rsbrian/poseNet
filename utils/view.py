@@ -77,6 +77,10 @@ class View(object):
             img, points,
             isClosed=False, color=clr, thickness=thickness)
 
+    def draw_circle(self, img, circle):
+        x, y, r, clr, t = circle
+        cv2.circle(img, (int(x), int(y)), r, clr, thickness=t)
+
     def show(self, image):
         x1, x2, y1, y2 = self.setting_calibrate_box()
         cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 3)

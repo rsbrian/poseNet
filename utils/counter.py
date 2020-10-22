@@ -23,4 +23,5 @@ class Counter(object):
         self.start()
 
     def result(self):
+        self.end_time = time.time()
         return round(self.end_time - self.start_time, 2)
