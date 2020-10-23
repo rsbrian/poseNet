@@ -70,9 +70,7 @@ def main():
                 control.draw_by_points(img, (200, 200, 0))
 
                 course = control.choose_course()
-                course()
-                circle = course.get_circle()
-                control.view.draw_circle(img, circle)
+                course(img)
                 # api = course().get_api()
                 # control.send(server, api)
 

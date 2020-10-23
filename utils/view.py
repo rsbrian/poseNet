@@ -81,6 +81,11 @@ class View(object):
         x, y, r, clr, t = circle
         cv2.circle(img, (int(x), int(y)), r, clr, thickness=t)
 
+    def draw_line(self, img, line):
+        h, w, c = img.shape
+        y, clr, t = line
+        cv2.line(img, (0, int(y)), (w, int(y)), clr, t)
+
     def show(self, image):
         x1, x2, y1, y2 = self.setting_calibrate_box()
         cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 3)

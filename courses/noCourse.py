@@ -9,9 +9,9 @@ class NoCourse(object):
         self.view = view
         self.analysis = Analysis(self.brain)
 
-    def __call__(self):
+    def __call__(self, img):
         if self.is_body_in_box():
-            behavior = self.analysis.predict()
+            behavior = self.analysis.predict(img)
             self.set_api("最後動作", behavior)
         return self
 
@@ -23,6 +23,3 @@ class NoCourse(object):
 
     def set_api(self, column_name, behavior_name):
         self.api.behavior[column_name] = behavior_name
-
-    def get_circle(self):
-        return self.analysis.get_circle()
