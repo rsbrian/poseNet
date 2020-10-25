@@ -15,23 +15,31 @@ class Open(Test):
         print("Open")
         self.append(points, face)
 
-        if not self.move(points):
-            self.counter.start()
-            if self.counter.result() > self.time:
-                temp = self.cut_start_history()
-                if temp != {}:  # temp 的第一個值就是起點 -> 畫出來應該會在中間
-                    x = temp["right_wrist_x"][0]
-                    y = temp["right_wrist_y"][0]
-                    cv2.circle(img, (int(x), int(y)), 3, (0, 200, 200), -1)
-                    if not self.is_point_in_thres(img, points, face):
-                        print("Calculate Angles")
-                        angles = self.predict_by_angles(temp)
-                        print(angles)
-                        self.history = {}
-                    # else:
-                    #     print("Calculate dx and dy")
-                    #     self.predict_by_gradients(temp)
-                    #     self.history = {}
+        if self.is_point_in_thres(img, points, face):
+            # if not self.move(points):
+            #     self.counter.start()
+            #     self.center_x.append(points["right_wrist_x"])
+            #     self.center_y.append(points["right_wrist_y"])
+            #     if len(self.center_x) > 3:
+            #         self.center_x = self.center_x[1:]
+            #         self.center_y = self.center_y[1:]
+            #     if self.counter.result() > self.time:
+            #         self.center = (
+            #             np.mean(self.center_x),
+            #             np.mean(self.center_y),
+            #         )
+            #         x, y = self.center
+            #         cv2.circle(img, (int(x), int(y)), 3, (0, 200, 200), 3)
+            # else:
+            self.counter.reset()
+            self.center_x = []
+            self.center_y = []
+            if self.center == ():
+                self.history = self.cut_start_history()
+                print(self.history)
+                x = self.history["right_wrist_x"][0]
+                y = self.history["right_wrist_y"][0]
+                cv2.circle(img, (int(x), int(y)), 3, (0, 0, 200), 3)
 
         if self.is_drop_the_hands(points):
             self.analysis.change(Close(self.analysis))
@@ -92,4 +100,46 @@ else:
     self.center_x = []
     self.center_y = []
     self.counter.reset()
+
+
+        if self.center == ():
+            if not self.move(points):
+                self.counter.start()
+                self.center_x.append(points["right_wrist_x"])
+                self.center_y.append(points["right_wrist_y"])
+                if self.counter.result() > self.time:
+                    temp = self.cut_start_history()
+                    if temp != {}:  # temp 的第一個值就是起點 -> 畫出來應該會在中間
+                        x = temp["right_wrist_x"][0]
+                        y = temp["right_wrist_y"][0]
+                        cv2.circle(img, (int(x), int(y)), 3, (0, 200, 200), -1)
+                        if not self.is_point_in_thres(img, points, face):
+                            print("Calculate Angles")
+                            angles = self.predict_by_angles(temp)
+                            print(angles)
+                            self.history = {}
+                        else:
+                            print("Calculate dx and dy")
+                            predict = self.predict_by_gradients(temp)
+                            if predict == "":
+                                self.history = {}
+                                self.center = (
+                                    np.mean(self.center_x),
+                                    np.mean(self.center_y),
+                                )
+                                self.center_x = []
+                                self.center_y = []
+                            else:
+                                print(predict)
+        else:
+            x, y = self.center
+            cv2.circle(img, (int(x), int(y)), 3, (0, 200, 200), 3)
+            if not self.move(points):
+                print(len(self.history["right_wrist_x"]))
+                self.center = ()
+                self.center_x = []
+                self.center_y = []
+                self.history = {}
+
+
 """

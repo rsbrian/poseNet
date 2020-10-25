@@ -8,7 +8,7 @@ class Test(object):
         self.analysis = analysis
         self.counter = Counter()
         self.history = {}
-        self.time = 0.95
+        self.time = 1.5
         self.valid_width = 20
         self.valid_height = 20
         self.moving = 4
@@ -39,7 +39,6 @@ class Test(object):
     def predict_by_gradients(self, history):
         right_wrist_x = history["right_wrist_x"]
         right_wrist_y = history["right_wrist_y"]
-        print(len(right_wrist_x))
         dx = 0
         dy = 0
         dxs = []
@@ -57,13 +56,15 @@ class Test(object):
             dy += abs(diffy)
         print(dx, dy)
         if (dx - dy) > 50 and self.calc_scope(dxs) == "先負再正":
-            print("往左滑")
+            return "往左滑"
         elif (dx - dy) > 50 and self.calc_scope(dxs) == "先正再負":
-            print("往右滑")
+            return "往右滑"
         elif (dy - dx) > 50 and self.calc_scope(dxs) == "先負再正":
-            print("往上滑")
+            return "往上滑"
         elif (dy - dx) > 50 and self.calc_scope(dxs) == "先正再負":
-            print("往下滑")
+            return "往下滑"
+        else:
+            return ""
 
     def calc_scope(self, gradients):
         s = 0
@@ -87,7 +88,7 @@ class Test(object):
             fx = self.history["face_x"][i]
             fy = self.history["face_y"][i]
             dist = self.norm(rwx, rwy, rsx, rsy)
-            if dist < minimum and self.point_is_thres(rwx, rwy, rsx, rsy, fx, fy):
+            if dist < minimum and self.point_in_thres(rwx, rwy, rsx, rsy, fx, fy):
                 temp = self.cut_history_by_index(i)
                 minimum = dist
         return temp
@@ -98,11 +99,11 @@ class Test(object):
             temp[name] = value[i:]
         return temp
 
-    def point_is_thres(self, rwx, rwy, rsx, rsy, fx, fy):
-        right_bound = fx
+    def point_in_thres(self, rwx, rwy, rsx, rsy, fx, fy):
+        right_bound = fx + self.valid_width
         left_bound = rsx - (fx - rsx)
-        upper_bound = fy
-        lower_bound = rsy - (fy - rsy)
+        upper_bound = fy + self.valid_height
+        lower_bound = rsy + (fy - rsy)
         c1 = rwx < right_bound
         c2 = rwx > left_bound
         c3 = rwy > upper_bound
