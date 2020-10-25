@@ -8,7 +8,7 @@ class Test(object):
         self.analysis = analysis
         self.counter = Counter()
         self.history = {}
-        self.time = 0.5
+        self.time = 0.95
         self.valid_width = 20
         self.valid_height = 20
         self.moving = 4

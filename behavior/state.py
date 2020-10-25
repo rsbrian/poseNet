@@ -20,15 +20,18 @@ class Open(Test):
             if self.counter.result() > self.time:
                 temp = self.cut_start_history()
                 if temp != {}:  # temp 的第一個值就是起點 -> 畫出來應該會在中間
+                    x = temp["right_wrist_x"][0]
+                    y = temp["right_wrist_y"][0]
+                    cv2.circle(img, (int(x), int(y)), 3, (0, 200, 200), -1)
                     if not self.is_point_in_thres(img, points, face):
                         print("Calculate Angles")
                         angles = self.predict_by_angles(temp)
                         print(angles)
                         self.history = {}
-                    else:
-                        print("Calculate dx and dy")
-                        self.predict_by_gradients(temp)
-                        self.history = {}
+                    # else:
+                    #     print("Calculate dx and dy")
+                    #     self.predict_by_gradients(temp)
+                    #     self.history = {}
 
         if self.is_drop_the_hands(points):
             self.analysis.change(Close(self.analysis))
