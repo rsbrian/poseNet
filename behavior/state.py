@@ -13,31 +13,22 @@ class Open(Test):
 
     def __call__(self, img, points, face):
         print("Open")
-        self.append(points)
+        self.append(points, face)
 
         if not self.move(points):
             self.counter.start()
-            self.center_x.append(points["right_wrist_x"])
-            self.center_y.append(points["right_wrist_y"])
             if self.counter.result() > self.time:
-                if self.is_point_in_thres(img, points, face):
-                    self.center = (
-                        np.mean(self.center_x),
-                        np.mean(self.center_y)
-                    )
-                    x, y = self.center
-                    r = 3
-                    cv2.circle(img, (int(x), int(y)), r, (0, 200, 200), 3)
-                    if self.is_any_turning_point(["right_wrist_x", "right_wrist_y"]):
-                        pass
-                #     self.history = {}
-                else:
-                    pass
-        else:
-            self.center = ()
-            self.center_x = []
-            self.center_y = []
-            self.counter.reset()
+                temp = self.cut_start_history()
+                if temp != {}:  # temp 的第一個值就是起點 -> 畫出來應該會在中間
+                    if not self.is_point_in_thres(img, points, face):
+                        print("Calculate Angles")
+                        angles = self.predict_by_angles(temp)
+                        print(angles)
+                        self.history = {}
+                    else:
+                        print("Calculate dx and dy")
+                        self.predict_by_gradients(temp)
+                        self.history = {}
 
         if self.is_drop_the_hands(points):
             self.analysis.change(Close(self.analysis))

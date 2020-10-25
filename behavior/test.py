@@ -8,11 +8,106 @@ class Test(object):
         self.analysis = analysis
         self.counter = Counter()
         self.history = {}
-        self.time = 0.7
+        self.time = 0.5
         self.valid_width = 20
         self.valid_height = 20
         self.moving = 4
-        self.dists = []
+
+    def predict_by_angles(self, history):
+        angles = []
+        right_wrist_x = history["right_wrist_x"].copy()
+        right_wrist_y = history["right_wrist_y"].copy()
+        px = right_wrist_x[0]
+        py = right_wrist_y[0]
+        for i in range(1, len(right_wrist_x)):
+            x = right_wrist_x[i]
+            y = right_wrist_y[i]
+            dx = (x - px)
+            dy = (y - py)
+            angle = np.arctan2(dy, dx) / np.pi * 180
+            angles.append(angle)
+            px = x
+            py = y
+
+        i = 0
+        step = 3
+        while i < len(angles) - (step - 1):
+            angles[i] = np.mean(angles[i:i+step])
+            i += 1
+        return angles
+
+    def predict_by_gradients(self, history):
+        right_wrist_x = history["right_wrist_x"]
+        right_wrist_y = history["right_wrist_y"]
+        print(len(right_wrist_x))
+        dx = 0
+        dy = 0
+        dxs = []
+        dys = []
+        px = right_wrist_x[0]
+        py = right_wrist_y[0]
+        for i in range(1, len(right_wrist_x)):
+            x = right_wrist_x[i]
+            y = right_wrist_y[i]
+            diffx = x - px
+            diffy = y - py
+            dxs.append(diffx)
+            dys.append(diffy)
+            dx += abs(diffx)
+            dy += abs(diffy)
+        print(dx, dy)
+        if (dx - dy) > 50 and self.calc_scope(dxs) == "先負再正":
+            print("往左滑")
+        elif (dx - dy) > 50 and self.calc_scope(dxs) == "先正再負":
+            print("往右滑")
+        elif (dy - dx) > 50 and self.calc_scope(dxs) == "先負再正":
+            print("往上滑")
+        elif (dy - dx) > 50 and self.calc_scope(dxs) == "先正再負":
+            print("往下滑")
+
+    def calc_scope(self, gradients):
+        s = 0
+        p = gradients[0]
+        for gradient in gradients[1:]:
+            s += (gradient - p)
+            p = gradient
+        if s > 0:
+            return "先負再正"
+        else:
+            return "先正再負"
+
+    def cut_start_history(self):
+        temp = {}
+        minimum = np.inf
+        for i in range(len(self.history["right_wrist_x"])):
+            rwx = self.history["right_wrist_x"][i]
+            rwy = self.history["right_wrist_y"][i]
+            rsx = self.history["right_shoulder_x"][i]
+            rsy = self.history["right_shoulder_y"][i]
+            fx = self.history["face_x"][i]
+            fy = self.history["face_y"][i]
+            dist = self.norm(rwx, rwy, rsx, rsy)
+            if dist < minimum and self.point_is_thres(rwx, rwy, rsx, rsy, fx, fy):
+                temp = self.cut_history_by_index(i)
+                minimum = dist
+        return temp
+
+    def cut_history_by_index(self, i):
+        temp = self.history.copy()
+        for name, value in temp.items():
+            temp[name] = value[i:]
+        return temp
+
+    def point_is_thres(self, rwx, rwy, rsx, rsy, fx, fy):
+        right_bound = fx
+        left_bound = rsx - (fx - rsx)
+        upper_bound = fy
+        lower_bound = rsy - (fy - rsy)
+        c1 = rwx < right_bound
+        c2 = rwx > left_bound
+        c3 = rwy > upper_bound
+        c4 = rwy < lower_bound
+        return c1 and c2 and c3 and c4
 
     def is_any_turning_point(self, listed_name):
         angles = []
@@ -37,12 +132,18 @@ class Test(object):
         thres = self.analysis.calc_thres(points, 4)
         return y > thres
 
-    def append(self, points):
+    def append(self, points, face):
         for name, value in points.items():
             try:
                 self.history[name].append(value)
             except Exception:
                 self.history[name] = [value]
+        try:
+            self.history["face_x"].append(face[0])
+            self.history["face_y"].append(face[1])
+        except Exception:
+            self.history["face_x"] = [face[0]]
+            self.history["face_y"] = [face[1]]
 
     def find_closest_point(self, points):
         cx = points["right_shoulder_x"]
@@ -74,11 +175,7 @@ class Test(object):
             now_x = points["right_wrist_x"]
             now_y = points["right_wrist_y"]
             dist = self.norm(now_x, now_y, past_x, past_y)
-            self.dists.append(dist)
-            if len(self.dists) > 5:
-                dist = np.mean(self.dists)
-                self.dists = self.dists[1:]
-                return dist < self.moving
+            return dist < self.moving
         return False
 
     def norm(self, x1, y1, x2, y2):
