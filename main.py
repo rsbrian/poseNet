@@ -24,7 +24,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=1)
 parser.add_argument('--cam_id', type=int, default=-1)
-parser.add_argument('--socket', type=int, default=1)
+parser.add_argument('--socket', type=int, default=0)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
 parser.add_argument('--cam_width', type=int, default=540)
@@ -74,7 +74,7 @@ def main():
                 # api = course().get_api()
                 # control.send(server, api)
 
-            time.sleep(0.02)
+            # time.sleep(0.02)
             control.show(img)
             # cv2.imshow("show", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -116,9 +116,9 @@ def main_thread_close():
     t.join()
 
 
+PORT = 5500
+server = WebsocketServer(PORT)
 if args.socket:
-    PORT = 5500
-    server = WebsocketServer(PORT)
     server.set_fn_new_client(new_client)
     server.set_fn_client_left(client_left)
     main_thread()
