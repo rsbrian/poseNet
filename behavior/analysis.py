@@ -15,7 +15,7 @@ class Analysis(object):
         face = self.brain.face
         points = self.brain.human.points
         behavior = self.state(img, points, face)
-        return ""
+        return behavior
 
     def change(self, new_state):
         self.state = new_state

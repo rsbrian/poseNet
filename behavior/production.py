@@ -19,10 +19,6 @@ class Behavior(object):
         fy = self.history["face_y"][-1]
         boundary = self.get_boundary(rsx, rsy, fx, fy)
         check_list = self.compare_boundary(rwx, rwy, boundary)
-        # print(f"left: {check_list[0]}")
-        # print(f"right: {check_list[1]}")
-        # print(f"upper: {check_list[2]}")
-        # print(f"lower: {check_list[3]}")
         return self.behavior_filter(check_list)
 
     def behavior_filter(self, check_list):
