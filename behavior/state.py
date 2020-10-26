@@ -1,48 +1,147 @@
 import cv2
 import numpy as np
 
-from behavior.test import Test
+from utils.counter import Counter
+from behavior.production import Behavior
 
 
-class Open(Test):
+class Outside(Behavior):
+    def __init__(self, state, behavior):
+        super().__init__(state)
+        self.behavior = behavior
+        self.count = 0
+
+    def __call__(self, img, points, face, history):
+        self.history = history
+
+        if self.is_point_in_thres(img, points, face) and not self.move(points):
+            self.state.change(InsideNotMove(self.state))
+
+        elif self.is_point_in_thres(img, points, face) and self.move(points):
+            self.state.change(InsideMovingNoCenter(self.state))
+
+        if self.behavior == "向下選取" and not self.is_drop_the_hands():
+            print("1")
+            if self.count > 4:
+                print(self.behavior)
+            self.count += 1
+
+        elif self.behavior == "向下選取":
+            print("2")
+            print("他只是要把手放下")
+            behavior = ""
+            self.state.analysis.change(Close(self.state.analysis))
+
+        elif self.is_drop_the_hands(points):
+            print("3")
+            print(self.behavior)
+            self.state.analysis.change(Close(self.state.analysis))
+
+
+class InsideMovingNoCenter(Behavior):
+    def __init__(self, state):
+        super().__init__(state)
+
+    def __call__(self, img, points, face, history):
+        self.history = history
+        self.find_closest_point_and_cut()
+        if not self.is_point_in_thres(img, points, face):
+            behavior = self.predict_behavior()
+            print(behavior)
+            self.state.history = {}
+            self.state.change(Outside(self.state, behavior))
+
+        elif not self.move(points):
+            self.state.change(InsideNotMove(self.state))
+
+
+class InsideMovingHaveCenter(Behavior):
+    def __init__(self, state):
+        super().__init__(state)
+
+    def __call__(self, img, points, face, history):
+        self.history = history
+
+        if not self.is_point_in_thres(img, points, face):
+            behavior = self.predict_behavior()
+            print(behavior)
+            self.state.history = {}
+            self.state.change(Outside(self.state, behavior))
+
+        elif not self.move(points):
+            self.state.change(InsideNotMove(self.state))
+
+
+class InsideNotMove(Behavior):
+    def __init__(self, state):
+        super().__init__(state)
+        self.counter = Counter()
+        self.center = None
+        self.time = 0.8
+
+    def __call__(self, img, points, face, history):
+        self.history = history
+
+        if self.move(points) and self.center is None:
+            self.counter.reset()
+            self.state.change(InsideMovingNoCenter(self.state))
+
+        elif self.move(points):
+            self.counter.reset()
+            self.state.change(InsideMovingHaveCenter(self.state))
+
+        elif self.center is None:
+            self.counter.start()
+            if self.counter.result() > self.time:
+                self.cut_history_to_start()
+                self.center = (
+                    self.history["right_wrist_x"][-1],
+                    self.history["right_wrist_y"][-1]
+                )
+        else:
+            self.cut_history_to_start()
+            self.center = (
+                self.history["right_wrist_x"][-1],
+                self.history["right_wrist_y"][-1]
+            )
+
+
+class Open(Behavior):
     def __init__(self, analysis):
-        super().__init__(analysis)
-        self.center = ()
-        self.center_x = []
-        self.center_y = []
+        self.analysis = analysis
+        self.history = {}
+        self.state = None
+        self.valid_width = 20
+        self.valid_height = 20
 
     def __call__(self, img, points, face):
-        print("Open")
         self.append(points, face)
+        if self.state is None:
+            if not self.is_point_in_thres(img, points, face):
+                self.state = Outside(self, "")
 
-        if self.is_point_in_thres(img, points, face):
-            # if not self.move(points):
-            #     self.counter.start()
-            #     self.center_x.append(points["right_wrist_x"])
-            #     self.center_y.append(points["right_wrist_y"])
-            #     if len(self.center_x) > 3:
-            #         self.center_x = self.center_x[1:]
-            #         self.center_y = self.center_y[1:]
-            #     if self.counter.result() > self.time:
-            #         self.center = (
-            #             np.mean(self.center_x),
-            #             np.mean(self.center_y),
-            #         )
-            #         x, y = self.center
-            #         cv2.circle(img, (int(x), int(y)), 3, (0, 200, 200), 3)
-            # else:
-            self.counter.reset()
-            self.center_x = []
-            self.center_y = []
-            if self.center == ():
-                self.history = self.cut_start_history()
-                print(self.history)
-                x = self.history["right_wrist_x"][0]
-                y = self.history["right_wrist_y"][0]
-                cv2.circle(img, (int(x), int(y)), 3, (0, 0, 200), 3)
+            elif not self.move(points):
+                self.state = InsideNotMove(self)
 
-        if self.is_drop_the_hands(points):
-            self.analysis.change(Close(self.analysis))
+            else:
+                self.state = InsideMovingNoCenter(self)
+
+        else:
+            print(self.state.__class__.__name__)
+            self.state(img, points, face, self.history)
+
+    def append(self, points, face):
+        for name, value in points.items():
+            try:
+                self.history[name].append(value)
+            except Exception:
+                self.history[name] = [value]
+        try:
+            self.history["face_x"].append(face[0])
+            self.history["face_y"].append(face[1])
+        except Exception:
+            self.history["face_x"] = [face[0]]
+            self.history["face_y"] = [face[1]]
 
     def change(self, new_state):
         self.state = new_state
