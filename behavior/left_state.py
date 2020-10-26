@@ -1,8 +1,5 @@
-import cv2
-import numpy as np
-
 from utils.counter import Counter
-from behavior.production import Behavior
+from behavior.left_production import Behavior
 
 
 class Outside(Behavior):
@@ -27,18 +24,52 @@ class Outside(Behavior):
             self.count += 1
 
         elif self.behavior == "向下選取" and self.count < 4:
-            print("我只是想把手放下")
+            # print("他只是要把手放下")
             self.state.behavior = ""
-            self.state.analysis.change_right_state(
-                RightClose(self.state.analysis))
+            self.state.analysis.change_left_state(
+                LeftClose(self.state.analysis))
 
         elif self.is_drop_the_hands(points):
-            self.state.analysis.change_right_state(
-                RightClose(self.state.analysis))
+            self.state.analysis.change_left_state(
+                LeftClose(self.state.analysis))
 
         else:
             self.state.behavior = self.behavior
             self.behavior = ""
+
+
+class InsideNotMove(Behavior):
+    def __init__(self, state):
+        super().__init__(state)
+        self.counter = Counter()
+        self.center = None
+        self.time = 0.6
+
+    def __call__(self, img, points, face, history):
+        self.history = history
+
+        if self.move(points) and self.center is None:
+            self.counter.reset()
+            self.state.change(InsideMovingNoCenter(self.state))
+
+        elif self.move(points):
+            self.counter.reset()
+            self.state.change(InsideMovingHaveCenter(self.state))
+
+        elif self.center is None:
+            self.counter.start()
+            if self.counter.result() > self.time:
+                self.cut_history_to_start(-2)
+                self.center = (
+                    self.history["left_wrist_x"][-1],
+                    self.history["left_wrist_y"][-1]
+                )
+        else:
+            self.cut_history_to_start(-2)
+            self.center = (
+                self.history["left_wrist_x"][-1],
+                self.history["left_wrist_y"][-1]
+            )
 
 
 class InsideMovingNoCenter(Behavior):
@@ -73,40 +104,6 @@ class InsideMovingHaveCenter(Behavior):
             self.state.change(InsideNotMove(self.state))
 
 
-class InsideNotMove(Behavior):
-    def __init__(self, state):
-        super().__init__(state)
-        self.counter = Counter()
-        self.center = None
-        self.time = 0.6
-
-    def __call__(self, img, points, face, history):
-        self.history = history
-
-        if self.move(points) and self.center is None:
-            self.counter.reset()
-            self.state.change(InsideMovingNoCenter(self.state))
-
-        elif self.move(points):
-            self.counter.reset()
-            self.state.change(InsideMovingHaveCenter(self.state))
-
-        elif self.center is None:
-            self.counter.start()
-            if self.counter.result() > self.time:
-                self.cut_history_to_start(-2)
-                self.center = (
-                    self.history["right_wrist_x"][-1],
-                    self.history["right_wrist_y"][-1]
-                )
-        else:
-            self.cut_history_to_start(-2)
-            self.center = (
-                self.history["right_wrist_x"][-1],
-                self.history["right_wrist_y"][-1]
-            )
-
-
 class Open(Behavior):
     def __init__(self, analysis):
         self.analysis = analysis
@@ -130,7 +127,7 @@ class Open(Behavior):
                 self.state = InsideMovingNoCenter(self)
 
         else:
-            # print(self.state.__class__.__name__)
+            print(self.state.__class__.__name__)
             self.state(img, points, face, self.history)
 
         return self.behavior
@@ -152,29 +149,16 @@ class Open(Behavior):
         self.state = new_state
 
 
-class RightClose(object):
+class LeftClose(object):
     def __init__(self, analysis):
         self.analysis = analysis
 
     def __call__(self, img, points, face):
         if self.is_upper_than_line(points):
-            self.analysis.change_right_state(Open(self.analysis))
+            self.analysis.change_left_state(Open(self.analysis))
         return ""
 
     def is_upper_than_line(self, points):
-        y = points["right_wrist_y"]
-        thres = self.analysis.calc_right_thres(points, 2)
+        y = points["left_wrist_y"]
+        thres = self.analysis.calc_left_thres(points, 2)
         return y < thres
-
-    def norm(self, x1, y1, x2, y2):
-        return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
-
-    def is_inside_the_circle(self, img, points):
-        x = points["right_wrist_x"]
-        y = points["right_wrist_y"]
-        x1 = points["right_shoulder_x"]
-        y1 = points["right_shoulder_y"]
-        r = 75
-        dist = self.norm(x, y, x1, y1)
-        cv2.circle(img, (int(x1), int(y1)), r, (0, 200, 200), 3)
-        return dist < r

@@ -10,11 +10,38 @@ class Behavior(object):
         self.valid_height = 5
         self.behavior_map = ["向左選取", "向右選取", "向上選取", "向下選取"]
 
+    def calcAngles(self, listed_x, listed_y):
+        angles = []
+        px = listed_x[0]
+        py = listed_y[0]
+        for i in range(1, len(listed_x)):
+            x = listed_x[i]
+            y = listed_y[i]
+            dx = (x - px)
+            dy = (y - py)
+            angle = np.arctan2(dy, dx) / np.pi * 180
+            angles.append(angle)
+            px = x
+            py = y
+
+        temp = []
+        i = 0
+        step = 3
+        while i < (len(angles) - (step - 1)):
+            angles[i] = np.mean(angles[i:i+step])
+            i += 1
+        return angles
+
     def predict_behavior(self):
-        rwx = self.history["right_wrist_x"][-1]
-        rwy = self.history["right_wrist_y"][-1]
-        rsx = self.history["right_shoulder_x"][-1]
-        rsy = self.history["right_shoulder_y"][-1]
+        rwx = self.history["left_wrist_x"][-1]
+        rwy = self.history["left_wrist_y"][-1]
+
+        angles = self.calcAngles(self.history["left_wrist_x"], self.history["left_wrist_y"])
+        print(angles)
+        print(np.mean(angles))
+
+        rsx = self.history["left_shoulder_x"][-1]
+        rsy = self.history["left_shoulder_y"][-1]
         fx = self.history["face_x"][-1]
         fy = self.history["face_y"][-1]
         boundary = self.get_boundary(rsx, rsy, fx, fy)
@@ -30,11 +57,11 @@ class Behavior(object):
     def find_closest_point_and_cut(self):
         temp = {}
         minimum = np.inf
-        for i in range(len(self.history["right_wrist_x"])):
-            rwx = self.history["right_wrist_x"][i]
-            rwy = self.history["right_wrist_y"][i]
-            rsx = self.history["right_shoulder_x"][i]
-            rsy = self.history["right_shoulder_y"][i]
+        for i in range(len(self.history["left_wrist_x"])):
+            rwx = self.history["left_wrist_x"][i]
+            rwy = self.history["left_wrist_y"][i]
+            rsx = self.history["left_shoulder_x"][i]
+            rsy = self.history["left_shoulder_y"][i]
             fx = self.history["face_x"][i]
             fy = self.history["face_y"][i]
             dist = self.norm(rwx, rwy, rsx, rsy)
@@ -57,8 +84,8 @@ class Behavior(object):
             self.history[name] = self.history[name][param:].copy()
 
     def get_boundary(self, rsx, rsy, fx, fy):
-        right_bound = fx + self.valid_width
-        left_bound = rsx - (fx - rsx)
+        left_bound = fx - self.valid_width
+        right_bound = rsx + (rsx - fx)
         upper_bound = fy - self.valid_height
         lower_bound = rsy + (rsy - fy)
         return [right_bound, left_bound, upper_bound, lower_bound]
@@ -80,11 +107,11 @@ class Behavior(object):
         return all(check_list)
 
     def move(self, points):
-        if len(self.history["right_wrist_x"]) > 2:
-            past_x = self.history["right_wrist_x"][-2]
-            past_y = self.history["right_wrist_y"][-2]
-            now_x = points["right_wrist_x"]
-            now_y = points["right_wrist_y"]
+        if len(self.history["left_wrist_x"]) > 2:
+            past_x = self.history["left_wrist_x"][-2]
+            past_y = self.history["left_wrist_y"][-2]
+            now_x = points["left_wrist_x"]
+            now_y = points["left_wrist_y"]
             dist = self.norm(now_x, now_y, past_x, past_y)
             return dist > self.moving
         return False
@@ -93,10 +120,10 @@ class Behavior(object):
         return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
 
     def is_point_in_thres(self, img, points, face):
-        rwx = points["right_wrist_x"]
-        rwy = points["right_wrist_y"]
-        rsx = points["right_shoulder_x"]
-        rsy = points["right_shoulder_y"]
+        rwx = points["left_wrist_x"]
+        rwy = points["left_wrist_y"]
+        rsx = points["left_shoulder_x"]
+        rsy = points["left_shoulder_y"]
         fx = face[0]
         fy = face[1]
         boundary = self.get_boundary(rsx, rsy, fx, fy)
@@ -122,6 +149,6 @@ class Behavior(object):
         return all(check_list)
 
     def is_drop_the_hands(self, points):
-        y = points["right_wrist_y"]
-        thres = self.state.analysis.calc_right_thres(points, 4)
+        y = points["left_wrist_y"]
+        thres = self.state.analysis.calc_left_thres(points, 4)
         return y > thres
