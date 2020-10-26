@@ -2,8 +2,9 @@ import cv2
 import copy
 import numpy as np
 
-from behavior.state import RightClose
 from behavior.left_state import LeftClose
+from behavior.right_state import RightClose
+from behavior.both_state import BothClose
 
 
 class Analysis(object):
@@ -12,13 +13,16 @@ class Analysis(object):
         self.single_circle = (0, 0, 0, (200, 200, 200), 3)
         self.right_state = RightClose(self)
         self.left_state = LeftClose(self)
+        self.both_state = BothClose(self)
 
     def predict(self, img):
         face = self.brain.face
         points = self.brain.human.points
-        right_behavior = ""
-        # right_behavior = self.right_state(img, points, face)
+        right_behavior = self.right_state(img, points, face)
         left_behavior = self.left_state(img, points, face)
+        both_behavior = self.both_state(img, points, face)
+        if left_behavior != "":
+            return left_behavior
         return right_behavior
 
     def change_right_state(self, new_right_state):
