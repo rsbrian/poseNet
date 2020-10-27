@@ -2,11 +2,10 @@ from utils.counter import Counter
 from behavior.both_production import Behavior
 
 
-class Outside(Behavior):
+class Clicked(Behavior):
     def __init__(self, state, behavior):
         super().__init__(state)
         self.behavior = behavior
-        self.count = 0
 
     def __call__(self, img, points, face, history):
         self.history = history
@@ -14,81 +13,47 @@ class Outside(Behavior):
         self.state.behavior = self.behavior
         self.behavior = ""
 
-        if self.is_point_in_thres(img, points, face) and not self.move(points):
-            self.state.change(InsideNotMove(self.state))
+        if self.is_drop_the_hands(points):
+            self.state.analysis.change_both_state(
+                BothClose(self.state.analysis))
 
-        elif self.is_point_in_thres(img, points, face) and self.move(points):
-            self.state.change(InsideMovingNoCenter(self.state))
+
+class Outside(Behavior):
+    def __init__(self, state):
+        super().__init__(state)
+
+    def __call__(self, img, points, face, history):
+        self.history = history
+
+        if self.is_left_point_in_thres(img, points, face) and \
+                self.is_right_point_in_thres(img, points, face):
+            self.state.change(Inside(self.state))
 
         if self.is_drop_the_hands(points):
-            self.state.analysis.change_left_state(
-                LeftClose(self.state.analysis))
+            self.state.analysis.change_both_state(
+                BothClose(self.state.analysis))
 
 
-class InsideNotMove(Behavior):
+class Inside(Behavior):
     def __init__(self, state):
         super().__init__(state)
         self.counter = Counter()
-        self.center = None
-        self.time = 0.6
+        self.time = 0.3
 
     def __call__(self, img, points, face, history):
         self.history = history
 
-        if self.move(points) and self.center is None:
-            self.counter.reset()
-            self.state.change(InsideMovingNoCenter(self.state))
+        if not (self.is_left_point_in_thres(img, points, face) and
+                self.is_right_point_in_thres(img, points, face)):
+            self.state.change(Outside(self.state))
 
-        elif self.move(points):
-            self.counter.reset()
-            self.state.change(InsideMovingHaveCenter(self.state))
-
-        elif self.center is None:
+        if not (self.check_left_length() and self.check_right_length()):
             self.counter.start()
             if self.counter.result() > self.time:
-                self.cut_history_to_start(-2)
-                self.center = (
-                    self.history["left_wrist_x"][-1],
-                    self.history["left_wrist_y"][-1]
-                )
+                self.behavior = "雙手彎舉"
+                self.state.change(Clicked(self.state, self.behavior))
         else:
-            self.cut_history_to_start(-2)
-            self.center = (
-                self.history["left_wrist_x"][-1],
-                self.history["left_wrist_y"][-1]
-            )
-
-
-class InsideMovingNoCenter(Behavior):
-    def __init__(self, state):
-        super().__init__(state)
-
-    def __call__(self, img, points, face, history):
-        self.history = history
-        self.find_closest_point_and_cut()
-        if not self.is_point_in_thres(img, points, face):
-            behavior = self.predict_behavior()
-            self.state.history = {}
-            self.state.change(Outside(self.state, behavior))
-
-        elif not self.move(points):
-            self.state.change(InsideNotMove(self.state))
-
-
-class InsideMovingHaveCenter(Behavior):
-    def __init__(self, state):
-        super().__init__(state)
-
-    def __call__(self, img, points, face, history):
-        self.history = history
-
-        if not self.is_point_in_thres(img, points, face):
-            behavior = self.predict_behavior()
-            self.state.history = {}
-            self.state.change(Outside(self.state, behavior))
-
-        elif not self.move(points):
-            self.state.change(InsideNotMove(self.state))
+            self.counter.reset()
 
 
 class Open(Behavior):
@@ -104,15 +69,9 @@ class Open(Behavior):
     def __call__(self, img, points, face):
         self.append(points, face)
         if self.state is None:
-            if not self.is_point_in_thres(img, points, face):
-                self.state = Outside(self, self.behavior)
-
-            elif not self.move(points):
-                self.state = InsideNotMove(self)
-
-            else:
-                self.state = InsideMovingNoCenter(self)
-
+            if self.is_left_point_in_thres(img, points, face) and \
+                    self.is_right_point_in_thres(img, points, face):
+                self.state = Inside(self)
         else:
             self.state(img, points, face, self.history)
 
@@ -140,11 +99,17 @@ class BothClose(object):
         self.analysis = analysis
 
     def __call__(self, img, points, face):
-        if self.is_upper_than_line(points):
-            self.analysis.change_left_state(Open(self.analysis))
+        if self.is_left_upper_than_line(points) and \
+                self.is_right_upper_than_line(points):
+            self.analysis.change_both_state(Open(self.analysis))
         return ""
 
-    def is_upper_than_line(self, points):
+    def is_left_upper_than_line(self, points):
         y = points["left_wrist_y"]
         thres = self.analysis.calc_left_thres(points, 2)
+        return y < thres
+
+    def is_right_upper_than_line(self, points):
+        y = points["right_wrist_y"]
+        thres = self.analysis.calc_right_thres(points, 2)
         return y < thres

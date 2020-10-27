@@ -10,7 +10,6 @@ from behavior.both_state import BothClose
 class Analysis(object):
     def __init__(self, brain):
         self.brain = brain
-        self.single_circle = (0, 0, 0, (200, 200, 200), 3)
         self.right_state = RightClose(self)
         self.left_state = LeftClose(self)
         self.both_state = BothClose(self)
@@ -21,9 +20,14 @@ class Analysis(object):
         right_behavior = self.right_state(img, points, face)
         left_behavior = self.left_state(img, points, face)
         both_behavior = self.both_state(img, points, face)
+        if both_behavior != "":
+            return both_behavior
         if left_behavior != "":
             return left_behavior
         return right_behavior
+
+    def change_both_state(self, new_both_state):
+        self.both_state = new_both_state
 
     def change_right_state(self, new_right_state):
         self.right_state = new_right_state
