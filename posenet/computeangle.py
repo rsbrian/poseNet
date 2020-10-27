@@ -120,7 +120,6 @@ def startpoint_twovector(line1, line2):
         degree = round(np.degrees(angle))
         return startpoint, degree
     except Exception as e:
-        raise e
         return None, None
 
 

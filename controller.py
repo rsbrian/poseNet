@@ -34,10 +34,9 @@ class Controller(object):
         if len(points) == 0:
             return False
         angles = self.calculate_angles(points)
-        # if not self.is_angles_none(angles):
-        # TODO: KALMAN FILTER # Not good
-        self.brain.reset_state(points, angles)
-        self.brain.add_median_filter()
+        if not self.is_angles_none(angles):
+            self.brain.reset_state(points, angles)
+            self.brain.add_median_filter()
         return True
 
     def update_server(self, api):

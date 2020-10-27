@@ -23,7 +23,7 @@ import pickle
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=1)
-parser.add_argument('--cam_id', type=int, default=0)
+parser.add_argument('--cam_id', type=int, default=-1)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
