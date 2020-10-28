@@ -51,7 +51,7 @@ class Behavior(object):
             dist = self.norm(x1, y1, x2, y2)
             d1 = self.norm(x1, y1, x3, y3)
             d2 = self.norm(x3, y3, x4, y4)
-            if (d1 + d2) < (dist / 3):
+            if (d1 + d2) < (dist / 4):
                 return True
         return False
 
@@ -66,7 +66,7 @@ class Behavior(object):
         if self.check_length():
             return ""
 
-        return "Cancel" if mean_angles > 40 and mean_angles < 60 else ""
+        return "Cancel" if mean_angles > -10 and mean_angles < 45 else ""
 
     def find_closest_point_and_cut(self):
         temp = {}

@@ -60,7 +60,7 @@ class Behavior(object):
         right_bound = fx + self.valid_width
         left_bound = rsx - (fx - rsx)
         upper_bound = fy - self.valid_height
-        lower_bound = rsy + (rsy - fy)
+        lower_bound = rsy + (rsy - fy) - 20
         return [right_bound, left_bound, upper_bound, lower_bound]
 
     def compare_boundary(self, rwx, rwy, boundary):

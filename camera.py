@@ -10,7 +10,8 @@ class Camera(object):
 
         if self.args.cam_id != -1:
             self.cap = cv2.VideoCapture(self.args.cam_id)
-            self.add_writers(saved_names)
+            if self.args.save:
+                self.add_writers(saved_names)
         else:
             self.cap = cv2.VideoCapture(video_name)
             self.args.save = 0

@@ -27,7 +27,7 @@ class Outside(Behavior):
             self.count += 1
 
         elif self.behavior == "向下選取" and self.count < 4:
-            print("我只是想把手放下")
+            # print("我只是想把手放下")
             self.state.behavior = ""
             self.state.analysis.change_right_state(
                 RightClose(self.state.analysis))
