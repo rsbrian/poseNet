@@ -3,6 +3,27 @@ font-family: 'Adventure Subtitles';
 src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 }
 
+
+.blink {
+-webkit-animation-name: blink;
+animation-name: blink;
+-webkit-animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+animation-timing-function: cubic-bezier(0.42, 0, 0.58, 1);
+-webkit-animation-duration: 1.2s;
+animation-duration: 1.2s; }
+
+@keyframes blink {
+0% {
+    opacity: 1; }
+25% {
+    opacity: 0; }
+50% {
+    opacity: 1; }
+75% {
+    opacity: 0; }
+100% {
+    opacity: 1; } }
+
 .home_pageTitle {
     position: absolute;
     top: 312px;
@@ -55,6 +76,7 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     float: left;
     padding: 10px;
     margin-right: 20px;
+    mix-blend-mode: lighten;
 
     /*width: 710px;
     height: 424px;*/
@@ -64,17 +86,19 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     outline:none
 }
 
-.home_coachArea:focus-within {
-    /*background-image: url('./assets/pic_vselectframe.png');*/
+/*.home_coachArea:focus-within {
+    / *background-image: url('./assets/pic_vselectframe.png');* /
     background-image: url('./assets/pic_cselected.png');
     background-repeat: no-repeat;
     opacity: 1;
     background-size: 400px 1020px;
-}
+}*/
 
 .home_videoArea {
-    height: 1000px;
-    mix-blend-mode: lighten;
+    /*height: 1000px;*/
+    height: 900px;
+    top: 100px;
+    /*mix-blend-mode: lighten;*/
 
     position: relative;
     width: 900px;
@@ -312,6 +336,24 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     opacity: 0.82;
 }
 
+
+.home_tour {
+    position: absolute;
+    top: 1400px;
+    left: 270px;
+    width: 540px;
+    height: 412px;
+    background-image: url('./assets/homedir.png');
+}
+
+.class2_tour {
+    position: absolute;
+
+    left: 0px;
+    top: 1532px;
+    mix-blend-mode:screen;
+}
+
 @keyframes moveSlideshow {
     /*0%{ transform: translateX(0); }*/
 
@@ -333,6 +375,11 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
     overflow-y: hidden;
 }
 
+@keyframes marquee {
+    0% { left: 0; }
+    100% { left: -150%; }
+}
+
 .page_tip_area {
     position: absolute;
     top: 1770px;
@@ -347,11 +394,15 @@ src: url('./assets/Adventure Subtitles.ttf') format('truetype');
 }
 
 .page_tip_container {
-    /*width: 1630px;*/
     width: 3240px;
+    /*width: 3240px; */
     /*width: 2180px;*/
     height: 82px;
     display: table;
+    overflow-x: hidden;
+    position: absolute;
+
+    animation: marquee 8s linear infinite;
 }
 
 
@@ -507,14 +558,17 @@ to {
 
 .class2_area{
     position: absolute;
-    top: 302px;
+    /*top: 302px;*/
+    top: 232px;
     left: 0px;
     width: 1080px;
-    height: 1364px;
+    height: 1320px;
+    max-height: 1320px;
+    min-height: 1320px;
+    /*height: 1364px;
     max-height: 1364px;
-    min-height: 1364px;
+    min-height: 1364px;*/
     overflow-y: hidden;
-
 }
 
 .class2_catalog_area{
@@ -626,14 +680,16 @@ to {
     max-width: 315px;
     max-height: 345px;
 
-    border-top: 5px #74E0FC solid;
-    border-bottom: 5px #74E0FC solid;
+    /*border-top: 5px #74E0FC solid;
+    border-bottom: 5px #74E0FC solid;*/
 }
 
 .class2_courseWrapperImage {
     position: relative;
-    top: -344px;
-    height: 337px;
+    /*top: -344px;
+    height: 337px;*/
+    top: -368px;
+    height: 388px;
     mix-blend-mode:screen;
 }
 
@@ -763,805 +819,6 @@ to {
       opacity:1;
     }
   }
-
-.catalog_bodyImage{
-    position: absolute;
-    top: 328px;
-    left: 410px;
-    width: 261px;
-    height: 1315px;
-}
-
-.catalog_shoulder {
-    position: absolute;
-    top: 372px;
-    left: 608px;
-    width: 334px;
-    height: 174px;
-    background-image: url('./assets/pic_shoulder.png');
-    opacity: 1;
-}
-
-.catalog_shoulder:focus {
-    outline:none
-}
-
-.catalog_shoulder:focus-within {
-    position: absolute;
-    top: 372px;
-    left: 608px;
-    width: 334px;
-    height: 174px;
-    background-image: url('./assets/pic_shoulder_selected.png');
-    opacity: 1;
-}
-
-.catalog_arm{
-    position: absolute;
-    top: 489px;
-    left: 187px;
-    width: 377px;
-    height: 150px;
-    background-image: url('./assets/pic_arm.png');
-    opacity: 1;
-}
-
-.catalog_arm:focus {
-    outline:none
-}
-
-.catalog_arm:focus-within{
-    position: absolute;
-    top: 489px;
-    left: 187px;
-    width: 377px;
-    height: 150px;
-    background-image: url('./assets/pic_arm_selected.png');
-    opacity: 1;
-}
-
-.catalog_back{
-    position: absolute;
-    top: 636px;
-    left: 645px;
-    width: 319px;
-    height: 150px;
-    background-image: url('./assets/pic_back.png');
-    opacity: 1;
-}
-
-.catalog_back:focus {
-    outline:none
-}
-
-.catalog_back:focus-within{
-    position: absolute;
-    top: 636px;
-    left: 645px;
-    width: 319px;
-    height: 150px;
-    background-image: url('./assets/pic_back_selected.png');
-    opacity: 1;
-}
-
-.catalog_leg{
-    position: absolute;
-    top: 1144px;
-    left: 124px;
-    width: 385px;
-    height: 150px;
-    background-image: url('./assets/pic_leg.png');
-    opacity: 1;
-}
-
-.catalog_leg:focus {
-    outline:none
-}
-
-.catalog_leg:focus-within{
-    position: absolute;
-    top: 1144px;
-    left: 124px;
-    width: 385px;
-    height: 150px;
-    background-image: url('./assets/pic_leg_selected.png');
-    opacity: 1;
-}
-
-.catalog_hip{
-    position: absolute;
-    top: 931px;
-    left: 601px;
-    width: 331px;
-    height: 150px;
-    background-image: url('./assets/pic_hip.png');
-    opacity: 1;
-}
-
-.catalog_hip:focus {
-    outline:none
-}
-
-.catalog_hip:focus-within{
-    position: absolute;
-    top: 931px;
-    left: 601px;
-    width: 331px;
-    height: 150px;
-    background-image: url('./assets/pic_hip_selected.png');
-    opacity: 1;
-}
-
-.catalog_test{
-    top: 372px;
-    left: 677px;
-    width: 82px;
-    height: 150px;
-    background: #74E0FC 0% 0% no-repeat padding-box;
-    opacity: 1;
-}
-
-.catalog_pageTitle {
-    position: absolute;
-    top: 685px;
-    left: 324px;
-    width: 432px;
-    height: 96px;
-    text-align: center;
-    font-size: 72px;
-    font: Regular 72px/81px Microsoft Sans Serif;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.catalog_pageTitle2 {
-    position: absolute;
-    top: 805px;
-    left: 103px;
-    width: 874px;
-    height: 62px;
-    text-align: center;
-    font-size: 46px;
-    font: Regular 46px/52px Microsoft Sans Serif;
-    letter-spacing: 0px;
-    color: #93D5FF;
-    opacity: 0.82;
-}
-
-.catalog_pageButton {
-    position: absolute;
-
-    left: 183px;
-    width: 300px;
-    height: 216px;
-    border: 3px solid #57B4FB;
-    opacity: 1;
-
-    background: transparent ;
-    border-radius:44px;
-
-    text-align: center;
-    font-size: 72px;
-    font: Regular 72px/81px Microsoft Sans Serif;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-.catalog_pageButton_descript{
-    width: 100%;
-    height: 50px;
-    text-align: center;
-    font-size: 30px;
-    font: Regular 30px/39px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-
-    position: relative;
-}
-
-.level_pageTitle {
-    position: absolute;
-    top: 685px;
-    left: 252px;
-    width: 576px;
-    height: 177px;
-    text-align: center;
-    font-size: 72px;
-    font: Regular 72px/81px Microsoft Sans Serif;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.level_pageTitle2 {
-    position: absolute;
-    top: 800px;
-    left: 238px;
-    width: 610px;
-    height: 177px;
-    text-align: center;
-    font-size: 46px;
-    font: Regular 46px/52px Microsoft Sans Serif;
-    letter-spacing: 0px;
-    color: #93D5FF;
-    opacity: 0.82;
-}
-
-.level_pageButton {
-    position: absolute;
-
-    left: 170px;
-    width: 741px;
-    height: 184px;
-
-    background: transparent ;
-    border: 3px solid #57B4FB;
-    border-radius: 44px;
-    opacity: 1;
-
-    text-align: center;
-    font-size: 72px;
-    font: Regular 72px/81px Microsoft Sans Serif;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-
-.level_pageButton_title {
-    position: relative;
-
-    /*top: 975px;
-    left: 482px;*/
-    width: 100%;
-    height: 72px;
-    text-align: center;
-    font-size: 54px;
-    font: Bold 54px/71px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-    margin-top: -18px;
-}
-
-.level_pageButton_descript {
-    float: inline-end;
-    position: relative;
-    /*top: 1073px;
-    left: 448px;*/
-    width: 100%;
-    height: 49px;
-    text-align: center;
-    font-size: 37px;
-    font: Regular 37px/63px Segoe UI;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.level_parent {
-    width: 150px;
-    margin: 0 auto;
-}
-
-.level_full {
-    float:left;
-    /*top: 1055px;
-    left: 461px;*/
-    width: 49px;
-    height: 12px;
-    background: #FE59A5 0% 0% no-repeat padding-box;
-    border-radius: 14px;
-    opacity: 1;
-}
-
-.level_no_full {
-    float:left;
-    /*top: 1055px;
-    left: 461px;*/
-    width: 49px;
-    height: 12px;
-    background: #FE59A5 0% 0% no-repeat padding-box;
-    border-radius: 14px;
-    opacity: 0.31;
-}
-
-.classSelect_pageSize{
-    position: absolute;
-
-    top: 274px;
-    left: 96px;
-    width: 889px;
-    height: 1423px;
-
-    z-index: 10;
-    overflow-y: hidden;
-    overflow-x: hidden;
-    /*border-width: 200px;
-    border-color: crimson;*/
-
-}
-
-.classSelect_pageButton {
-
-    height: 419px;
-
-    background-image: url('./assets/class_bg.png');
-
-    /*background: transparent ;
-    border: 3px solid #57B4FB;
-    border-radius: 44px;
-    opacity: 1;
-
-    text-align: center;
-    font-size: 72px;
-    font: Regular 72px/81px Microsoft Sans Serif;
-    letter-spacing: 0px;
-    color: #FFFFFF;*/
-    margin-bottom: 71px;
-}
-
-.classSelect_pageButton:focus{
-    outline:none
-}
-
-.classSelect_pageButton:focus-within {
-    /*border: 6px solid #79E0FA;*/
-    background-image: url('./assets/class_bg_selected.png');
-}
-
-.classSelect_pageButton_title {
-    position: relative;
-
-    top: 0px;
-    left: 69px;
-    width: 751px;
-    height: 53px;
-
-    text-align: left;
-    font-size: 76px;
-    font: Regular 76px/76px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #74E0FC;
-    opacity: 1;
-    /*margin-top: 10px;*/
-}
-
-.classSelect_pageButton_line {
-    position: relative;
-
-    top: 49px;
-    left: 69px;
-    width: 751px;
-    height: 20px;
-    border-top: 6px solid #74E0Fc ;
-    border-bottom: 2px solid #74E0Fc ;
-    border-color: #74E0FC;
-}
-
-.classSelect_pageButton_imageSpace {
-    position: relative;
-
-    top: 68px;
-    left: 73px;
-    width: 324px;
-    height: 244px;
-    border: 1px solid #74E0FC;
-    opacity: 1;
-    /*margin: 0 auto;
-    margin-top: 30px;
-    margin-bottom: 30px;*/
-}
-
-.classSelect_pageButton_dot1 {
-    position: relative;
-
-    top: -167px;
-    left: 410px;
-    width: 40px;
-    height: 40px;
-    background-image: url('./assets/pic_dot.png');
-}
-
-.classSelect_pageMuscle{
-    position: relative;
-    top: -250px;
-    left: 457px;
-    width: 370px;
-    height: 24px;
-    text-align: left;
-    font-size: 30px;
-    font: Regular 30px/31px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #74E0FC;
-    opacity: 1;
-}
-
-.classSelect_pageMuscleData{
-    position: relative;
-    top: -237px;
-    left: 457px;
-    width: 370px;
-    height: 24px;
-    text-align: left;
-    font-size: 35px;
-    font: Regular 35px/35px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #74E0FC;
-    opacity: 1;
-}
-
-.classSelect_pageDescript {
-    position: relative;
-    top: -170px;
-    left: 457px;
-    width: 370px;
-    height: 24px;
-    text-align: left;
-    font-size: 30px;
-    font: Regular 30px/31px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #F7F7F7;
-    opacity: 1;
-    /*position: relative;*/
-}
-
-.classSelect_pageDescriptData {
-    position: relative;
-    top: -146px;
-    left: 457px;
-    width: 370px;
-    height: 24px;
-    text-align: left;
-    font-size: 35px;
-    font: Regular 35px/35px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #F7F7F7;
-    opacity: 1;
-    /*position: relative;*/
-}
-
-.classIntro_ImageSpace {
-    position: absolute;
-
-    top: 184px;
-    left: 150px;
-    width: 780px;
-    height: 440px;
-    background: #FFFFFF 0% 0% no-repeat padding-box;
-    opacity: 1;
-}
-
-.classIntro_ClassName {
-    position: absolute;
-
-    top: 654px;
-    width: 100%;
-    height: 67px;
-    text-align: center;
-    font-size: 50px;
-    font: Bold 50px/42px Microsoft Tai Le;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_ClassDescriptArea {
-    position: absolute;
-
-    top: 758px;
-    left: 151px;
-    width: 779px;
-    height: 102px;
-    background: rgba(255,255,255,0.18) 0% 0% no-repeat padding-box;
-    border: 1px solid #707070;
-    border-radius: 15px;
-}
-
-.classIntro_ClassDescriptData {
-    position: absolute;
-
-    top: 28px;
-    width: 100%;
-    height: 41px;
-    text-align: center;
-    font-size: 28px;
-    font: Bold 28px/37px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_classDataArea {
-    position: absolute;
-
-    top: 885px;
-    left: 160px;
-    width: 100px;
-    height: 101px;
-    text-align: left;
-    letter-spacing: NaNpx;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_classData_1 {
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 42px;
-
-    text-align: center;
-
-    font-size: 29px;
-    font: Regular 29px/60px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-.classIntro_parent {
-    position: absolute;
-    top: 47px;
-    left: 0px;
-    width: 100px;
-    margin: 0 auto;
-}
-
-.classIntro_full {
-    float:left;
-    /*top: 1055px;
-    left: 461px;*/
-    width: 33.3px;
-    height: 12px;
-    background: #FE59A5 0% 0% no-repeat padding-box;
-    border-radius: 14px;
-    opacity: 1;
-}
-
-.classIntro_no_full {
-    float:left;
-    /*top: 1055px;
-    left: 461px;*/
-    width: 33.3px;
-    height: 12px;
-    background: #FE59A5 0% 0% no-repeat padding-box;
-    border-radius: 14px;
-    opacity: 0.31;
-}
-
-.classIntro_classData_2 {
-    position: absolute;
-    top: 64px;
-    left: 0px;
-    width: 100%;
-    height: 37px;
-    text-align: left;
-    font-size: 25px;
-    font: Regular 25px/60px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-.classIntro_CALData {
-    position: absolute;
-    top: 885px;
-    left: 270px;
-    width: 102px;
-    height: 102px;
-    border-radius: 61px;
-    border: 1px solid #FFFFFF;
-    opacity: 1;
-}
-.classIntro_CAL_Data {
-    position: absolute;
-    top: 900px;
-    left: 292px;
-    width: 58px;
-    height: 74px;
-    text-align: left;
-    letter-spacing: NaNpx;
-    color: #FFFFFF;
-    opacity: 1;
-    margin-top: -7px;
-}
-
-.classIntro_CAL_Data_S1{
-    top: 0px;
-    left: 0px;
-    width: 55px;
-    height: 45px;
-    text-align: left;
-    font-size: 34px;
-    font: Regular 34px/35px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-.classIntro_CAL_Data_S2{
-    top: 36px;
-    left: 0px;
-    width: 58px;
-    height: 38px;
-    text-align: left;
-    font-size: 29px;
-    font: Regular 29px/35px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-.classIntro_samePeople {
-    position: absolute;
-
-    top: 919px;
-    right: 148px;
-    width: 100%;
-    height: 42px;
-    text-align: right;
-    font-size: 29px;
-    font: Regular 29px/35px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_StartButton {
-    position: absolute;
-
-    top: 1032px;
-    left: 173px;
-    width: 735px;
-    height: 95px;
-    background: transparent radial-gradient(closest-side at 50% 50%, #25528D 0%, #1CA7F6 100%) 0% 0% no-repeat padding-box;
-    border-radius: 48px;
-
-    text-align: center;
-    font-size: 50px;
-    font: Bold 50px/42px Microsoft Tai Le;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_drawLine {
-    top: 1172px;
-    left: 150px;
-    width: 785px;
-    height: 30px;
-    border-top: 5px solid white;
-    position: absolute;
-}
-
-.classIntro_coachArea {
-    position: absolute;
-
-    top: 1214px;
-    left: 172px;
-    width: 735px;
-    height: 193px;
-}
-
-.classIntro_coachImageArea {
-    position: absolute;
-
-    width: 193px;
-    height: 193px;
-}
-
-.classIntro_coachDataArea {
-    position: absolute;
-
-    top: 24px;
-    left: 227px;
-    width: 100%;
-    height: 153px;
-}
-
-.classIntro_coachDataTitle {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 78px;
-    height: 57px;
-    text-align: left;
-    font-size: 39px;
-    font: Bold 39px/48px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-.classIntro_coachDataName {
-    position: absolute;
-    top: 50px;
-    left: 0px;
-    width: 100%;
-    height: 56px;
-    text-align: left;
-    font-size: 43px;
-    font: Bold 43px/48px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-}
-
-.classIntro_coachData2 {
-    position: absolute;
-
-    top: 106px;
-    left: 0px;
-    width: 100%;
-    height: 47px;
-    text-align: left;
-    font-size: 32px;
-    font: Regular 32px/35px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_courseStepTitle {
-    position: absolute;
-
-    top: 1462px;
-    left: 205px;
-    width: 132px;
-    height: 44px;
-    text-align: left;
-    font: Bold 33px/36px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_courseStep {
-    position: absolute;
-
-    width: 239px;
-    height: 239px;
-    border-radius: 120px;
-    border: 7px solid #FFFFFF;
-}
-
-.classIntro_courseStepArea {
-    position: absolute;
-
-    top: 70px;
-    left: 77px;
-    width: 74px;
-    height: 113px;
-    text-align: left;
-    letter-spacing: NaNpx;
-    color: #FFFFFF;
-    opacity: unset;
-}
-
-.classIntro_courseStepArea_title {
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 74px;
-    height: 54px;
-    text-align: left;
-    font-size: 37px;
-    font: Regular 37px/31px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
-
-.classIntro_courseStepArea_value {
-    position: absolute;
-
-    top: 45px;
-    left: 0px;
-    width: 72px;
-    height: 37px;
-    text-align: left;
-    font-size: 28px;
-    font: Bold 28px/31px Microsoft New Tai Lue;
-    letter-spacing: 0px;
-    color: #FFFFFF;
-    opacity: 1;
-}
 
 
 .classBegin_ClassName {
@@ -1728,6 +985,16 @@ to {
     /*left: 215px;*/
     height: 1450px;
     mix-blend-mode:screen;
+    /*width:150%;*/
+}
+
+.classBegin_video2{
+    position: absolute;
+    top: 200px;
+    /*left: 215px;*/
+    height: 1450px;
+    mix-blend-mode:screen;
+    display:none;
     /*width:150%;*/
 }
 
