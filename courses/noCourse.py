@@ -11,7 +11,7 @@ class NoCourse(object):
 
     def __call__(self, img):
         if self.is_body_in_box():
-            behavior = self.analysis.predict(img)
+            behavior = self.analysis.predict()
             self.set_api("最後動作", behavior)
         return self
 

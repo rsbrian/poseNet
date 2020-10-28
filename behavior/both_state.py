@@ -7,7 +7,7 @@ class Clicked(Behavior):
         super().__init__(state)
         self.behavior = behavior
 
-    def __call__(self, img, points, face, history):
+    def __call__(self, points, face, history):
         self.history = history
 
         self.state.behavior = self.behavior
@@ -22,11 +22,11 @@ class Outside(Behavior):
     def __init__(self, state):
         super().__init__(state)
 
-    def __call__(self, img, points, face, history):
+    def __call__(self, points, face, history):
         self.history = history
 
-        if self.is_left_point_in_thres(img, points, face) and \
-                self.is_right_point_in_thres(img, points, face):
+        if self.is_left_point_in_thres(points, face) and \
+                self.is_right_point_in_thres(points, face):
             self.state.change(Inside(self.state))
 
         if self.is_drop_the_hands(points):
@@ -40,11 +40,11 @@ class Inside(Behavior):
         self.counter = Counter()
         self.time = 0.3
 
-    def __call__(self, img, points, face, history):
+    def __call__(self, points, face, history):
         self.history = history
 
-        if not (self.is_left_point_in_thres(img, points, face) and
-                self.is_right_point_in_thres(img, points, face)):
+        if not (self.is_left_point_in_thres(points, face) and
+                self.is_right_point_in_thres(points, face)):
             self.state.change(Outside(self.state))
 
         if not (self.check_left_length() and self.check_right_length()):
@@ -66,14 +66,14 @@ class Open(Behavior):
         self.behavior = ""
         self.left_wrist = []
 
-    def __call__(self, img, points, face):
+    def __call__(self, points, face):
         self.append(points, face)
         if self.state is None:
-            if self.is_left_point_in_thres(img, points, face) and \
-                    self.is_right_point_in_thres(img, points, face):
+            if self.is_left_point_in_thres(points, face) and \
+                    self.is_right_point_in_thres(points, face):
                 self.state = Inside(self)
         else:
-            self.state(img, points, face, self.history)
+            self.state(points, face, self.history)
 
         return self.behavior
 
@@ -98,7 +98,7 @@ class BothClose(object):
     def __init__(self, analysis):
         self.analysis = analysis
 
-    def __call__(self, img, points, face):
+    def __call__(self, points, face):
         if self.is_left_upper_than_line(points) and \
                 self.is_right_upper_than_line(points):
             self.analysis.change_both_state(Open(self.analysis))

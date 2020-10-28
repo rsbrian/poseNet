@@ -22,9 +22,9 @@ import pickle
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
-parser.add_argument('--save', type=int, default=0)
-parser.add_argument('--cam_id', type=int, default=2)
-parser.add_argument('--socket', type=int, default=1)
+parser.add_argument('--save', type=int, default=1)
+parser.add_argument('--cam_id', type=int, default=-1)
+parser.add_argument('--socket', type=int, default=0)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
 parser.add_argument('--cam_width', type=int, default=540)
@@ -70,7 +70,7 @@ def main():
                 control.draw_by_points(img, (200, 200, 0))
 
                 course = control.choose_course()
-                api = course(img).get_api()
+                api = course().get_api()
                 # api = course().get_api()
                 control.send(server, api)
 

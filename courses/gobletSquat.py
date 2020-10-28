@@ -96,6 +96,14 @@ class HandsUp(object):
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
+        elif self.brain.is_pose("knee_to_toe"):
+            print("膝蓋請對齊腳尖，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "膝蓋請對其腳尖，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
         elif self.brain.is_pose("hands_down_overheadsquat"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
@@ -124,6 +132,14 @@ class HandsDown(object):
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
+        elif self.brain.is_pose("knee_to_toe"):
+            print("膝蓋請對齊腳尖，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "膝蓋請對其腳尖，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
         """
         elif self.brain.is_pose("hold_dumbbells_on_chest"):
             # print("持啞鈴於胸口")

@@ -133,7 +133,7 @@ class Behavior(object):
     def norm(self, x1, y1, x2, y2):
         return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
 
-    def is_point_in_thres(self, img, points, face):
+    def is_point_in_thres(self, points, face):
         rwx = points["left_wrist_x"]
         rwy = points["left_wrist_y"]
         rsx = points["left_shoulder_x"]
@@ -143,23 +143,23 @@ class Behavior(object):
         boundary = self.get_boundary(rsx, rsy, fx, fy)
         check_list = self.compare_boundary(rwx, rwy, boundary)
 
-        right_bound = boundary[0]
-        left_bound = boundary[1]
-        upper_bound = boundary[2]
-        lower_bound = boundary[3]
-        h, w, c = img.shape
-        cv2.line(
-            img,
-            (int(left_bound), 0), (int(left_bound), h), (0, 200, 200), 3)
-        cv2.line(
-            img,
-            (0, int(upper_bound)), (w, int(upper_bound)), (0, 200, 200), 3)
-        cv2.line(
-            img,
-            (int(right_bound), 0), (int(right_bound), h), (0, 200, 200), 3)
-        cv2.line(
-            img,
-            (0, int(lower_bound)), (w, int(lower_bound)), (0, 200, 200), 3)
+        # right_bound = boundary[0]
+        # left_bound = boundary[1]
+        # upper_bound = boundary[2]
+        # lower_bound = boundary[3]
+        # h, w, c = img.shape
+        # cv2.line(
+        #     img,
+        #     (int(left_bound), 0), (int(left_bound), h), (0, 200, 200), 3)
+        # cv2.line(
+        #     img,
+        #     (0, int(upper_bound)), (w, int(upper_bound)), (0, 200, 200), 3)
+        # cv2.line(
+        #     img,
+        #     (int(right_bound), 0), (int(right_bound), h), (0, 200, 200), 3)
+        # cv2.line(
+        #     img,
+        #     (0, int(lower_bound)), (w, int(lower_bound)), (0, 200, 200), 3)
         return all(check_list)
 
     def is_drop_the_hands(self, points):

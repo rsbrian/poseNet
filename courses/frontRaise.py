@@ -94,6 +94,25 @@ class Action(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
+        
+        elif self.brain.is_pose("heands_track_is_wrong"):
+            print("手移動軌跡錯誤，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "手移動軌跡錯誤，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+        
+        elif self.brain.is_pose("hands_over_shoulder_front"):
+            print("手不要舉太高，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "手不要舉太高，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+            
 
         elif self.brain.is_pose("hands_up_left") and self.course.number == 0:
             # print("Bar1 Open")
@@ -150,6 +169,24 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
+        
+        elif self.brain.is_pose("heands_track_is_wrong"):
+            print("手移動軌跡錯誤，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "手移動軌跡錯誤，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+        
+        elif self.brain.is_pose("hands_over_shoulder_front"):
+            print("手不要舉太高，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "手不要舉太高，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
 
         elif self.brain.is_pose("hands_down_frontleft") and self.course.number == 0:
             # print("Bar1 Close", self.counter.result())
@@ -200,6 +237,22 @@ class HandsDown(object):
             print("請回到預備動作重新開始")
             self.course.api.course_action["action"]["alert"] = [
                 "請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+        elif self.brain.is_pose("hands_over_shoulder_front"):
+            print("手不要舉太高，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "手不要舉太高，請回到預備動作重新開始"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
+            self.course.change(
+                ErrorHandleing(self.course, self.brain))
+        elif self.brain.is_pose("heands_track_is_wrong"):
+            print("手移動軌跡錯誤，請回到預備動作重新開始")
+            self.course.api.course_action["action"]["alert"] = [
+                "手移動軌跡錯誤，請回到預備動作重新開始"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(

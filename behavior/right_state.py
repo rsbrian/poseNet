@@ -11,13 +11,13 @@ class Outside(Behavior):
         self.behavior = behavior
         self.count = 0
 
-    def __call__(self, img, points, face, history):
+    def __call__(self, points, face, history):
         self.history = history
 
-        if self.is_point_in_thres(img, points, face) and not self.move(points):
+        if self.is_point_in_thres(points, face) and not self.move(points):
             self.state.change(InsideNotMove(self.state))
 
-        elif self.is_point_in_thres(img, points, face) and self.move(points):
+        elif self.is_point_in_thres(points, face) and self.move(points):
             self.state.change(InsideMovingNoCenter(self.state))
 
         if self.behavior == "向下選取" and not self.is_drop_the_hands(points):
@@ -45,10 +45,10 @@ class InsideMovingNoCenter(Behavior):
     def __init__(self, state):
         super().__init__(state)
 
-    def __call__(self, img, points, face, history):
+    def __call__(self, points, face, history):
         self.history = history
         self.find_closest_point_and_cut()
-        if not self.is_point_in_thres(img, points, face):
+        if not self.is_point_in_thres(points, face):
             behavior = self.predict_behavior()
             self.state.history = {}
             self.state.change(Outside(self.state, behavior))
@@ -61,10 +61,10 @@ class InsideMovingHaveCenter(Behavior):
     def __init__(self, state):
         super().__init__(state)
 
-    def __call__(self, img, points, face, history):
+    def __call__(self, points, face, history):
         self.history = history
 
-        if not self.is_point_in_thres(img, points, face):
+        if not self.is_point_in_thres(points, face):
             behavior = self.predict_behavior()
             self.state.history = {}
             self.state.change(Outside(self.state, behavior))
@@ -80,7 +80,7 @@ class InsideNotMove(Behavior):
         self.center = None
         self.time = 0.6
 
-    def __call__(self, img, points, face, history):
+    def __call__(self, points, face, history):
         self.history = history
 
         if self.move(points) and self.center is None:
@@ -117,10 +117,10 @@ class Open(Behavior):
         self.behavior = ""
         self.left_wrist = []
 
-    def __call__(self, img, points, face):
+    def __call__(self, points, face):
         self.append(points, face)
         if self.state is None:
-            if not self.is_point_in_thres(img, points, face):
+            if not self.is_point_in_thres(points, face):
                 self.state = Outside(self, self.behavior)
 
             elif not self.move(points):
@@ -131,7 +131,7 @@ class Open(Behavior):
 
         else:
             # print(self.state.__class__.__name__)
-            self.state(img, points, face, self.history)
+            self.state(points, face, self.history)
 
         return self.behavior
 
@@ -156,7 +156,7 @@ class RightClose(object):
     def __init__(self, analysis):
         self.analysis = analysis
 
-    def __call__(self, img, points, face):
+    def __call__(self, points, face):
         if self.is_upper_than_line(points):
             self.analysis.change_right_state(Open(self.analysis))
         return ""
@@ -169,12 +169,11 @@ class RightClose(object):
     def norm(self, x1, y1, x2, y2):
         return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
 
-    def is_inside_the_circle(self, img, points):
+    def is_inside_the_circle(self, points):
         x = points["right_wrist_x"]
         y = points["right_wrist_y"]
         x1 = points["right_shoulder_x"]
         y1 = points["right_shoulder_y"]
         r = 75
         dist = self.norm(x, y, x1, y1)
-        cv2.circle(img, (int(x1), int(y1)), r, (0, 200, 200), 3)
         return dist < r

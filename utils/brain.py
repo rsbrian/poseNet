@@ -1,5 +1,4 @@
 import copy
-import numpy as np
 from api.human import Human
 
 
@@ -22,16 +21,6 @@ class Brain(object):
     def reset_state(self, points, angles):
         self.human.points = points
         self.human.angles = angles
-
-    def add_filter(self, kalman):
-        x = self.human.points["right_wrist_x"]
-        y = self.human.points["right_wrist_y"]
-        current_position = np.array([[np.float32(x)], [np.float32(y)]])
-        kalman.correct(current_position)
-        current_prediction = kalman.predict()
-        px, py = current_prediction[0], current_prediction[1]
-        self.human.points["right_wrist_x"] = px
-        self.human.points["right_wrist_y"] = py
 
     def add_median_filter(self):
         self.stored_points.append(copy.deepcopy(self.human.points))
@@ -94,6 +83,7 @@ class Brain(object):
             "shoulder_width_apart": self.shoulder_width_apart,
             "drop_hand_natrually": self.drop_hand_natrually,
             "hands_over_shoulder": self.hands_over_shoulder,
+            "hands_over_shoulder_front": self.hands_over_shoulder_front,
             "lying_down": self.lying_down,
             "hold_dumbbel_shoulder": self.hold_dumbbel_shoulder,
             "raised_with_one_hand": self.raised_with_one_hand,
@@ -108,7 +98,9 @@ class Brain(object):
             "hand_too_straight": self.hand_too_straight,
             "left_elbow_moved": self.left_elbow_moved,
             "right_elbow_moved": self.right_elbow_moved,
+            "knee_to_toe": self.knee_to_toe,
             "hands_lower_than_shoulder": self.hands_lower_than_shoulder,
+            "heands_track_is_wrong": self.heands_track_is_wrong,
             "hands_up": self.hands_up,
             "hands_up_down": self.hands_up_down,
             "hands_up_left": self.hands_up_left,
@@ -163,6 +155,10 @@ class Brain(object):
         return self.noabs_compare("left_shoulder_y", "left_wrist_y", ">", 40) or \
             self.noabs_compare("right_shoulder_y", "right_wrist_y", ">", 40)
 
+    def hands_over_shoulder_front(self):
+        return self.noabs_compare("left_shoulder_y", "left_wrist_y", ">", 100) or \
+            self.noabs_compare("right_shoulder_y", "right_wrist_y", ">", 100)
+
     def left_elbow_expansion(self):  # 左手肘外擴
         return self.abs_compare("left_elbow_x", "left_elbow_x_temp", ">", 40)
 
@@ -173,8 +169,12 @@ class Brain(object):
         return self.human.angles["right_elbow_angle"] > 170
 
     def hands_lower_than_shoulder(self):
-        return self.noabs_compare("right_elbow_y", "right_shoulder", ">", 50) or \
-            self.noabs_compare("left_elbow_y", "left_shoulder", ">", 50)
+        return self.noabs_compare("right_elbow_y", "right_shoulder", ">", 30) or \
+            self.noabs_compare("left_elbow_y", "left_shoulder", ">", 30)
+
+    def heands_track_is_wrong(self):
+        return self.abs_compare("right_wrist_x", "right_shoulder_x", ">", 100) or \
+            self.abs_compare("left_wrist_x", "left_shoulder_x", ">", 100)
 
     def left_elbow_moved(self):
         return self.abs_compare("left_elbow_y", "left_elbow_y_temp", ">", 40) or \
@@ -183,6 +183,10 @@ class Brain(object):
     def right_elbow_moved(self):
         return self.abs_compare("right_elbow_y", "right_elbow_y_temp", ">", 40) or \
             self.abs_compare("right_elbow_x", "right_elbow_x_temp", ">", 40)
+
+    def knee_to_toe(self):  # 膝蓋請對其腳尖
+        return self.noabs_compare("right_knee_x", "right_ankle_x", ">", 20) or \
+            self.noabs_compare("left_knee_x", "left_ankle_x", "<", -20)
 
     def hold_dumbbel_shoulder(self):  # 雙手持啞鈴於肩膀兩側
         return self.abs_compare("right_shoulder_y", "right_elbow_y", ">", 50) or \
@@ -219,8 +223,8 @@ class Brain(object):
             self.noabs_compare("left_ankle_x", "left_shoulder_x", "<", 20)
 
     def hand_to_knee(self):  # 手脘放到膝蓋旁
-        return self.abs_compare("right_wrist_y", "right_knee_y", ">", 50) or \
-            self.abs_compare("left_wrist_y", "left_knee_y", ">", 50)
+        return self.abs_compare("right_wrist_y", "right_knee_y", ">", 70) or \
+            self.abs_compare("left_wrist_y", "left_knee_y", ">", 70)
 
     def sit_down(self):  # 坐姿
         return self.abs_compare("right_knee_x", "right_ankle_x", ">", 30) or \

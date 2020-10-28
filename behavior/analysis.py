@@ -14,12 +14,12 @@ class Analysis(object):
         self.left_state = LeftClose(self)
         self.both_state = BothClose(self)
 
-    def predict(self, img):
+    def predict(self):
         face = self.brain.face
         points = self.brain.human.points
-        right_behavior = self.right_state(img, points, face)
-        left_behavior = self.left_state(img, points, face)
-        both_behavior = self.both_state(img, points, face)
+        right_behavior = self.right_state(points, face)
+        left_behavior = self.left_state(points, face)
+        both_behavior = self.both_state(points, face)
         if both_behavior != "":
             return both_behavior
         if left_behavior != "":
