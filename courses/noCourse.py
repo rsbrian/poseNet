@@ -9,7 +9,7 @@ class NoCourse(object):
         self.view = view
         self.analysis = Analysis(self.brain)
 
-    def __call__(self, img):
+    def __call__(self):
         if self.is_body_in_box():
             behavior = self.analysis.predict()
             self.set_api("最後動作", behavior)

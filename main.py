@@ -48,6 +48,15 @@ third_party = ThirdParty()
 reader = zxing.BarCodeReader()
 
 
+def extract_qrcode(img):
+    cv2.imwrite("image/test.png", img)
+    barcode = reader.decode("image/test.png")
+    try:
+        print(barcode.parsed)
+    except Exception as e:
+        print(e)
+
+
 def main():
     with tf.Session() as sess:
         global server
@@ -59,12 +68,8 @@ def main():
                 break
 
             img = camera.preprocessing(img)
-            # cv2.imwrite("image/test.png", img)
-            # barcode = reader.decode("image/test.png")
-            # try:
-            #     print(barcode.parsed)
-            # except Exception as e:
-            #     print(e)
+            # extract_qrcode(img)
+
             original_img = img.copy()
 
             img, multi_points = camera.get_multi_skeleton_from(
@@ -79,7 +84,6 @@ def main():
 
                 course = control.choose_course()
                 api = course().get_api()
-                # api = course().get_api()
                 control.send(server, api)
 
             control.show(img)
