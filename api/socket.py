@@ -22,6 +22,10 @@ class Api(object):
             'function': 'exercise_status',
             '最後動作': ''
         }
+        self._qrcode = {
+            "function": "qrcode"
+            "content": ""
+        }
 
     @property
     def course(self):
@@ -54,3 +58,11 @@ class Api(object):
     @behavior.setter
     def behavior(self, key, value):
         self._behavior[key] = value
+
+    @property
+    def qrcode(self):
+        return self._qrcode
+
+    @qrcode.setter
+    def qrcode(self, key, value):
+        self._qrcode[key] = value

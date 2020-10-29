@@ -11,6 +11,7 @@ import argparse
 import threading
 import numpy as np
 import tensorflow as tf
+import zxing
 
 from camera import Camera
 from controller import Controller
@@ -22,8 +23,8 @@ import pickle
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
-parser.add_argument('--save', type=int, default=1)
-parser.add_argument('--cam_id', type=int, default=-1)
+parser.add_argument('--save', type=int, default=0)
+parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--socket', type=int, default=0)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
@@ -44,6 +45,7 @@ saved_names = ["all.avi", "only_in_box.avi"]
 camera = Camera(args, video_name, saved_names)
 control = Controller(args)
 third_party = ThirdParty()
+reader = zxing.BarCodeReader()
 
 
 def main():
@@ -57,6 +59,12 @@ def main():
                 break
 
             img = camera.preprocessing(img)
+            # cv2.imwrite("image/test.png", img)
+            # barcode = reader.decode("image/test.png")
+            # try:
+            #     print(barcode.parsed)
+            # except Exception as e:
+            #     print(e)
             original_img = img.copy()
 
             img, multi_points = camera.get_multi_skeleton_from(
