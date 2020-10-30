@@ -23,7 +23,7 @@ class Api(object):
             '最後動作': ''
         }
         self._qrcode = {
-            "function": "qrcode"
+            "function": "qrcode",
             "content": ""
         }
 
