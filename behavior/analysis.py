@@ -13,6 +13,7 @@ class Analysis(object):
         self.right_state = RightClose(self)
         self.left_state = LeftClose(self)
         self.both_state = BothClose(self)
+        self.draw_shapes = []
 
     def predict(self):
         face = self.brain.face

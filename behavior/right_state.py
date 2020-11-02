@@ -164,6 +164,9 @@ class RightClose(object):
     def is_upper_than_line(self, points):
         y = points["right_wrist_y"]
         thres = self.analysis.calc_right_thres(points, 2)
+        self.analysis.draw_shapes.append(
+            ("line", -1, thres)
+        )
         return y < thres
 
     def norm(self, x1, y1, x2, y2):

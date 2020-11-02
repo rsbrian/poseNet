@@ -1,31 +1,31 @@
 # !/home/iiidsi/anaconda3/bin/python
 # -*- coding: utf-8 -*-
 # 2020/10/26 16:30
+from pyzbar import pyzbar
 import cv2
 import json
 import time
 import copy
+import pickle
 import posenet
 import datetime
 import argparse
 import threading
 import numpy as np
 import tensorflow as tf
-import zxing
 
 from camera import Camera
 from controller import Controller
 from third_party import ThirdParty
 from websocket_server import WebsocketServer
-
-import pickle
+from zxing import BarCodeReader
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=0)
 parser.add_argument('--cam_id', type=int, default=-1)
-parser.add_argument('--socket', type=int, default=0)
+parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
 parser.add_argument('--cam_width', type=int, default=540)
@@ -40,21 +40,25 @@ print("Num of GPUs", physical_devices)
 if len(physical_devices):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-video_name = "all.avi"
+video_name = "only_in_box.avi"
 saved_names = ["all.avi", "only_in_box.avi"]
 camera = Camera(args, video_name, saved_names)
 control = Controller(args)
-third_party = ThirdParty()
-reader = zxing.BarCodeReader()
+third_party = ThirdParty(args)
+# reader = BarCodeReader()
 
 
 def extract_qrcode(img):
-    cv2.imwrite("image/test.png", img)
-    barcode = reader.decode("image/test.png")
-    try:
-        print(barcode.parsed)
-    except Exception as e:
-        print(e)
+    bars = pyzbar.decode(img)
+    for bar in bars:
+        barcodeData = bar.data.decode("utf-8")
+        print(barcodeData)
+    # cv2.imwrite("image/test.png", img)
+    # barcode = reader.decode("image/test.png")
+    # try:
+    #     print(barcode.parsed)
+    # except Exception as e:
+    #     print(e)
 
 
 def main():
@@ -70,16 +74,14 @@ def main():
             img = camera.preprocessing(img)
             # extract_qrcode(img)
 
-            original_img = img.copy()
+            multi_points = third_party.get_multi_skeleton_from(img)
+            points, face, all_faces = camera.one_person_filter(multi_points)
 
-            img, multi_points = camera.get_multi_skeleton_from(
-                img, third_party)
-            img, points, face = camera.one_person_filter(img, multi_points)
             control.loading(face)
-            camera.save(original_img, "all")
+            # camera.save(original_img, "all")
 
             if control.update_model(points):
-                camera.save(original_img, "only_in_box")
+                # camera.save(original_img, "only_in_box")
                 control.draw_by_points(img, (200, 200, 0))
 
                 course = control.choose_course()

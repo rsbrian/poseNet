@@ -117,30 +117,27 @@ def get_skeleton(
 
 
 def get_all_skeleton(
-        img, instance_scores, keypoint_scores, keypoint_coords,
+        instance_scores, keypoint_scores, keypoint_coords,
         min_pose_confidence=0.5, min_part_confidence=0.5):
     adjacent_keypoints = []
 
-    for ii, score in enumerate(instance_scores):
+    for i, score in enumerate(instance_scores):
         if score < min_pose_confidence:
             continue
         new_keypoints = get_adjacent_keypoints(
-            keypoint_scores[ii, :], keypoint_coords[ii, :, :], min_part_confidence)
+            keypoint_scores[i, :], keypoint_coords[i, :, :], min_part_confidence)
 
         face_points = []
-        for ks, kc in zip(keypoint_scores[ii, :5], keypoint_coords[ii, :5, :5]):
+        for ks, kc in zip(keypoint_scores[i, :5], keypoint_coords[i, :5, :5]):
             if ks < min_part_confidence:
                 continue
-            x = int(kc[1])
-            y = int(kc[0])
-            confidence = int(10 * ks)
+            x = kc[1]
+            y = kc[0]
+            confidence = ks
             face_points.append([x, y, confidence])
-            # out_img[y-r:y+r, x-r:x+r] = 0
-            # cv2.circle(img, (int(kc[1]), int(
-            #     kc[0])), int(10 * ks), (255, 255, 0), -1)
         adjacent_keypoints.append([new_keypoints, face_points])
 
-    return img, adjacent_keypoints
+    return adjacent_keypoints
 
 
 def draw_skel_and_kp(

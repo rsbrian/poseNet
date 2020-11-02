@@ -51,28 +51,25 @@ class Camera(object):
         img = cv2.resize(img, (self.args.cam_width, self.args.cam_height))
         return img
 
-    def get_multi_skeleton_from(self, img, third_party):
-        return third_party.get_multi_skeleton(img, self.args)
-
-    def one_person_filter(self, img, points):
-        result = []
+    def one_person_filter(self, multi_points):
+        face = ()
+        points = []
+        all_faces = []
         minmimum = np.inf
         center = self.args.cam_width // 2
-        (rx, ry, rr) = (None, None, None)
-        for i in range(len(points)):
-            face_points = points[i][1].copy()
+        for i in range(len(multi_points)):
+            face_points = multi_points[i][1].copy()
 
             if len(face_points) > 0:
                 x = np.mean([point[0] for point in face_points])
                 y = np.mean([point[1] for point in face_points])
                 r = np.mean([point[2] for point in face_points])
-                cv2.circle(img, (int(x), int(y)), int(r), (150, 150, 0), -1)
+                all_faces.append((x, y, r))
+
                 diff = abs(x - center)
                 if diff < minmimum:
-                    result = points[i][0].copy()
-                    rx, ry, rr = x, y, r
-                    cv2.circle(img, (int(rx), int(ry)),
-                               int(rr), (255, 255, 0), -1)
+                    points = multi_points[i][0].copy()
+                    face = (x, y, r)
                     minmimum = diff
 
-        return img, result, (rx, ry, rr)
+        return points, face, all_faces

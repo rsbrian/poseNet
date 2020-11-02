@@ -62,9 +62,7 @@ class Home(object):
         if self.is_body_in_box(leg):
             self.state()
             print(self.api.course_action["action"]["score"])
-            name = self.state.__class__.__name__
-            # if name == "Action" or name == "PrepareTest":
-            self.cancel_state()
+            # self.cancel_state()
         return self
 
     def change_cancel_state(self, new_state):

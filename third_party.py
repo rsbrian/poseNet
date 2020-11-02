@@ -2,7 +2,8 @@ import posenet
 
 
 class ThirdParty(object):
-    def __init__(self):
+    def __init__(self, args):
+        self.args = args
         self.sess = None
         self.model_cfg = None
         self.model_outputs = None
@@ -11,11 +12,11 @@ class ThirdParty(object):
         self.sess = sess
         self.model_cfg, self.model_outputs = posenet.load_model(model_id, sess)
 
-    def predict(self, img, args):
+    def predict(self, img):
         output_stride = self.model_cfg['output_stride']
         input_image, display_image, output_scale = posenet.read_img(
             img,
-            scale_factor=args.scale_factor,
+            scale_factor=self.args.scale_factor,
             output_stride=output_stride)
         heatmaps_result, offsets_result, displacement_fwd_result, displacement_bwd_result = self.sess.run(
             self.model_outputs,
@@ -31,10 +32,9 @@ class ThirdParty(object):
         keypoint_coords *= output_scale
         return display_image, pose_scores, keypoint_scores, keypoint_coords
 
-    def get_multi_skeleton(self, img, args):
-        img, pose_scores, keypoint_scores, keypoint_coords = self.predict(
-            img, args)
+    def get_multi_skeleton_from(self, img):
+        img, pose_scores, keypoint_scores, keypoint_coords = self.predict(img)
         return posenet.get_all_skeleton(
-            img, pose_scores, keypoint_scores, keypoint_coords,
+            pose_scores, keypoint_scores, keypoint_coords,
             min_pose_confidence=0.4, min_part_confidence=0.4,
         )
