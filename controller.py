@@ -58,12 +58,11 @@ class Controller(object):
     def choose_course(self):
         return self.my_server.get_route(self.brain, self.view)
 
-    def show(self, image):
-        if self.args.show:
-            self.view.show(image)
-        else:
-            image = np.zeros((10, 10))
-            cv2.imshow("image", image)
+    def update(self, img):
+        self.view.img = img
+
+    def show(self, need_to_draw, clr, thickness):
+        self.view.show(need_to_draw, clr, thickness)
 
     def destroy(self):
         self.view.destroy()

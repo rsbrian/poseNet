@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 
 class View(object):
@@ -7,6 +8,7 @@ class View(object):
         self._height = None
         self._width = None
         self._rotate = None
+        self._img = None
 
     @property
     def height(self):
@@ -31,6 +33,14 @@ class View(object):
     @rotate.setter
     def rotate(self, new_rotate):
         self._rotate = new_rotate
+
+    @property
+    def img(self):
+        return self._img
+
+    @img.setter
+    def img(self, new_img):
+        self._img = new_img
 
     def setting_calibrate_box(self):
         if self.height < self.width:
@@ -72,24 +82,32 @@ class View(object):
             self.brain.compare("left_ankle_y", "<", y2)
         return c1 and c2 and c3 and c4
 
-    def draw_skeleton(self, img, points, clr, thickness):
+    def draw_skeleton(self, points, clr, thickness):
         cv2.polylines(
-            img, points,
+            self.img, points,
             isClosed=False, color=clr, thickness=thickness)
 
-    def draw_circle(self, img, circle):
-        x, y, r, clr, t = circle
-        cv2.circle(img, (int(x), int(y)), r, clr, thickness=t)
+    def draw_circle(self, circle, clr, thickness):
+        x, y, r = circle
+        cv2.circle(
+            self.img, (int(x), int(y)), int(r * 10),
+            color=clr, thickness=thickness)
 
-    def draw_line(self, img, line):
-        h, w, c = img.shape
-        y, clr, t = line
-        cv2.line(img, (0, int(y)), (w, int(y)), clr, t)
+    def draw_list(self, need_to_draw, clr, thickness):
+        temp = need_to_draw[0]
+        if isinstance(temp, tuple):
+            for draw in need_to_draw:
+                self.draw_circle(draw, clr, thickness)
+        elif type(temp).__module__ == np.__name__:
+            self.draw_skeleton(need_to_draw, clr, thickness)
 
-    def show(self, image):
-        x1, x2, y1, y2 = self.setting_calibrate_box()
-        cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 3)
-        cv2.imshow('posenet', image)
+    def show(self, need_to_draw, clr, thickness):
+        if len(need_to_draw) == 0:
+            return
+        if isinstance(need_to_draw, list):
+            self.draw_list(need_to_draw, clr, thickness)
+        elif isinstance(need_to_draw, tuple):
+            self.draw_circle(need_to_draw, clr, thickness)
 
     def destroy(self):
         cv2.destroyAllWindows()

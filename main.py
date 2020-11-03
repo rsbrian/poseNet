@@ -1,7 +1,6 @@
 # !/home/iiidsi/anaconda3/bin/python
 # -*- coding: utf-8 -*-
 # 2020/10/26 16:30
-from pyzbar import pyzbar
 import cv2
 import json
 import time
@@ -14,11 +13,11 @@ import threading
 import numpy as np
 import tensorflow as tf
 
+from pyzbar import pyzbar
 from camera import Camera
 from controller import Controller
 from third_party import ThirdParty
 from websocket_server import WebsocketServer
-from zxing import BarCodeReader
 
 
 parser = argparse.ArgumentParser()
@@ -40,7 +39,7 @@ print("Num of GPUs", physical_devices)
 if len(physical_devices):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-video_name = "only_in_box.avi"
+video_name = "videos/test_video.avi"
 saved_names = ["all.avi", "only_in_box.avi"]
 camera = Camera(args, video_name, saved_names)
 control = Controller(args)
@@ -77,19 +76,22 @@ def main():
             multi_points = third_party.get_multi_skeleton_from(img)
             points, face, all_faces = camera.one_person_filter(multi_points)
 
-            control.loading(face)
-            # camera.save(original_img, "all")
+            # control.loading(face)
+            # # camera.save(original_img, "all")
 
-            if control.update_model(points):
-                # camera.save(original_img, "only_in_box")
-                control.draw_by_points(img, (200, 200, 0))
+            # if control.update_model(points):
+            #     # camera.save(original_img, "only_in_box")
+            #     control.draw_by_points(img, (200, 200, 0))
 
-                course = control.choose_course()
-                api = course().get_api()
-                control.send(server, api)
+            #     course = control.choose_course()
+            #     api = course().get_api()
+            #     control.send(server, api)
 
-            control.show(img)
-            # cv2.imshow("show", img)
+            control.update(img)
+            control.show(all_faces, (0, 100, 100), -1)
+            control.show(points, (200, 200, 0), 3)
+            control.show(face, (200, 200, 0), -1)
+            cv2.imshow("img", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
