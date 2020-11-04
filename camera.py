@@ -73,3 +73,17 @@ class Camera(object):
                     minmimum = diff
 
         return points, face, all_faces
+
+    def setting_calibrate_box(self):
+        if self.height < self.width:
+            segment_width = self.height // 3
+            segment_height = self.width // 6
+        else:
+            segment_width = self.width // 3
+            segment_height = self.height // 6
+
+        x1 = segment_width * 1 + 10  # 1
+        x2 = segment_width * 2 - 10  # 2
+        y1 = segment_height * 4 + 50  # 4
+        y2 = segment_height * 5 + 100  # 5
+        return x1, x2, y1, y2

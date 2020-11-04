@@ -44,7 +44,6 @@ saved_names = ["all.avi", "only_in_box.avi"]
 camera = Camera(args, video_name, saved_names)
 control = Controller(args)
 third_party = ThirdParty(args)
-# reader = BarCodeReader()
 
 
 def extract_qrcode(img):
