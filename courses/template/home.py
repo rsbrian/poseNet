@@ -46,9 +46,8 @@ class NotCancel(object):
 
 
 class Home(object):
-    def __init__(self, brain, view):
+    def __init__(self, brain):
         self.brain = brain
-        self.view = view
         self.error = 0
         self.number = -1
         self.total_score = 0
@@ -70,8 +69,8 @@ class Home(object):
 
     def is_body_in_box(self, leg):
         c = self.brain.human.points != {}
-        c1 = self.view.calibrate_human_body_leg() and c
-        c2 = self.view.calibrate_human_body() and c
+        c1 = self.brain.calibrate_human_body_leg() and c
+        c2 = self.brain.calibrate_human_body() and c
         if leg is None:
             return c2
         else:

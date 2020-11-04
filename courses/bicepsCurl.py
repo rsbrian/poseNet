@@ -11,8 +11,8 @@ from courses.template.error_handleing import ErrorHandleingTemplate
 
 
 class BicepsCurl(Home):
-    def __init__(self, brain, view):
-        super().__init__(brain, view)
+    def __init__(self, brain):
+        super().__init__(brain)
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
@@ -91,7 +91,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-        
+
         elif self.brain.is_pose("prepare_action"):
             print("請回到預備動作重新開始")
             self.course.api.course_action["action"]["alert"] = [
@@ -100,6 +100,7 @@ class Action(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
+
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -214,6 +215,7 @@ class HandsDown(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
+
 
 class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):

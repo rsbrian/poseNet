@@ -11,8 +11,8 @@ from courses.template.error_handleing import ErrorHandleingTemplate
 
 
 class BentLegPushHip(Home):
-    def __init__(self, brain, view):
-        super().__init__(brain, view)
+    def __init__(self, brain):
+        super().__init__(brain)
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
@@ -66,7 +66,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-                
+
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -92,7 +92,6 @@ class HandsUp(object):
             self.counter.record("up")
             self.course.change(
                 HandsDown(self.course, self.brain, self.counter))
-        
 
     def is_time_small_than(self, time_threshold):
         time = self.counter.result()
@@ -111,7 +110,7 @@ class HandsDown(object):
         self.counter.start()
         if self.brain.is_pose("ending_down"):
             # print("Bar2 Close", self.counter.result())
-            #self.brain.reset_temp_points()
+            # self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))

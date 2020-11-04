@@ -11,8 +11,8 @@ from courses.template.error_handleing import ErrorHandleingTemplate
 
 
 class BentLaterRaise(Home):
-    def __init__(self, brain, view):
-        super().__init__(brain, view)
+    def __init__(self, brain):
+        super().__init__(brain)
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
@@ -52,6 +52,7 @@ class Prepare(object):
         self.course.set_time("lastTime")
         self.course.set_time("startPoint")
         return self.counter.result() > 3
+
 
 class PrepareTest(object):
     def __init__(self, course, brain):
@@ -109,7 +110,7 @@ class Action(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-        
+
         elif self.brain.is_pose("prepare_action"):
             print("請回到預備動作重新開始")
             self.course.api.course_action["action"]["alert"] = [
@@ -118,14 +119,14 @@ class Action(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-        
+
         elif self.brain.is_pose("hands_up"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-        
+
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -213,6 +214,7 @@ class HandsDown(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
+
 
 class Evaluation(object):
     def __init__(self, course, brain, counter):

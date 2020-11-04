@@ -3,11 +3,10 @@ from behavior.analysis import Analysis
 
 
 class NoCourse(object):
-    def __init__(self, brain, view):
+    def __init__(self, brain):
         self.api = Api()
         self.brain = brain
-        self.view = view
-        self.analysis = Analysis(self.brain)
+        self.analysis = Analysis(brain)
 
     def __call__(self):
         if self.is_body_in_box():
@@ -16,7 +15,7 @@ class NoCourse(object):
         return self
 
     def is_body_in_box(self):
-        return self.view.calibrate_human_body()
+        return self.brain.human.points != {} and self.brain.calibrate_human_body()
 
     def get_api(self):
         return self.api.behavior

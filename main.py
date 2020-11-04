@@ -51,12 +51,6 @@ def extract_qrcode(img):
     for bar in bars:
         barcodeData = bar.data.decode("utf-8")
         print(barcodeData)
-    # cv2.imwrite("image/test.png", img)
-    # barcode = reader.decode("image/test.png")
-    # try:
-    #     print(barcode.parsed)
-    # except Exception as e:
-    #     print(e)
 
 
 def main():
@@ -70,21 +64,17 @@ def main():
                 break
 
             img = camera.preprocessing(img)
+            # camera.save(original_img, "all")
             # extract_qrcode(img)
 
             multi_points = third_party.get_multi_skeleton_from(img)
             points, face, all_faces = camera.one_person_filter(multi_points)
 
-            # control.loading(face)
-            # # camera.save(original_img, "all")
+            control.loading(points, face)
 
-            # if control.update_model(points):
-            #     # camera.save(original_img, "only_in_box")
-            #     control.draw_by_points(img, (200, 200, 0))
-
-            #     course = control.choose_course()
-            #     api = course().get_api()
-            #     control.send(server, api)
+            course = control.choose_course()
+            api = course().get_api()
+            control.send(server, api)
 
             control.update(img)
             control.show(all_faces, (0, 100, 100), -1)

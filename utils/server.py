@@ -1,5 +1,3 @@
-from utils.brain import Brain
-
 from urllib.parse import unquote
 
 from courses.bentRow import BentRow
@@ -52,12 +50,12 @@ class Server(object):
     def is_course_need_to_change(self):
         return self.course_name_cache != self.course_name
 
-    def get_route(self, brain, view):
+    def get_route(self, brain):
         if self.is_course_need_to_change():
             if "高腳杯寬腿深蹲" in self.course_name:
                 self.course_name = "高腳杯寬腿深蹲"
             self.course_name_cache = self.course_name
-            self.course = self.course_template[self.course_name](brain, view)
+            self.course = self.course_template[self.course_name](brain)
         return self.course
 
     def set_api(self, msg):

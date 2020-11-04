@@ -3,7 +3,8 @@ from api.human import Human
 
 
 class Brain(object):
-    def __init__(self):
+    def __init__(self, args):
+        self.args = args
         self.human = Human()
 
         self.stored_points = []
@@ -73,6 +74,46 @@ class Brain(object):
                 return abs(self.human.points[nameA] - self.human.points[nameB]) == (param - buff)
         except Exception as e:
             pass
+
+    def setting_calibrate_box(self):
+        if self.args.cam_height < self.args.cam_width:
+            segment_width = self.args.cam_height // 3
+            segment_height = self.args.cam_width // 6
+        else:
+            segment_width = self.args.cam_width // 3
+            segment_height = self.args.cam_height // 6
+
+        x1 = segment_width * 1 + 10  # 1
+        x2 = segment_width * 2 - 10  # 2
+        y1 = segment_height * 4 + 50  # 4
+        y2 = segment_height * 5 + 100  # 5
+        return x1, x2, y1, y2
+
+    def calibrate_human_body(self):
+        x1, x2, y1, y2 = self.setting_calibrate_box()
+        c1 = self.compare("left_ankle_x", ">", x1) and \
+            self.compare("left_ankle_x", "<", x2)
+        c2 = self.compare("right_ankle_x", ">", x1) and \
+            self.compare("right_ankle_x", "<", x2)
+        c3 = self.compare("left_ankle_y", ">", y1) and \
+            self.compare("left_ankle_y", "<", y2)
+        c4 = self.compare("left_ankle_y", ">", y1) and \
+            self.compare("left_ankle_y", "<", y2)
+        return c1 and c2 and c3 and c4
+
+    def calibrate_human_body_leg(self):
+        x1, x2, y1, y2 = self.setting_calibrate_box()
+        x1 = x1 - 80
+        x2 = x2 + 80
+        c1 = self.compare("left_ankle_x", ">", x1) and \
+            self.compare("left_ankle_x", "<", x2)
+        c2 = self.compare("right_ankle_x", ">", x1) and \
+            self.compare("right_ankle_x", "<", x2)
+        c3 = self.compare("left_ankle_y", ">", y1) and \
+            self.compare("left_ankle_y", "<", y2)
+        c4 = self.compare("left_ankle_y", ">", y1) and \
+            self.compare("left_ankle_y", "<", y2)
+        return c1 and c2 and c3 and c4
 
     def is_pose(self, name):
         return self.pose_template()[name]()

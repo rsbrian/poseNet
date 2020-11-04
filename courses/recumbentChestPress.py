@@ -11,8 +11,8 @@ from courses.template.error_handleing import ErrorHandleingTemplate
 
 
 class RecumbentChestPress(Home):
-    def __init__(self, brain, view):
-        super().__init__(brain, view)
+    def __init__(self, brain):
+        super().__init__(brain)
         self.state = Prepare(self, self.brain)
 
     def __call__(self):
@@ -85,7 +85,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
-        
+
 
 class HandsUp(object):
     def __init__(self, course, brain):
