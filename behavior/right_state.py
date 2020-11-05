@@ -115,10 +115,10 @@ class Open(Behavior):
         self.valid_width = 20
         self.valid_height = 5
         self.behavior = ""
-        self.left_wrist = []
 
     def __call__(self, points, face):
         self.append(points, face)
+
         if self.state is None:
             if not self.is_point_in_thres(points, face):
                 self.state = Outside(self, self.behavior)
@@ -130,7 +130,17 @@ class Open(Behavior):
                 self.state = InsideMovingNoCenter(self)
 
         else:
-            # print(self.state.__class__.__name__)
+            rsx = points["right_shoulder_x"]
+            rsy = points["right_shoulder_y"]
+            fx = face[0]
+            fy = face[1]
+            boundary = self.state.get_boundary(rsx, rsy, fx, fy)
+            right_bound = boundary[0]
+            left_bound = boundary[1]
+            upper_bound = boundary[2]
+            lower_bound = boundary[3]
+            self.analysis.thres = (
+                left_bound, right_bound, upper_bound, lower_bound)
             self.state(points, face, self.history)
 
         return self.behavior
@@ -152,31 +162,27 @@ class Open(Behavior):
         self.state = new_state
 
 
-class RightClose(object):
+class RightClose(Behavior):
     def __init__(self, analysis):
         self.analysis = analysis
+        self.valid_width = 20
+        self.valid_height = 5
 
     def __call__(self, points, face):
-        if self.is_upper_than_line(points):
+        rsx = points["right_shoulder_x"]
+        rsy = points["right_shoulder_y"]
+        fx = face[0]
+        fy = face[1]
+        boundary = self.get_boundary(rsx, rsy, fx, fy)
+        right_bound = boundary[0]
+        left_bound = boundary[1]
+        upper_bound = boundary[2]
+        lower_bound = boundary[3]
+        self.analysis.thres = (
+            left_bound, right_bound, upper_bound, lower_bound)
+        if self.is_point_in_thres(points, face):
             self.analysis.change_right_state(Open(self.analysis))
         return ""
 
-    def is_upper_than_line(self, points):
-        y = points["right_wrist_y"]
-        thres = self.analysis.calc_right_thres(points, 2)
-        self.analysis.draw_shapes.append(
-            ("line", -1, thres)
-        )
-        return y < thres
-
     def norm(self, x1, y1, x2, y2):
         return ((x1 - x2) ** 2 + (y1 - y2) ** 2) ** 0.5
-
-    def is_inside_the_circle(self, points):
-        x = points["right_wrist_x"]
-        y = points["right_wrist_y"]
-        x1 = points["right_shoulder_x"]
-        y1 = points["right_shoulder_y"]
-        r = 75
-        dist = self.norm(x, y, x1, y1)
-        return dist < r

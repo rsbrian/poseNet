@@ -52,13 +52,14 @@ class Home(object):
         self.number = -1
         self.total_score = 0
         self.state = None
-        self.analysis = Analysis()
         self.api = Api()
+        self.analysis = Analysis(brain)
         self.api.course_action["tip"]["duration"] = 2
+        self.bounding_box = self.brain.setting_calibrate_box()
         self.cancel_state = NotCancel(self, self.brain, self.analysis)
 
     def __call__(self, leg=None):
-        if self.is_body_in_box(leg):
+        if self.is_body_in_box():
             self.state()
             print(self.api.course_action["action"]["score"])
             # self.cancel_state()
@@ -67,14 +68,13 @@ class Home(object):
     def change_cancel_state(self, new_state):
         self.cancel_state = new_state
 
-    def is_body_in_box(self, leg):
+    def is_body_in_box(self):
         c = self.brain.human.points != {}
-        c1 = self.brain.calibrate_human_body_leg() and c
-        c2 = self.brain.calibrate_human_body() and c
-        if leg is None:
-            return c2
-        else:
-            return c1
+        c1 = self.brain.calibrate_human_body(self.bounding_box)
+        return c and c1
+
+    def get_bounding_box(self):
+        return self.bounding_box
 
     def change(self, new_state):
         self.state = new_state

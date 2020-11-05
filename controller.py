@@ -13,7 +13,7 @@ class Controller(object):
     def __init__(self, args):
         self.args = args
         self.brain = Brain(args)
-        self.view = View()
+        self.view = View(args)
         self.my_server = Server()
 
     def loading(self, points, face):

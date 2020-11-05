@@ -25,6 +25,8 @@ class Camera(object):
             self.outs[file_name] = cv2.VideoWriter(name, fourcc, fps, shape)
 
     def isOpened(self):
+        if not self.cap.isOpened():
+            raise "Please Check the camera id."
         return self.cap.isOpened()
 
     def read(self):

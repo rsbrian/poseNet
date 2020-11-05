@@ -7,6 +7,7 @@ class NoCourse(object):
         self.api = Api()
         self.brain = brain
         self.analysis = Analysis(brain)
+        self.bounding_box = self.brain.setting_calibrate_box()
 
     def __call__(self):
         if self.is_body_in_box():
@@ -15,7 +16,15 @@ class NoCourse(object):
         return self
 
     def is_body_in_box(self):
-        return self.brain.human.points != {} and self.brain.calibrate_human_body()
+        c = self.brain.human.points != {}
+        c1 = self.brain.calibrate_human_body(self.bounding_box)
+        return c and c1
+
+    def get_thres(self):
+        return self.analysis.get_thres()
+
+    def get_bounding_box(self):
+        return self.bounding_box
 
     def get_api(self):
         return self.api.behavior

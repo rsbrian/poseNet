@@ -58,10 +58,10 @@ class Behavior(object):
 
     def get_boundary(self, rsx, rsy, fx, fy):
         right_bound = fx + self.valid_width
-        left_bound = rsx - (fx - rsx)
+        left_bound = rsx - (right_bound - rsx)
         upper_bound = fy - self.valid_height
-        lower_bound = rsy + (rsy - fy) - 20
-        return [right_bound, left_bound, upper_bound, lower_bound]
+        lower_bound = rsy + (rsy - upper_bound) - 20
+        return (right_bound, left_bound, upper_bound, lower_bound)
 
     def compare_boundary(self, rwx, rwy, boundary):
         right_bound = boundary[0]
@@ -101,27 +101,9 @@ class Behavior(object):
         fy = face[1]
         boundary = self.get_boundary(rsx, rsy, fx, fy)
         check_list = self.compare_boundary(rwx, rwy, boundary)
-
-        # right_bound = boundary[0]
-        # left_bound = boundary[1]
-        # upper_bound = boundary[2]
-        # lower_bound = boundary[3]
-        # h, w, c = img.shape
-        # cv2.line(
-        #     img,
-        #     (int(left_bound), 0), (int(left_bound), h), (0, 200, 200), 3)
-        # cv2.line(
-        #     img,
-        #     (0, int(upper_bound)), (w, int(upper_bound)), (0, 200, 200), 3)
-        # cv2.line(
-        #     img,
-        #     (int(right_bound), 0), (int(right_bound), h), (0, 200, 200), 3)
-        # cv2.line(
-        #     img,
-        #     (0, int(lower_bound)), (w, int(lower_bound)), (0, 200, 200), 3)
         return all(check_list)
 
     def is_drop_the_hands(self, points):
         y = points["right_wrist_y"]
-        thres = self.state.analysis.calc_right_thres(points, 4)
+        _, thres = self.state.analysis.calc_right_thres(points, 10)
         return y > thres

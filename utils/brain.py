@@ -87,24 +87,16 @@ class Brain(object):
         x2 = segment_width * 2 - 10  # 2
         y1 = segment_height * 4 + 50  # 4
         y2 = segment_height * 5 + 100  # 5
-        return x1, x2, y1, y2
+        return (x1, x2, y1, y2)
 
-    def calibrate_human_body(self):
-        x1, x2, y1, y2 = self.setting_calibrate_box()
-        c1 = self.compare("left_ankle_x", ">", x1) and \
-            self.compare("left_ankle_x", "<", x2)
-        c2 = self.compare("right_ankle_x", ">", x1) and \
-            self.compare("right_ankle_x", "<", x2)
-        c3 = self.compare("left_ankle_y", ">", y1) and \
-            self.compare("left_ankle_y", "<", y2)
-        c4 = self.compare("left_ankle_y", ">", y1) and \
-            self.compare("left_ankle_y", "<", y2)
-        return c1 and c2 and c3 and c4
-
-    def calibrate_human_body_leg(self):
+    def setting_calibrate_box_leg(self):
         x1, x2, y1, y2 = self.setting_calibrate_box()
         x1 = x1 - 80
         x2 = x2 + 80
+        return (x1, x2, y1, y2)
+
+    def calibrate_human_body(self, coor):
+        x1, x2, y1, y2 = coor
         c1 = self.compare("left_ankle_x", ">", x1) and \
             self.compare("left_ankle_x", "<", x2)
         c2 = self.compare("right_ankle_x", ">", x1) and \

@@ -8,6 +8,7 @@ class Behavior(object):
         self.moving = 4
         self.valid_width = 20
         self.valid_height = 5
+        self.thres = None
 
     def calcAngles(self, listed_x, listed_y):
         angles = []
@@ -56,9 +57,6 @@ class Behavior(object):
         return False
 
     def predict_behavior(self):
-        rwx = self.history["left_wrist_x"][-1]
-        rwy = self.history["left_wrist_y"][-1]
-
         angles = self.calcAngles(
             self.history["left_wrist_x"], self.history["left_wrist_y"])
         mean_angles = np.mean(angles)
@@ -66,7 +64,7 @@ class Behavior(object):
         if self.check_length():
             return ""
 
-        return "Cancel" if mean_angles > -10 and mean_angles < 45 else ""
+        return "Cancel" if mean_angles > 35 and mean_angles < 50 else ""
 
     def find_closest_point_and_cut(self):
         temp = {}
@@ -99,9 +97,9 @@ class Behavior(object):
 
     def get_boundary(self, rsx, rsy, fx, fy):
         left_bound = fx - self.valid_width
-        right_bound = rsx + (rsx - fx)
+        right_bound = rsx + (rsx - left_bound)
         upper_bound = fy - self.valid_height
-        lower_bound = rsy + (rsy - fy)
+        lower_bound = rsy + (rsy - upper_bound)
         return [right_bound, left_bound, upper_bound, lower_bound]
 
     def compare_boundary(self, rwx, rwy, boundary):
@@ -142,27 +140,9 @@ class Behavior(object):
         fy = face[1]
         boundary = self.get_boundary(rsx, rsy, fx, fy)
         check_list = self.compare_boundary(rwx, rwy, boundary)
-
-        # right_bound = boundary[0]
-        # left_bound = boundary[1]
-        # upper_bound = boundary[2]
-        # lower_bound = boundary[3]
-        # h, w, c = img.shape
-        # cv2.line(
-        #     img,
-        #     (int(left_bound), 0), (int(left_bound), h), (0, 200, 200), 3)
-        # cv2.line(
-        #     img,
-        #     (0, int(upper_bound)), (w, int(upper_bound)), (0, 200, 200), 3)
-        # cv2.line(
-        #     img,
-        #     (int(right_bound), 0), (int(right_bound), h), (0, 200, 200), 3)
-        # cv2.line(
-        #     img,
-        #     (0, int(lower_bound)), (w, int(lower_bound)), (0, 200, 200), 3)
         return all(check_list)
 
     def is_drop_the_hands(self, points):
         y = points["left_wrist_y"]
-        thres = self.state.analysis.calc_left_thres(points, 4)
+        _, thres = self.state.analysis.calc_left_thres(points, 10)
         return y > thres

@@ -99,7 +99,6 @@ class Open(Behavior):
         self.valid_width = 20
         self.valid_height = 5
         self.behavior = ""
-        self.left_wrist = []
 
     def __call__(self, points, face):
         self.append(points, face)
@@ -114,6 +113,17 @@ class Open(Behavior):
                 self.state = InsideMovingNoCenter(self)
 
         else:
+            rsx = points["left_shoulder_x"]
+            rsy = points["left_shoulder_y"]
+            fx = face[0]
+            fy = face[1]
+            boundary = self.state.get_boundary(rsx, rsy, fx, fy)
+            right_bound = boundary[0]
+            left_bound = boundary[1]
+            upper_bound = boundary[2]
+            lower_bound = boundary[3]
+            self.analysis.thres = (
+                left_bound, right_bound, upper_bound, lower_bound)
             self.state(points, face, self.history)
 
         return self.behavior
@@ -146,5 +156,5 @@ class LeftClose(object):
 
     def is_upper_than_line(self, points):
         y = points["left_wrist_y"]
-        thres = self.analysis.calc_left_thres(points, 2)
-        return y < thres
+        self.thres = self.analysis.calc_left_thres(points, 2)
+        return y < self.thres[1]

@@ -14,9 +14,10 @@ class Recumbentbird(Home):
     def __init__(self, brain):
         super().__init__(brain)
         self.state = Prepare(self, self.brain)
+        self.bounding_box = self.brain.setting_calibrate_box_leg()
 
     def __call__(self):
-        return super().__call__(leg="leg")
+        return super().__call__()
 
 
 class Prepare(object):

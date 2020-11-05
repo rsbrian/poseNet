@@ -65,7 +65,7 @@ def main():
 
             img = camera.preprocessing(img)
             # camera.save(original_img, "all")
-            # extract_qrcode(img)
+            extract_qrcode(img)
 
             multi_points = third_party.get_multi_skeleton_from(img)
             points, face, all_faces = camera.one_person_filter(multi_points)
@@ -76,10 +76,15 @@ def main():
             api = course().get_api()
             control.send(server, api)
 
+            thres = course.get_thres()
+            bounding_box = course.get_bounding_box()
+
             control.update(img)
+            control.show(bounding_box, (0, 200, 0), 3)
             control.show(all_faces, (0, 100, 100), -1)
             control.show(points, (200, 200, 0), 3)
             control.show(face, (200, 200, 0), -1)
+            control.show(thres, (0, 200, 200), 3)
             cv2.imshow("img", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break

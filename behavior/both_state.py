@@ -64,7 +64,6 @@ class Open(Behavior):
         self.valid_width = 20
         self.valid_height = 5
         self.behavior = ""
-        self.left_wrist = []
 
     def __call__(self, points, face):
         self.append(points, face)
@@ -106,10 +105,10 @@ class BothClose(object):
 
     def is_left_upper_than_line(self, points):
         y = points["left_wrist_y"]
-        thres = self.analysis.calc_left_thres(points, 2)
-        return y < thres
+        self.thres = self.analysis.calc_left_thres(points, 2)
+        return y < self.thres[1]
 
     def is_right_upper_than_line(self, points):
         y = points["right_wrist_y"]
-        thres = self.analysis.calc_right_thres(points, 2)
-        return y < thres
+        self.thres = self.analysis.calc_right_thres(points, 2)
+        return y < self.thres[1]
