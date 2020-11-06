@@ -145,16 +145,13 @@ class Open(Behavior):
         self.state = new_state
 
 
-class LeftClose(object):
+class LeftClose(Behavior):
     def __init__(self, analysis):
         self.analysis = analysis
+        self.valid_width = 20
+        self.valid_height = 5
 
     def __call__(self, points, face):
-        if self.is_upper_than_line(points):
+        if self.is_point_in_thres(points, face):
             self.analysis.change_left_state(Open(self.analysis))
         return ""
-
-    def is_upper_than_line(self, points):
-        y = points["left_wrist_y"]
-        self.thres = self.analysis.calc_left_thres(points, 2)
-        return y < self.thres[1]

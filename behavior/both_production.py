@@ -19,7 +19,9 @@ class Behavior(object):
         ley = self.history["left_elbow_y"]
         lwx = self.history["left_wrist_x"]
         lwy = self.history["left_wrist_y"]
-        for i in range(len(lsx)):
+        total = len(lsx)
+        wrong = 0
+        for i in range(total):
             x1 = lsx[i]
             y1 = lsy[i]
             x2 = lhx[i]
@@ -31,8 +33,12 @@ class Behavior(object):
             dist = self.norm(x1, y1, x2, y2)
             d1 = self.norm(x1, y1, x3, y3)
             d2 = self.norm(x3, y3, x4, y4)
-            if (d1 + d2) < (dist / 3):
-                return True
+            thres = dist / 6
+            if d1 < thres or d2 < thres:
+                wrong += 1
+        wrong_acc = (wrong / total)
+        if wrong_acc > 0.7:
+            return True
         return False
 
     def check_right_length(self):
@@ -44,7 +50,9 @@ class Behavior(object):
         ley = self.history["right_elbow_y"]
         lwx = self.history["right_wrist_x"]
         lwy = self.history["right_wrist_y"]
-        for i in range(len(lsx)):
+        total = len(lsx)
+        wrong = 0
+        for i in range(total):
             x1 = lsx[i]
             y1 = lsy[i]
             x2 = lhx[i]
@@ -56,8 +64,12 @@ class Behavior(object):
             dist = self.norm(x1, y1, x2, y2)
             d1 = self.norm(x1, y1, x3, y3)
             d2 = self.norm(x3, y3, x4, y4)
-            if (d1 + d2) < (dist / 3):
-                return True
+            thres = dist / 6
+            if d1 < thres or d2 < thres:
+                wrong += 1
+        wrong_acc = (wrong / total)
+        if wrong_acc > 0.7:
+            return True
         return False
 
     def get_right_boundary(self, rsx, rsy, fx, fy):

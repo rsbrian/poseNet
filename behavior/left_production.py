@@ -23,9 +23,11 @@ class Behavior(object):
             angles.append(angle)
             px = x
             py = y
-        temp = []
+        return angles
+
+    def smoothing(self, angles):
         i = 0
-        step = 3
+        step = 4
         while i < (len(angles) - (step - 1)):
             angles[i] = np.mean(angles[i:i+step])
             i += 1
@@ -40,7 +42,9 @@ class Behavior(object):
         ley = self.history["left_elbow_y"]
         lwx = self.history["left_wrist_x"]
         lwy = self.history["left_wrist_y"]
-        for i in range(len(lsx)):
+        total = len(lsx)
+        wrong = 0
+        for i in range(total):
             x1 = lsx[i]
             y1 = lsy[i]
             x2 = lhx[i]
@@ -52,19 +56,37 @@ class Behavior(object):
             dist = self.norm(x1, y1, x2, y2)
             d1 = self.norm(x1, y1, x3, y3)
             d2 = self.norm(x3, y3, x4, y4)
-            if (d1 + d2) < (dist / 4):
-                return True
+            thres = dist / 8
+            if d1 < thres or d2 < thres:
+                wrong += 1
+        wrong_acc = (wrong / total)
+        if wrong_acc > 0.7:
+            return True
         return False
 
+    def negative_filter(self, angles):
+        pivot = 0
+        past = angles[0]
+        for i, angle in enumerate(angles[1:]):
+            if past < 0 or abs(angle - past) < 1:
+                pivot = i
+            past = angle
+        angles = angles[pivot+1:]
+        return angles
+
     def predict_behavior(self):
+        min_thres = 30
+        max_thres = 50
         angles = self.calcAngles(
             self.history["left_wrist_x"], self.history["left_wrist_y"])
-        mean_angles = np.mean(angles)
-
-        if self.check_length():
+        print(angles)
+        angles = self.smoothing(angles)
+        angles = self.negative_filter(angles)
+        if len(angles) == 0 or self.check_length():
             return ""
-
-        return "Cancel" if mean_angles > 35 and mean_angles < 50 else ""
+        mean_angles = np.mean(angles)
+        print(round(mean_angles, 2))
+        return "Cancel" if mean_angles > min_thres and mean_angles < max_thres else ""
 
     def find_closest_point_and_cut(self):
         temp = {}

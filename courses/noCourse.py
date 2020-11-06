@@ -10,6 +10,7 @@ class NoCourse(object):
         self.bounding_box = self.brain.setting_calibrate_box()
 
     def __call__(self):
+        self.analysis.thres = None
         if self.is_body_in_box():
             behavior = self.analysis.predict()
             self.set_api("最後動作", behavior)

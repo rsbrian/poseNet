@@ -18,13 +18,13 @@ class Analysis(object):
     def predict(self):
         face = self.brain.face
         points = self.brain.human.points
-        right_behavior = self.right_state(points, face)
-        left_behavior = self.left_state(points, face)
         both_behavior = self.both_state(points, face)
         if both_behavior != "":
             return both_behavior
+        left_behavior = self.left_state(points, face)
         if left_behavior != "":
             return left_behavior
+        right_behavior = self.right_state(points, face)
         return right_behavior
 
     def get_thres(self):

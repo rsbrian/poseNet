@@ -26,13 +26,10 @@ class Outside(Behavior):
                 self.behavior = ""
             self.count += 1
 
-        elif self.behavior == "向下選取" and self.count < 4:
-            # print("我只是想把手放下")
+        elif self.is_drop_the_hands(points) or (self.behavior == "向下選取" and self.count < 4):
+            print("我只是想把手放下")
+            self.behavior = ""
             self.state.behavior = ""
-            self.state.analysis.change_right_state(
-                RightClose(self.state.analysis))
-
-        elif self.is_drop_the_hands(points):
             self.state.analysis.change_right_state(
                 RightClose(self.state.analysis))
 

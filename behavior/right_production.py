@@ -10,6 +10,37 @@ class Behavior(object):
         self.valid_height = 5
         self.behavior_map = ["向左選取", "向右選取", "向上選取", "向下選取"]
 
+    def check_length(self):
+        lsx = self.history["right_shoulder_x"]
+        lsy = self.history["right_shoulder_y"]
+        lhx = self.history["right_hip_x"]
+        lhy = self.history["right_hip_y"]
+        lex = self.history["right_elbow_x"]
+        ley = self.history["right_elbow_y"]
+        lwx = self.history["right_wrist_x"]
+        lwy = self.history["right_wrist_y"]
+        total = len(lsx)
+        wrong = 0
+        for i in range(total):
+            x1 = lsx[i]
+            y1 = lsy[i]
+            x2 = lhx[i]
+            y2 = lhy[i]
+            x3 = lex[i]
+            y3 = ley[i]
+            x4 = lwx[i]
+            y4 = lwy[i]
+            dist = self.norm(x1, y1, x2, y2)
+            d1 = self.norm(x1, y1, x3, y3)
+            d2 = self.norm(x3, y3, x4, y4)
+            thres = dist / 8
+            if d1 < thres or d2 < thres:
+                wrong += 1
+        wrong_acc = (wrong / total)
+        if wrong_acc > 0.4:
+            return True
+        return False
+
     def predict_behavior(self):
         rwx = self.history["right_wrist_x"][-1]
         rwy = self.history["right_wrist_y"][-1]
@@ -19,6 +50,8 @@ class Behavior(object):
         fy = self.history["face_y"][-1]
         boundary = self.get_boundary(rsx, rsy, fx, fy)
         check_list = self.compare_boundary(rwx, rwy, boundary)
+        if self.check_length():
+            return ""
         return self.behavior_filter(check_list)
 
     def behavior_filter(self, check_list):

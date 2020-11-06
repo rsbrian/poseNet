@@ -50,7 +50,7 @@ def extract_qrcode(img):
     bars = pyzbar.decode(img)
     for bar in bars:
         barcodeData = bar.data.decode("utf-8")
-        print(barcodeData)
+        print(f"QR code: {barcodeData}")
 
 
 def main():
