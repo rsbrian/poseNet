@@ -3,16 +3,12 @@ from behavior.left_production import Behavior
 
 
 class Outside(Behavior):
-    def __init__(self, state, behavior):
+    def __init__(self, state):
         super().__init__(state)
-        self.behavior = behavior
         self.count = 0
 
     def __call__(self, points, face, history):
         self.history = history
-
-        self.state.behavior = self.behavior
-        self.behavior = ""
 
         if self.is_point_in_thres(points, face) and not self.move(points):
             self.state.change(InsideNotMove(self.state))
@@ -21,6 +17,12 @@ class Outside(Behavior):
             self.state.change(InsideMovingNoCenter(self.state))
 
         if self.is_drop_the_hands(points):
+            self.state.analysis.change_left_state(
+                LeftClose(self.state.analysis))
+
+        elif not self.move(points):
+            self.state.behavior = self.predict_behavior()
+            self.cut_history_to_start()
             self.state.analysis.change_left_state(
                 LeftClose(self.state.analysis))
 
@@ -67,9 +69,8 @@ class InsideMovingNoCenter(Behavior):
         self.history = history
         self.find_closest_point_and_cut()
         if not self.is_point_in_thres(points, face):
-            behavior = self.predict_behavior()
-            self.state.history = {}
-            self.state.change(Outside(self.state, behavior))
+            self.cut_history_to_start(-2)
+            self.state.change(Outside(self.state))
 
         elif not self.move(points):
             self.state.change(InsideNotMove(self.state))
@@ -83,9 +84,8 @@ class InsideMovingHaveCenter(Behavior):
         self.history = history
 
         if not self.is_point_in_thres(points, face):
-            behavior = self.predict_behavior()
-            self.state.history = {}
-            self.state.change(Outside(self.state, behavior))
+            self.cut_history_to_start(-2)
+            self.state.change(Outside(self.state))
 
         elif not self.move(points):
             self.state.change(InsideNotMove(self.state))
@@ -104,7 +104,8 @@ class Open(Behavior):
         self.append(points, face)
         if self.state is None:
             if not self.is_point_in_thres(points, face):
-                self.state = Outside(self, self.behavior)
+                self.cut_history_to_start()
+                self.state = Outside(self)
 
             elif not self.move(points):
                 self.state = InsideNotMove(self)

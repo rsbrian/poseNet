@@ -22,6 +22,7 @@ class Outside(Behavior):
 
         if self.behavior == "向下選取" and not self.is_drop_the_hands(points):
             if self.count > 4:
+                self.state.history = {}
                 self.state.behavior = self.behavior
                 self.behavior = ""
             self.count += 1

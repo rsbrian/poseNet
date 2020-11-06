@@ -5,6 +5,7 @@ import numpy as np
 class Behavior(object):
     def __init__(self, state):
         self.state = state
+        self.state.behavior = ""
         self.moving = 4
         self.valid_width = 20
         self.valid_height = 5
@@ -97,14 +98,15 @@ class Behavior(object):
         return (right_bound, left_bound, upper_bound, lower_bound)
 
     def compare_boundary(self, rwx, rwy, boundary):
+        thres = 20
         right_bound = boundary[0]
         left_bound = boundary[1]
         upper_bound = boundary[2]
         lower_bound = boundary[3]
-        c1 = rwx < right_bound
-        c2 = rwx > left_bound
-        c3 = rwy > upper_bound
-        c4 = rwy < lower_bound
+        c1 = rwx < (right_bound + thres)
+        c2 = rwx > (left_bound - thres)
+        c3 = rwy > (upper_bound - thres)
+        c4 = rwy < (lower_bound + thres)
         return [c1, c2, c3, c4]
 
     def point_in_thres(self, rwx, rwy, rsx, rsy, fx, fy):

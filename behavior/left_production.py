@@ -5,6 +5,7 @@ import numpy as np
 class Behavior(object):
     def __init__(self, state):
         self.state = state
+        self.state.behavior = ""
         self.moving = 4
         self.valid_width = 20
         self.valid_height = 5
@@ -65,21 +66,19 @@ class Behavior(object):
         return False
 
     def negative_filter(self, angles):
-        pivot = 0
+        temp = []
         past = angles[0]
         for i, angle in enumerate(angles[1:]):
-            if past < 0 or abs(angle - past) < 1:
-                pivot = i
+            if angle > 0 and past > 0 and abs(angle - past) > 3:
+                temp.append(past)
             past = angle
-        angles = angles[pivot+1:]
-        return angles
+        return temp
 
     def predict_behavior(self):
-        min_thres = 30
-        max_thres = 50
+        min_thres = 35
+        max_thres = 55
         angles = self.calcAngles(
             self.history["left_wrist_x"], self.history["left_wrist_y"])
-        print(angles)
         angles = self.smoothing(angles)
         angles = self.negative_filter(angles)
         if len(angles) == 0 or self.check_length():

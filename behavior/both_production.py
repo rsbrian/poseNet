@@ -5,6 +5,7 @@ import numpy as np
 class Behavior(object):
     def __init__(self, state):
         self.state = state
+        self.state.behavior = ""
         self.moving = 4
         self.valid_width = 20
         self.valid_height = 5
