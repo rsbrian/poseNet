@@ -43,8 +43,7 @@ class Inside(Behavior):
     def __call__(self, points, face, history):
         self.history = history
 
-        if not (self.is_left_point_in_thres(points, face) and
-                self.is_right_point_in_thres(points, face)):
+        if not self.is_left_point_in_thres(points, face) or not self.is_right_point_in_thres(points, face):
             self.state.change(Outside(self.state))
 
         if not (self.check_left_length() and self.check_right_length()):
@@ -72,6 +71,7 @@ class Open(Behavior):
                     self.is_right_point_in_thres(points, face):
                 self.state = Inside(self)
         else:
+            print(self.state.__class__.__name__)
             self.state(points, face, self.history)
 
         return self.behavior

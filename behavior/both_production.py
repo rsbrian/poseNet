@@ -75,16 +75,16 @@ class Behavior(object):
 
     def get_right_boundary(self, rsx, rsy, fx, fy):
         right_bound = fx + self.valid_width
-        left_bound = rsx - (fx - rsx)
+        left_bound = rsx - (right_bound - rsx)
         upper_bound = fy - self.valid_height
-        lower_bound = rsy + (rsy - fy)
+        lower_bound = rsy + (rsy - upper_bound) - 20
         return [right_bound, left_bound, upper_bound, lower_bound]
 
     def get_left_boundary(self, rsx, rsy, fx, fy):
         left_bound = fx - self.valid_width
-        right_bound = rsx + (rsx - fx)
+        right_bound = rsx + (rsx - left_bound)
         upper_bound = fy - self.valid_height
-        lower_bound = rsy + (rsy - fy)
+        lower_bound = rsy + (rsy - upper_bound)
         return [right_bound, left_bound, upper_bound, lower_bound]
 
     def compare_boundary(self, rwx, rwy, boundary):
@@ -127,4 +127,4 @@ class Behavior(object):
         y1 = points["left_wrist_y"]
         y2 = points["right_wrist_y"]
         _, thres = self.state.analysis.calc_left_thres(points, 10)
-        return y1 > thres and y2 > thres
+        return y1 > thres or y2 > thres

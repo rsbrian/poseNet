@@ -15,6 +15,7 @@ class Outside(Behavior):
         self.history = history
 
         if self.is_point_in_thres(points, face) and not self.move(points):
+            self.cut_history_to_start(-2)
             self.state.change(InsideNotMove(self.state))
 
         elif self.is_point_in_thres(points, face) and self.move(points):
@@ -35,6 +36,7 @@ class Outside(Behavior):
                 RightClose(self.state.analysis))
 
         else:
+            self.state.history = {}
             self.state.behavior = self.behavior
             self.behavior = ""
 
