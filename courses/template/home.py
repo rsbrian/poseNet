@@ -75,18 +75,23 @@ class Home(object):
     def change(self, new_state):
         self.state = new_state
 
-    def set_start_time(self):
-        self.set_time("lastTime")
-        self.set_time("startPoint")
-
     def set_prepare_msg(self, mapList, val):
         self.set_api(mapList, val)
         self.set_start_time()
 
+    def set_start_time(self):
+        time = self.get_time()
+        self.set_api(["tip", "lastTime"], time)
+        self.set_api(["tip", "startPoint"], time)
+
     def set_alert_msg(self, mapList, val):
         self.set_api(mapList, val)
-        self.set_time("alertLastTime")
-        self.set_time("startPointLastTime")
+        self.set_alert_time()
+
+    def set_alert_time(self):
+        time = self.get_time()
+        self.set_api(["action", "alertLastTime"], time)
+        self.set_api(["action", "startPointLastTime"], time)
 
     def set_api(self, mapList, val):
         reduce(
@@ -97,6 +102,5 @@ class Home(object):
     def get_api(self):
         return self.api.course_action
 
-    def set_time(self, name):
-        time = datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S.%f")
-        self.set_api(["action", name], time)
+    def get_time(self):
+        return datetime.datetime.now().strftime("%Y/%m/%d %H:%M:%S.%f")

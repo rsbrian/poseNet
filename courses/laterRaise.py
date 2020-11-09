@@ -14,6 +14,10 @@ class LaterRaise(Home):
     def __init__(self, brain, camera):
         super().__init__(brain, camera)
         self.state = Prepare(self, self.brain)
+        self.prepare_notes = {
+            "雙腳請與肩同寬": "shoulder_width_apart",
+            "請將手自然垂放": "drop_hand_natrually"
+        }
 
     def __call__(self):
         return super().__call__()
@@ -28,31 +32,24 @@ class Prepare(object):
     def __call__(self):
         print("Preparing")
         self.counter.start()
-        if self.brain.is_pose("shoulder_width_apart"):
-            # print("雙腳請與肩同寬")
-            self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.api.course_action["tip"]["note"] = ["雙腳請與肩同寬"]
-            self.counter.reset()
-
-        elif self.brain.is_pose("drop_hand_natrually"):
-            # print("請將手自然垂放")
-            self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.api.course_action["tip"]["note"] = ["請將手自然垂放"]
-            self.counter.reset()
-
-        elif self.is_ready_to_start():
+        
+        items = []
+        for note, check_pose in self.course.prepare_notes:
+            pose_error = self.brain.is_pose(check_pose)
+            item = {}
+            item["name"] = note
+            item["check"] = pose_error
+            if pose_error:
+                self.counter.reset()
+            items.append(item)
+        self.course.api.course_action["tip"]["note"] = items
+        if self.is_ready_to_start():
             self.course.api.course_action["start"] = True
             self.brain.reset_temp_points()
             self.course.change(
                 Action(self.course, self.brain))
 
     def is_ready_to_start(self):
-        # print("很好請保持", self.counter.result())
-        self.course.set_time("lastTime")
-        self.course.set_time("startPoint")
-        self.course.api.course_action["tip"]["note"] = [f"很好請保持"]
         return self.counter.result() > 3
 
 
