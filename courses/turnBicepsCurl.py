@@ -11,8 +11,8 @@ from courses.template.error_handleing import ErrorHandleingTemplate
 
 
 class TurnBicepsCurl(Home):
-    def __init__(self, brain):
-        super().__init__(brain)
+    def __init__(self, brain, camera):
+        super().__init__(brain, camera)
         self.number = 0
         self.state = Prepare(self, self.brain)
 

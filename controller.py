@@ -15,6 +15,7 @@ class Controller(object):
         self.brain = Brain(args)
         self.view = View(args)
         self.my_server = Server()
+        self.camera = None
 
     def loading(self, points, face):
         if len(points) == 0:
@@ -24,6 +25,9 @@ class Controller(object):
             self.brain.reset_state(points, angles)
             self.brain.add_median_filter()
             self.brain.face = face
+
+    def add_video_writer(self, camera):
+        self.camera = camera
 
     def calculate_angles(self, points):
         return posenet.computeangle.calculateangle_all_body(points)
@@ -45,7 +49,7 @@ class Controller(object):
         self.my_server.default()
 
     def choose_course(self):
-        return self.my_server.get_route(self.brain)
+        return self.my_server.get_route(self.brain, self.camera)
 
     def update(self, img):
         self.view.img = img

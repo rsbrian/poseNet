@@ -46,8 +46,9 @@ class NotCancel(object):
 
 
 class Home(object):
-    def __init__(self, brain):
+    def __init__(self, brain, camera):
         self.brain = brain
+        self.camera = camera
         self.error = 0
         self.number = -1
         self.total_score = 0
@@ -61,6 +62,7 @@ class Home(object):
     def __call__(self, leg=None):
         if self.is_body_in_box():
             self.state()
+            self.camera.save(self.camera.original_img, "only_in_box")
             print(self.api.course_action["action"]["score"])
             # self.cancel_state()
         return self

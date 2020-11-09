@@ -50,12 +50,12 @@ class Server(object):
     def is_course_need_to_change(self):
         return self.course_name_cache != self.course_name
 
-    def get_route(self, brain):
+    def get_route(self, brain, camera):
         if self.is_course_need_to_change():
             if "高腳杯寬腿深蹲" in self.course_name:
                 self.course_name = "高腳杯寬腿深蹲"
             self.course_name_cache = self.course_name
-            self.course = self.course_template[self.course_name](brain)
+            self.course = self.course_template[self.course_name](brain, camera)
         return self.course
 
     def set_api(self, msg):

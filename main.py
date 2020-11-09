@@ -22,8 +22,8 @@ from websocket_server import WebsocketServer
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
-parser.add_argument('--save', type=int, default=0)
-parser.add_argument('--cam_id', type=int, default=-1)
+parser.add_argument('--save', type=int, default=1)
+parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
@@ -39,7 +39,7 @@ print("Num of GPUs", physical_devices)
 if len(physical_devices):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-video_name = "videos/test_video.avi"
+video_name = "only_in_box.avi"
 saved_names = ["all.avi", "only_in_box.avi"]
 camera = Camera(args, video_name, saved_names)
 control = Controller(args)
@@ -64,35 +64,28 @@ def main():
                 break
 
             img = camera.preprocessing(img)
-            # camera.save(original_img, "all")
+            camera.store(img)
             extract_qrcode(img)
 
             multi_points = third_party.get_multi_skeleton_from(img)
             points, face, all_faces = camera.one_person_filter(multi_points)
 
             control.loading(points, face)
+            control.add_video_writer(camera)
 
             course = control.choose_course()
             api = course().get_api()
             control.send(server, api)
 
-            thres = course.get_thres()
             bounding_box = course.get_bounding_box()
 
             control.update(img)
-            control.show(bounding_box, (0, 200, 0), 3)
-            control.show(all_faces, (0, 100, 100), -1)
             control.show(points, (200, 200, 0), 3)
             control.show(face, (200, 200, 0), -1)
-            control.show(thres, (0, 200, 200), 3)
+            control.show(bounding_box, (0, 200, 0), 3)
             cv2.imshow("img", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
-
-        # print(len(points))
-        # pickle_out = open('points.pickle', "wb")
-        # pickle.dump(points, pickle_out)
-        # pickle_out.close()
 
         camera.release()
         control.destroy()

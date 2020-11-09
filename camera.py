@@ -1,12 +1,14 @@
 import cv2
 import imutils
 import numpy as np
-
+import datetime
 
 class Camera(object):
     def __init__(self, args, video_name, saved_names):
         self.args = args
         self.outs = {}
+        # datetime
+        # saved_names
 
         if self.args.cam_id != -1:
             self.cap = cv2.VideoCapture(self.args.cam_id)
@@ -35,6 +37,9 @@ class Camera(object):
     def save(self, img, name):
         if self.args.save:
             self.outs[name].write(img)
+
+    def store(self, img):
+        self.original_img = img.copy()
 
     def release(self):
         if self.args.save:
