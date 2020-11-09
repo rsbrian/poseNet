@@ -68,3 +68,9 @@ class Controller(object):
                     json.dumps(api, ensure_ascii=False))
             elif api["function"] == "getExercise" or api["function"] == "endExercise":
                 server.send_message_to_all(json.dumps(api, ensure_ascii=False))
+
+    def send_qrcode(self, server, api):
+        if self.args.socket and api["content"] != "":
+            print(f"QRCode: {api}")
+            server.send_message_to_all(
+                json.dumps(api, ensure_ascii=False))

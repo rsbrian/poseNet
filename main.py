@@ -1,6 +1,7 @@
 # !/home/iiidsi/anaconda3/bin/python
 # -*- coding: utf-8 -*-
 # 2020/10/26 16:30
+import os
 import cv2
 import json
 import time
@@ -13,6 +14,7 @@ import threading
 import numpy as np
 import tensorflow as tf
 
+from api.socket import Api
 from pyzbar import pyzbar
 from camera import Camera
 from controller import Controller
@@ -39,19 +41,20 @@ print("Num of GPUs", physical_devices)
 if len(physical_devices):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
-video_name = "only_in_box.avi"
-saved_names = ["all.avi", "only_in_box.avi"]
-camera = Camera(args, video_name, saved_names)
+saved_folder = "videos"
+videos = os.listdir(saved_folder)
+saved_names = ["only_in_box"] 
+camera = Camera(args, videos, saved_names)
 control = Controller(args)
 third_party = ThirdParty(args)
-
+member = Api()
 
 def extract_qrcode(img):
     bars = pyzbar.decode(img)
+    member.qrcode["content"] = ""
     for bar in bars:
         barcodeData = bar.data.decode("utf-8")
-        print(f"QR code: {barcodeData}")
-
+        member.qrcode["content"] = barcodeData
 
 def main():
     with tf.Session() as sess:
@@ -76,6 +79,7 @@ def main():
             course = control.choose_course()
             api = course().get_api()
             control.send(server, api)
+            control.send_qrcode(server, member.qrcode)
 
             bounding_box = course.get_bounding_box()
 

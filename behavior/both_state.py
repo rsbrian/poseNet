@@ -49,7 +49,7 @@ class Inside(Behavior):
         if not (self.check_left_length() and self.check_right_length()):
             self.counter.start()
             if self.counter.result() > self.time:
-                self.behavior = "雙手彎舉"
+                self.behavior = "點選"
                 self.state.change(Clicked(self.state, self.behavior))
         else:
             self.counter.reset()

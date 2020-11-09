@@ -17,7 +17,6 @@ class Canceling(object):
     def __call__(self):
         self.end_time = time.time()
         processing_time = self.result()
-        print(round(processing_time, 2))
         points = self.brain.get_test_points()
         behavior = self.analysis.predict(points, self.brain.face)
         if self.analysis.both_hand_move():

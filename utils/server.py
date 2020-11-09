@@ -35,7 +35,7 @@ class Server(object):
             "相撲硬拉深蹲": SumoDeadlift,
             "高腳杯寬腿深蹲": GobletSquat,
             "斜躺啞鈴飛鳥": Recumbentbird,
-            "坐立肩推上提": ShoulderPressSit,
+            "坐姿啞鈴肩推": ShoulderPressSit, # 坐立肩推上提
             "俯身啞鈴反向飛鳥": BentLaterRaise,
             "斜躺啞鈴胸推": RecumbentChestPress,
             "單臂啞鈴過頂深蹲": BarbellOverheadSquat,
