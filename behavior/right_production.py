@@ -9,7 +9,7 @@ class Behavior(object):
         self.moving = 4
         self.valid_width = 20
         self.valid_height = 5
-        self.behavior_map = ["向左選取", "向右選取", "向下選取", "向上選取"]
+        self.behavior_map = ["向右選取", "向左選取", "向上選取", "向下選取"]
 
     def check_length(self):
         lsx = self.history["right_shoulder_x"]

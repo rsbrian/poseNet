@@ -17,8 +17,7 @@ class Canceling(object):
     def __call__(self):
         self.end_time = time.time()
         processing_time = self.result()
-        points = self.brain.get_test_points()
-        behavior = self.analysis.predict(points, self.brain.face)
+        behavior = self.analysis.predict()
         if self.analysis.both_hand_move():
             self.home.change_cancel_state(
                 NotCancel(self.home, self.brain, self.analysis))
@@ -31,18 +30,14 @@ class Canceling(object):
 
 
 class NotCancel(object):
-    def __init__(self, home, brain, analysis):
+    def __init__(self, home, analysis):
         self.home = home
-        self.brain = brain
         self.analysis = analysis
 
     def __call__(self):
-        points = self.brain.get_test_points()
-        behavior = self.analysis.predict(points, self.brain.face)
-        if behavior == "雙手交叉":
-            self.home.change_cancel_state(
-                Canceling(self.home, self.brain, self.analysis))
-
+        behavior = self.analysis.predict()
+        if behavior == "取消":
+            self.home.api.course_action["action"]["quit"] = True
 
 class Home(object):
     def __init__(self, brain, camera):
@@ -50,20 +45,20 @@ class Home(object):
         self.camera = camera
         self.error = 0
         self.number = -1
-        self.total_score = 0
+        self.try_total_times = 0
         self.state = None
         self.api = Api()
         self.analysis = Analysis(brain)
         self.api.course_action["tip"]["duration"] = 2
         self.bounding_box = self.brain.setting_calibrate_box()
-        self.cancel_state = NotCancel(self, self.brain, self.analysis)
+        self.cancel_state = NotCancel(self, self.analysis)
 
     def __call__(self, leg=None):
         if self.is_body_in_box():
             self.state()
             self.camera.save(self.camera.original_img, "only_in_box")
             print(self.api.course_action["action"]["score"])
-            # self.cancel_state()
+            self.cancel_state()
         return self
 
     def change_cancel_state(self, new_state):

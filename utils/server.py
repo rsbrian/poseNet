@@ -32,7 +32,7 @@ class Server(object):
             "錘式彎曲啞鈴": HammerCurl,
             "二頭彎曲": TurnBicepsCurl,
             "曲腿挺髖": BentLegPushHip,
-            "相撲硬拉深蹲": SumoDeadlift,
+            "相撲深蹲": SumoDeadlift, # 相撲硬拉深蹲
             "高腳杯寬腿深蹲": GobletSquat,
             "斜躺啞鈴飛鳥": Recumbentbird,
             "坐姿啞鈴肩推": ShoulderPressSit, # 坐立肩推上提

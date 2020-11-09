@@ -21,11 +21,11 @@ class Analysis(object):
         both_behavior = self.both_state(points, face)
         if both_behavior != "":
             return both_behavior
-        left_behavior = self.left_state(points, face)
-        if left_behavior != "":
-            return left_behavior
         right_behavior = self.right_state(points, face)
-        return right_behavior
+        if right_behavior != "":
+            return right_behavior
+        left_behavior = self.left_state(points, face)
+        return left_behavior
 
     def get_thres(self):
         return self.thres

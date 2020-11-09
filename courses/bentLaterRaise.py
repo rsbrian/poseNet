@@ -30,11 +30,15 @@ class Prepare(object):
         self.counter.start()
         if self.brain.is_pose("shoulder_width_apart"):
             print("雙腳請與肩同寬")
+            self.course.set_time("lastTime")
+            self.course.set_time("startPoint")
             self.course.api.course_action["tip"]["note"] = ["雙腳請與肩同寬"]
             self.counter.reset()
 
         elif self.brain.is_pose("hand_to_knee"):
             print("膝蓋微彎、身體前傾、將手垂放到膝蓋")
+            self.course.set_time("lastTime")
+            self.course.set_time("startPoint")
             self.course.api.course_action["tip"]["note"] = [
                 "膝蓋微彎、身體前傾、將手垂放到膝蓋"]
             self.counter.reset()
@@ -47,10 +51,9 @@ class Prepare(object):
 
     def is_ready_to_start(self):
         # print("很好請保持", self.counter.result())
-        self.course.api.course_action["tip"]["note"] = [
-            f"很好請保持"]
         self.course.set_time("lastTime")
         self.course.set_time("startPoint")
+        self.course.api.course_action["tip"]["note"] = [f"很好請保持"]
         return self.counter.result() > 3
 
 

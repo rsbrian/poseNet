@@ -30,11 +30,15 @@ class Prepare(object):
         self.counter.start()
         if self.brain.is_pose("raised_with_one_hand"):
             # print("請將持啞鈴手舉起並貼緊耳朵")
+            self.course.set_time("lastTime")
+            self.course.set_time("startPoint")
             self.course.api.course_action["tip"]["note"] = ["請將持啞鈴手舉起並貼緊耳朵"]
             self.counter.reset()
 
         elif self.brain.is_pose("spread_feet"):
             # print("雙腳略張開，腳尖向前")
+            self.course.set_time("lastTime")
+            self.course.set_time("startPoint")
             self.course.api.course_action["tip"]["note"] = ["雙腳略張開，腳尖向前"]
             self.counter.reset()
 
@@ -45,10 +49,9 @@ class Prepare(object):
                 Action(self.course, self.brain))
 
     def is_ready_to_start(self):
-        self.course.api.course_action["tip"]["note"] = [
-            f"很好請保持"]
         self.course.set_time("lastTime")
         self.course.set_time("startPoint")
+        self.course.api.course_action["tip"]["note"] = [f"很好請保持"]
         return self.counter.result() > 3
 
 

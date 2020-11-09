@@ -22,12 +22,18 @@ class PrepareTemp(object):
 
     def check(self, error):
         if self.brain.is_pose(ALERTS[error]):
+            self.course.set_time("lastTime")
+            self.course.set_time("startPoint")
             self.course.api.course_action["tip"]["note"] = [error]
             self.counter.reset()
             return True
         return False
 
     def is_ready_to_start(self):
+        self.course.set_time("lastTime")
+            self.course.set_time("startPoint")
+            self.course.set_time("lastTime")
+        self.course.set_time("startPoint")
         self.course.api.course_action["tip"]["note"] = [
             f"很好請保持"]
         self.course.set_time("lastTime")

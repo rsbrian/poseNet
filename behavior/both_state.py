@@ -71,7 +71,6 @@ class Open(Behavior):
                     self.is_right_point_in_thres(points, face):
                 self.state = Inside(self)
         else:
-            print(self.state.__class__.__name__)
             self.state(points, face, self.history)
 
         return self.behavior
