@@ -903,3 +903,26 @@ animation-duration: 1.2s; }
     border: 6px solid #79E0FA;
 }
 
+.testAnimation {
+    z-index:3000;
+    width:1080px;
+    height:1920px;
+    position: absolute;
+    left:0px;
+    top:0px;
+    display:none;
+
+    background-color: #000000BB;
+
+    transition: background-color .3s;
+    /*animation: clipcircle 1s linear 0S infinite;*/
+}
+
+.testAnimation_animation {
+    animation: clipcircle 500ms ease-in-out
+}
+
+@keyframes clipcircle{
+    0% { clip-path: circle(0 at 50% 50%);}
+    100% { clip-path: circle(1920px at 50% 50%);}
+}

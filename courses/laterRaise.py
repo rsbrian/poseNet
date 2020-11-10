@@ -14,10 +14,6 @@ class LaterRaise(Home):
     def __init__(self, brain, camera):
         super().__init__(brain, camera)
         self.state = Prepare(self, self.brain)
-        self.prepare_notes = {
-            "雙腳請與肩同寬": "shoulder_width_apart",
-            "請將手自然垂放": "drop_hand_natrually"
-        }
 
     def __call__(self):
         return super().__call__()
@@ -28,44 +24,47 @@ class Prepare(object):
         self.course = course
         self.brain = brain
         self.counter = Counter()
+        self.prepare_notes = {
+            "雙腳請與肩同寬": "shoulder_width_apart",
+            "請將手自然垂放": "drop_hand_natrually"
+        }
+        items = self.course.default_prepare(self.prepare_notes)
+        self.course.set_prepare_msg(["tip", "note"], items)
 
     def __call__(self):
         print("Preparing")
         self.counter.start()
-        
-        items = []
-        for note, check_pose in self.course.prepare_notes:
-            pose_error = self.brain.is_pose(check_pose)
-            item = {}
-            item["name"] = note
-            item["check"] = pose_error
-            if pose_error:
-                self.counter.reset()
-            items.append(item)
-        self.course.api.course_action["tip"]["note"] = items
+        items = self.course.check_prepare(self.prepare_notes, self.counter.reset)
+        self.course.set_prepare_msg(["tip", "note"], items)
         if self.is_ready_to_start():
             self.course.api.course_action["start"] = True
             self.brain.reset_temp_points()
             self.course.change(
                 Action(self.course, self.brain))
+        return self.counter
 
     def is_ready_to_start(self):
         return self.counter.result() > 3
 
+    def reset(self):
+        self.counter.reset()
 
 class Action(object):
     def __init__(self, course, brain):
         self.course = course
         self.brain = brain
+        self.action_notes = {
+            "雙腳請與肩同寬": "shoulder_width_apart",
+            "手不要舉超過肩，請回到預備動作重新開始": "hands_over_shoulder",
+            "請回到預備動作重新開始": "prepare_action"
+        }
 
     def __call__(self):
         print("Action")
 
         if self.brain.is_pose("shoulder_width_apart"):
             # print("雙腳請與肩同寬")
-            self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
+            self.set_alert_msg(["action", "alert"], "雙腳請與肩同寬")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 

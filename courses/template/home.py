@@ -59,6 +59,11 @@ class Home(object):
             self.camera.save(self.camera.original_img, "only_in_box")
             print(self.api.course_action["action"]["score"])
             self.cancel_state()
+        else:
+            try:
+                self.state.reset()
+            except Exception as e:
+                pass
         return self
 
     def change_cancel_state(self, new_state):
@@ -75,14 +80,37 @@ class Home(object):
     def change(self, new_state):
         self.state = new_state
 
+    def default_prepare(self, check_list):
+        items = []
+        for note, check_pose in check_list.items():
+            item = {}
+            item["name"] = note
+            item["check"] = False
+            items.append(item)
+        return items
+
+    def check_prepare(self, check_list, func):
+        items = []
+        for note, check_pose in check_list.items():
+            pose_error = self.brain.is_pose(check_pose)
+            item = {}
+            item["name"] = note
+            item["check"] = bool(not pose_error)
+            if pose_error:
+                func()
+            items.append(item)
+        return items
+
+    def set_time(self, name):
+        self.set_api(["action", name], self.get_time())
+
     def set_prepare_msg(self, mapList, val):
         self.set_api(mapList, val)
         self.set_start_time()
 
     def set_start_time(self):
         time = self.get_time()
-        self.set_api(["tip", "lastTime"], time)
-        self.set_api(["tip", "startPoint"], time)
+        self.set_api(["action", "startPointLastTime"], time)
 
     def set_alert_msg(self, mapList, val):
         self.set_api(mapList, val)
@@ -90,7 +118,6 @@ class Home(object):
 
     def set_alert_time(self):
         time = self.get_time()
-        self.set_api(["action", "alertLastTime"], time)
         self.set_api(["action", "startPointLastTime"], time)
 
     def set_api(self, mapList, val):
