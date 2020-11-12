@@ -4,6 +4,7 @@ import datetime
 from utils.counter import Counter
 
 from courses.template.home import Home
+from courses.template.prepare import PrepareTemp
 from courses.template.evaluation import EvaluationTemplate
 from courses.template.error_handleing import ErrorHandleingTemplate
 
