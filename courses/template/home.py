@@ -6,30 +6,7 @@ import datetime
 import time
 
 
-class Canceling(object):
-    def __init__(self, home, brain, analysis):
-        self.home = home
-        self.brain = brain
-        self.analysis = analysis
-        self.start_time = time.time()
-        self.end_time = None
-
-    def __call__(self):
-        self.end_time = time.time()
-        processing_time = self.result()
-        behavior = self.analysis.predict()
-        if self.analysis.both_hand_move():
-            self.home.change_cancel_state(
-                NotCancel(self.home, self.brain, self.analysis))
-
-        if processing_time > 2.5:
-            self.home.api.course_action["action"]["quit"] = True
-
-    def result(self):
-        return self.end_time - self.start_time
-
-
-class NotCancel(object):
+class Cancle(object):
     def __init__(self, home, analysis):
         self.home = home
         self.analysis = analysis
@@ -38,6 +15,7 @@ class NotCancel(object):
         behavior = self.analysis.predict()
         if behavior == "取消":
             self.home.api.course_action["action"]["quit"] = True
+
 
 class Home(object):
     def __init__(self, brain, camera):
@@ -51,7 +29,7 @@ class Home(object):
         self.analysis = Analysis(brain)
         self.api.course_action["tip"]["duration"] = 2
         self.bounding_box = self.brain.setting_calibrate_box()
-        self.cancel_state = NotCancel(self, self.analysis)
+        self.cancel_state = Cancle(self, self.analysis)
 
     def __call__(self, leg=None):
         if self.is_body_in_box():

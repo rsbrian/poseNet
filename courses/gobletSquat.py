@@ -23,40 +23,17 @@ class GobletSquat(Home):
         return self
 
 
-class Prepare(object):
+class Prepare(PrepareTemp):
+    prepare_notes = {
+        "高腳杯握法持啞鈴至胸前​": "hold_dumbbells_on_chest",
+        "雙腳張開45度，腹部收緊": "spread_feet"
+    }
+
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
-        self.counter = Counter()
+        super().__init__(course, brain, self.prepare_notes)
 
     def __call__(self):
-        print("Preparing")
-        self.counter.start()
-        if self.brain.is_pose("hold_dumbbells_on_chest"):
-            # print("持啞鈴於胸口")
-            self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.api.course_action["tip"]["note"] = ["高腳杯握法持啞鈴至胸前​"]
-            self.counter.reset()
-
-        elif self.brain.is_pose("spread_feet"):
-            # print("雙腳張開45度，腹部收緊")
-            self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.api.course_action["tip"]["note"] = ["雙腳張開45度，腹部收緊"]
-            self.counter.reset()
-
-        elif self.is_ready_to_start():
-            self.course.api.course_action["start"] = True
-            self.brain.reset_temp_points()
-            self.course.change(
-                Action(self.course, self.brain))
-
-    def is_ready_to_start(self):
-        self.course.set_time("lastTime")
-        self.course.set_time("startPoint")
-        self.course.api.course_action["tip"]["note"] = [f"很好請保持"]
-        return self.counter.result() > 3
+        super().__call__(Action)
 
 
 class Action(object):
@@ -76,7 +53,6 @@ class Action(object):
                 ErrorHandleing(self.course, self.brain))
         """
         if self.brain.is_pose("hands_up_down"):
-            # print("Bar1 Open")
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
             self.course.change(

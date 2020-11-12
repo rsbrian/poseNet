@@ -1,41 +1,29 @@
-from courses.template.alert import ALERTS
+from utils.counter import Counter
 
 
 class PrepareTemp(object):
-    def __init__(self, course, brain):
+    def __init__(self, course, brain, prepare_notes):
         self.course = course
         self.brain = brain
+        self.prepare_notes = prepare_notes
+        self.counter = Counter()
+        self.course.set_prepare_msg(
+            ["tip", "note"],
+            self.course.default_prepare(self.prepare_notes))
 
-    def __call__(self, check_list):
-        print("Preparing")
+    def __call__(self, action):
         self.counter.start()
-        for error in check_list:
-            if self.check(error):
-                return
-
-        # TODO: need to customize
-        # if self.is_ready_to_start():
-        #     self.course.api.course_action["start"] = True
-        #     self.brain.reset_temp_points()
-        #     self.course.change(
-        #         Action(self.course, self.brain))
-
-    def check(self, error):
-        if self.brain.is_pose(ALERTS[error]):
-            self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.api.course_action["tip"]["note"] = [error]
-            self.counter.reset()
-            return True
-        return False
+        self.course.set_prepare_msg(
+            ["tip", "note"],
+            self.course.check_prepare(self.prepare_notes, self.counter.reset))
+        if self.is_ready_to_start():
+            self.course.api.course_action["start"] = True
+            self.brain.reset_temp_points()
+            self.course.change(
+                action(self.course, self.brain))
 
     def is_ready_to_start(self):
-        self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.set_time("lastTime")
-        self.course.set_time("startPoint")
-        self.course.api.course_action["tip"]["note"] = [
-            f"很好請保持"]
-        self.course.set_time("lastTime")
-        self.course.set_time("startPoint")
         return self.counter.result() > 3
+
+    def reset(self):
+        self.counter.reset()

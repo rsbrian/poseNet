@@ -4,6 +4,7 @@ import datetime
 from utils.counter import Counter
 
 from courses.template.home import Home
+from courses.template.prepare import PrepareTemp
 from courses.template.evaluation import EvaluationTemplate
 from courses.template.error_handleing import ErrorHandleingTemplate
 
@@ -19,35 +20,18 @@ class LaterRaise(Home):
         return super().__call__()
 
 
-class Prepare(object):
+class Prepare(PrepareTemp):
+    prepare_notes = {
+        "雙腳請與肩同寬": "shoulder_width_apart",
+        "請將手自然垂放": "drop_hand_natrually"
+    }
+
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
-        self.counter = Counter()
-        self.prepare_notes = {
-            "雙腳請與肩同寬": "shoulder_width_apart",
-            "請將手自然垂放": "drop_hand_natrually"
-        }
-        items = self.course.default_prepare(self.prepare_notes)
-        self.course.set_prepare_msg(["tip", "note"], items)
+        super().__init__(course, brain, self.prepare_notes)
 
     def __call__(self):
-        print("Preparing")
-        self.counter.start()
-        items = self.course.check_prepare(self.prepare_notes, self.counter.reset)
-        self.course.set_prepare_msg(["tip", "note"], items)
-        if self.is_ready_to_start():
-            self.course.api.course_action["start"] = True
-            self.brain.reset_temp_points()
-            self.course.change(
-                Action(self.course, self.brain))
-        return self.counter
+        super().__call__(Action)
 
-    def is_ready_to_start(self):
-        return self.counter.result() > 3
-
-    def reset(self):
-        self.counter.reset()
 
 class Action(object):
     def __init__(self, course, brain):

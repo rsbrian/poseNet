@@ -19,41 +19,17 @@ class ShoulderPress(Home):
         return super().__call__()
 
 
-class Prepare(object):
+class Prepare(PrepareTemp):
+    prepare_notes = {
+        "雙腳請與肩同寬": "shoulder_width_apart",
+        "雙手持啞鈴於肩膀兩側": "hold_dumbbel_shoulder"
+    }
+
     def __init__(self, course, brain):
-        self.course = course
-        self.brain = brain
-        self.counter = Counter()
+        super().__init__(course, brain, self.prepare_notes)
 
     def __call__(self):
-        print("Preparing")
-        self.counter.start()
-        if self.brain.is_pose("shoulder_width_apart"):
-            # print("雙腳請與肩同寬")
-            self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.api.course_action["tip"]["note"] = ["雙腳請與肩同寬"]
-            self.counter.reset()
-
-        elif self.brain.is_pose("hold_dumbbel_shoulder"):
-            # print("雙手持啞鈴於肩膀兩側")
-            self.course.set_time("lastTime")
-            self.course.set_time("startPoint")
-            self.course.api.course_action["tip"]["note"] = ["雙手持啞鈴於肩膀兩側"]
-            self.counter.reset()
-
-        elif self.is_ready_to_start():
-            self.course.api.course_action["start"] = True
-            self.brain.reset_temp_points()
-            self.course.change(
-                Action(self.course, self.brain))
-
-    def is_ready_to_start(self):
-        # print("很好請保持", self.counter.result())
-        self.course.set_time("lastTime")
-        self.course.set_time("startPoint")
-        self.course.api.course_action["tip"]["note"] = [f"很好請保持"]
-        return self.counter.result() > 3
+        super().__call__(Action)
 
 
 class Action(object):

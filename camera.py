@@ -4,7 +4,7 @@ import numpy as np
 import datetime
 
 class Camera(object):
-    def __init__(self, args, video_name, saved_names):
+    def __init__(self, args, videos, saved_names):
         time = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
         self.args = args
         self.save_template = f"videos/{time}"
