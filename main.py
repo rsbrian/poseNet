@@ -42,12 +42,15 @@ if len(physical_devices):
     tf.config.experimental.set_memory_growth(physical_devices[0], True)
 
 saved_folder = "videos"
+if not os.path.isdir(saved_folder):
+    os.mkdir(saved_folder)
 videos = os.listdir(saved_folder)
-saved_names = ["only_in_box"] 
+saved_names = ["only_in_box"]
 camera = Camera(args, videos, saved_names)
 control = Controller(args)
 third_party = ThirdParty(args)
 member = Api()
+
 
 def extract_qrcode(img):
     bars = pyzbar.decode(img)
@@ -55,6 +58,7 @@ def extract_qrcode(img):
     for bar in bars:
         barcodeData = bar.data.decode("utf-8")
         member.qrcode["content"] = barcodeData
+
 
 def main():
     with tf.Session() as sess:

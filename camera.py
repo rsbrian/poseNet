@@ -3,6 +3,7 @@ import imutils
 import numpy as np
 import datetime
 
+
 class Camera(object):
     def __init__(self, args, videos, saved_names):
         time = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
@@ -15,6 +16,8 @@ class Camera(object):
             if self.args.save:
                 self.add_writers(saved_names)
         else:
+            if not len(videos):
+                raise "videos folder is empty, please check the videos folder"
             video_name = f"videos/{sorted(videos)[-1]}"
             self.cap = cv2.VideoCapture(video_name)
             self.args.save = 0
@@ -24,7 +27,8 @@ class Camera(object):
         fps = 20.0
         shape = (self.args.cam_width, self.args.cam_height)
         for name in saved_names:
-            self.outs[f"{self.save_template}_{name}"] = cv2.VideoWriter(f"{self.save_template}_{name}.avi", fourcc, fps, shape)
+            self.outs[f"{self.save_template}_{name}"] = cv2.VideoWriter(
+                f"{self.save_template}_{name}.avi", fourcc, fps, shape)
 
     def isOpened(self):
         if not self.cap.isOpened():
