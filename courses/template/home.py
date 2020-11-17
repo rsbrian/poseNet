@@ -10,7 +10,7 @@ class Home(object):
     def __init__(self, brain, camera):
         self.brain = brain
         self.camera = camera
-        self.resolutions = [(540, 960), (360, 540)]
+        self.resolutions = [(540, 960), (360, 540), (240, 320)]
         self.class_name = self.__class__.__name__.lower()
         self.camera.add_writers(self.resolutions, self.class_name)
         self.error = 0
