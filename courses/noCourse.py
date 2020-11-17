@@ -1,5 +1,5 @@
 from api.socket import Api
-from behavior.analysis import Analysis
+from behavior_static.analysis import Analysis
 
 
 class NoCourse(object):
@@ -13,8 +13,9 @@ class NoCourse(object):
     def __call__(self):
         self.analysis.thres = None
         self.set_api("最後動作", "")
+        self.camera.outs = {}
+        self.camera.writer_release()
         if self.is_body_in_box():
-            self.camera.save(self.camera.original_img, "only_in_box")
             behavior = self.analysis.predict()
             self.set_api("最後動作", behavior)
         return self

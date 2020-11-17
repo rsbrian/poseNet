@@ -5,30 +5,30 @@ import datetime
 
 
 class Camera(object):
-    def __init__(self, args, videos, saved_names):
-        time = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+    def __init__(self, args, videos):
         self.args = args
-        self.save_template = f"videos/{time}"
         self.outs = {}
 
         if self.args.cam_id != -1:
             self.cap = cv2.VideoCapture(self.args.cam_id)
-            if self.args.save:
-                self.add_writers(saved_names)
         else:
-            if not len(videos):
-                raise "videos folder is empty, please check the videos folder"
-            video_name = f"videos/{sorted(videos)[-1]}"
+            video_name = f"videos/test/{sorted(videos)[-1]}"
             self.cap = cv2.VideoCapture(video_name)
             self.args.save = 0
 
-    def add_writers(self, saved_names):
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        fps = 20.0
-        shape = (self.args.cam_width, self.args.cam_height)
-        for name in saved_names:
-            self.outs[f"{self.save_template}_{name}"] = cv2.VideoWriter(
-                f"{self.save_template}_{name}.avi", fourcc, fps, shape)
+    def tuple_to_str(self, shape):
+        x1, x2 = shape
+        return f"{str(x1)}x{str(x2)}"
+
+    def add_writers(self, resolutions, folder_name):
+        if self.args.save:
+            fourcc = cv2.VideoWriter_fourcc(*'XVID')
+            fps = 20.0
+            time = datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+            for shape in resolutions:
+                name = self.tuple_to_str(shape)
+                file_name = f"videos/{folder_name}/{time}_{name}"
+                self.outs[name] = cv2.VideoWriter(f"{file_name}.avi", fourcc, fps, shape)
 
     def isOpened(self):
         if not self.cap.isOpened():
@@ -38,17 +38,20 @@ class Camera(object):
     def read(self):
         return self.cap.read()
 
-    def save(self, img, name):
-        if self.args.save:
-            self.outs[f"{self.save_template}_{name}"].write(img)
+    def save(self, resolutions):
+        if len(self.outs) == 0: return
+        for resolution in resolutions:
+            img = cv2.resize(self.original_img, resolution)
+            self.outs[self.tuple_to_str(resolution)].write(img)
 
     def store(self, img):
         self.original_img = img.copy()
 
+    def writer_release(self):
+        for name, out in self.outs.items():
+            out.release()
+
     def release(self):
-        if self.args.save:
-            for k, out in self.outs.items():
-                out.release()
         self.cap.release()
 
     def preprocessing(self, img):
@@ -56,8 +59,6 @@ class Camera(object):
 
         if h < w:
             img = imutils.rotate_bound(img, self.args.rotate)
-            # for c in range(img.shape[2]):
-            #     img[:, :, c] = cv2.equalizeHist(img[:, :, c])
 
         img = cv2.resize(img, (self.args.cam_width, self.args.cam_height))
         return img

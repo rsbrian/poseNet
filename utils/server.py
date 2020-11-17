@@ -23,21 +23,28 @@ class Server(object):
     def __init__(self):
         self.course_template = {
             "首頁": NoCourse,
-            "啞鈴彎舉": BicepsCurl,
+            # Shoulder
             "站姿側平舉": LaterRaise,
-            "俯身啞鈴後划船": BentRow,
-            "啞鈴側弓步蹲": SideLunge,
-            "啞鈴肩推": ShoulderPress,
             "雙手交替前舉": FrontRaise,
-            "錘式彎曲啞鈴": HammerCurl,
-            "二頭彎曲": TurnBicepsCurl,
-            "曲腿挺髖": BentLegPushHip,
-            "相撲深蹲": SumoDeadlift, # 相撲硬拉深蹲
-            "高腳杯寬腿深蹲": GobletSquat,
-            "斜躺啞鈴飛鳥": Recumbentbird,
             "坐姿啞鈴肩推": ShoulderPressSit, # 坐立肩推上提
-            "俯身啞鈴反向飛鳥": BentLaterRaise,
+            "啞鈴肩推": ShoulderPress,
+            # Arm
+            "錘式彎曲啞鈴": HammerCurl,
+            "啞鈴彎舉": BicepsCurl,
+            # Chest
             "斜躺啞鈴胸推": RecumbentChestPress,
+            "斜躺啞鈴飛鳥": Recumbentbird,
+            # Back
+            "俯身啞鈴反向飛鳥": BentLaterRaise,
+            "俯身啞鈴後划船": BentRow,
+            # Hip
+            "啞鈴羅馬尼亞硬舉": BentLegPushHip, # 曲腿挺髖
+            # Leg
+            "相撲深蹲": SumoDeadlift, # 相撲硬拉深蹲
+            # No
+            "啞鈴側弓步蹲": SideLunge,
+            "二頭彎曲": TurnBicepsCurl,
+            "高腳杯寬腿深蹲": GobletSquat,
             "單臂啞鈴過頂深蹲": BarbellOverheadSquat,
         }
         self.default()

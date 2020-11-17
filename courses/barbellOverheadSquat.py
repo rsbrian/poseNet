@@ -42,7 +42,6 @@ class Action(object):
         print("Action")
 
         if self.brain.is_pose("hands_up_down"):
-            # print("Bar1 Open")
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
             self.course.change(

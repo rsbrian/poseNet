@@ -12,8 +12,8 @@ from courses.template.error_handleing import ErrorHandleingTemplate
 
 
 class SumoDeadlift(Home):
-    def __init__(self, braind):
-        super().__init__(brain)
+    def __init__(self, brain, camera):
+        super().__init__(brain, camera)
         self.state = Prepare(self, self.brain)
         self.bounding_box = self.brain.setting_calibrate_box_leg()
 
@@ -78,8 +78,6 @@ class HandsUp(object):
                 ErrorHandleing(self.course, self.brain))
 
         elif self.brain.is_pose("hands_down_overheadsquat"):
-            # print("Bar1 Close", self.counter.result())
-            # print("Bar2 Open")
             self.counter.record("up")
             self.course.change(
                 HandsDown(self.course, self.brain, self.counter))

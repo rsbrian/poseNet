@@ -1,26 +1,18 @@
 from operator import getitem
 from functools import reduce
 from api.socket import Api
-from behavior.analysis import Analysis
+from behavior_static.analysis import Analysis
 import datetime
 import time
-
-
-class Cancle(object):
-    def __init__(self, home, analysis):
-        self.home = home
-        self.analysis = analysis
-
-    def __call__(self):
-        behavior = self.analysis.predict()
-        if behavior == "取消":
-            self.home.api.course_action["action"]["quit"] = True
 
 
 class Home(object):
     def __init__(self, brain, camera):
         self.brain = brain
         self.camera = camera
+        self.resolutions = [(540, 960), (360, 540)]
+        self.class_name = self.__class__.__name__.lower()
+        self.camera.add_writers(self.resolutions, self.class_name)
         self.error = 0
         self.number = -1
         self.try_total_times = 0
@@ -29,14 +21,14 @@ class Home(object):
         self.analysis = Analysis(brain)
         self.api.course_action["tip"]["duration"] = 2
         self.bounding_box = self.brain.setting_calibrate_box()
-        self.cancel_state = Cancle(self, self.analysis)
 
     def __call__(self, leg=None):
+        self.camera.save(self.resolutions)
         if self.is_body_in_box():
             self.state()
-            self.camera.save(self.camera.original_img, "only_in_box")
-            print(self.api.course_action["action"]["score"])
-            self.cancel_state()
+            behavior = self.analysis.predict()
+            if behavior == "取消":
+                self.api.course_action["action"]["quit"] = True
         else:
             try:
                 self.state.reset()

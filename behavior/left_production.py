@@ -76,7 +76,7 @@ class Behavior(object):
 
     def predict_behavior(self):
         min_thres = 25
-        max_thres = 45
+        max_thres = 55
         angles = self.calcAngles(
             self.history["left_wrist_x"], self.history["left_wrist_y"])
         angles = self.smoothing(angles)
@@ -85,7 +85,7 @@ class Behavior(object):
             return ""
         mean_angles = np.mean(angles)
         print(round(mean_angles, 2))
-        return "取消" if mean_angles > min_thres and mean_angles < max_thres else ""
+        return "取消" if min_thres < mean_angles and mean_angles < max_thres else ""
 
     def find_closest_point_and_cut(self):
         temp = {}

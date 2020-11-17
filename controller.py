@@ -44,7 +44,7 @@ class Controller(object):
 
     def update_server(self, api):
         self.my_server.set_api(api)
-
+    
     def server_default(self):
         self.my_server.default()
 
@@ -63,7 +63,9 @@ class Controller(object):
     def send(self, server, api):
         if self.args.socket:
             if api["function"] == "exercise_status" and api["最後動作"] != "":
+                print("##############")
                 print(api["最後動作"])
+                print("##############")
                 server.send_message_to_all(
                     json.dumps(api, ensure_ascii=False))
             elif api["function"] == "getExercise" or api["function"] == "endExercise":
