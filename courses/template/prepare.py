@@ -27,3 +27,6 @@ class PrepareTemp(object):
 
     def reset(self):
         self.counter.reset()
+        self.course.set_prepare_msg(
+            ["tip", "note"],
+            self.course.default_prepare(self.prepare_notes))

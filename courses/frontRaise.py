@@ -56,7 +56,7 @@ class Action(object):
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
-                ErrorHandleing(self.course, self.brain))
+                ErrorHandleing2(self.course, self.brain))
 
         elif self.brain.is_pose("hands_up_left") and self.course.number == 1:
             # print("請換右手動作，請回到預備動作重新開始")
@@ -65,7 +65,7 @@ class Action(object):
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
-                ErrorHandleing(self.course, self.brain))
+                ErrorHandleing2(self.course, self.brain))
 
         elif self.brain.is_pose("prepare_action"):
             print("請回到預備動作重新開始")
@@ -272,6 +272,16 @@ class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
         super().__init__(course, brain)
         self.check_list = ["ending_left", "ending_right"]
+
+    def __call__(self):
+        if super().__call__(self.check_list):
+            self.course.change(Action(self.course, self.brain))
+
+
+class ErrorHandleing2(ErrorHandleingTemplate):
+    def __init__(self, course, brain):
+        super().__init__(course, brain)
+        self.check_list = ["ending_right", "ending_left"]
 
     def __call__(self):
         if super().__call__(self.check_list):

@@ -75,7 +75,7 @@ class Behavior(object):
         return temp
 
     def predict_behavior(self):
-        min_thres = 25
+        min_thres = 15
         max_thres = 55
         angles = self.calcAngles(
             self.history["left_wrist_x"], self.history["left_wrist_y"])

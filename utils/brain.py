@@ -292,11 +292,11 @@ class Brain(object):
             self.human.points["right_wrist_y"] < self.human.points["right_shoulder_y"] + param
 
     def hands_down_left(self):
-        param = 50
+        param = 120
         return self.human.points["left_wrist_y"] < self.human.points["left_shoulder_y"] + param
 
     def hands_down_right(self):
-        param = 50
+        param = 120
         return self.human.points["right_wrist_y"] < self.human.points["right_shoulder_y"] + param
 
     def hands_down_downleft(self):
@@ -327,7 +327,7 @@ class Brain(object):
             self.human.points["right_wrist_y"] < self.human.points["right_hip_y"] + param
 
     def hands_down_laterraise(self):
-        param = 30
+        param = 90
         return self.human.points["left_wrist_y"] < self.human.points["left_shoulder_y"] + param and \
             self.human.points["right_wrist_y"] < self.human.points["right_shoulder_y"] + param and \
             self.human.points["left_elbow_y"] < self.human.points["left_shoulder_y"] + param and \
@@ -339,7 +339,7 @@ class Brain(object):
             self.human.points["right_wrist_x"] < self.human.points["right_shoulder_x"] + param
 
     def hands_down_bent(self):  # 曲腿挺髖
-        param_y = 50
+        param_y = 120
         #param_x = 50
         return self.abs_compare("right_shoulder_y", "right_hip_y_temp", "<", param_y) and \
             self.abs_compare("left_shoulder_y", "left_hip_y_temp", "<", param_y) and \

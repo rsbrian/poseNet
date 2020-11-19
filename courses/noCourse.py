@@ -23,7 +23,7 @@ class NoCourse(object):
     def is_body_in_box(self):
         c = self.brain.human.points != {}
         c1 = self.brain.calibrate_human_body(self.bounding_box)
-        return c and c1
+        return c # and c1
 
     def get_thres(self):
         return self.analysis.get_thres()

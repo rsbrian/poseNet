@@ -24,11 +24,13 @@ class Home(object):
 
     def __call__(self, leg=None):
         self.camera.save(self.resolutions)
-        if self.is_body_in_box():
-            self.state()
+        if self.has_body():
             behavior = self.analysis.predict()
             if behavior == "取消":
                 self.api.course_action["action"]["quit"] = True
+
+        if self.is_body_in_box():
+            self.state()
         else:
             try:
                 self.state.reset()
@@ -39,8 +41,11 @@ class Home(object):
     def change_cancel_state(self, new_state):
         self.cancel_state = new_state
 
+    def has_body(self):
+        return self.brain.human.points != {}
+
     def is_body_in_box(self):
-        c = self.brain.human.points != {}
+        c = self.has_body()
         c1 = self.brain.calibrate_human_body(self.bounding_box)
         return c and c1
 

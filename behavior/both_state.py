@@ -38,7 +38,7 @@ class Inside(Behavior):
     def __init__(self, state):
         super().__init__(state)
         self.counter = Counter()
-        self.time = 0.1
+        self.time = 0.06
 
     def __call__(self, points, face, history):
         self.history = history
