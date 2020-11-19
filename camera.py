@@ -73,9 +73,12 @@ class Camera(object):
             face_points = multi_points[i][1].copy()
 
             if len(face_points) > 0:
-                x = np.mean([point[0] for point in face_points])
-                y = np.mean([point[1] for point in face_points])
-                r = np.mean([point[2] for point in face_points])
+                #x = np.mean([point[0] for point in face_points])
+                #y = np.mean([point[1] for point in face_points])
+                #r = np.mean([point[2] for point in face_points])
+                x = np.mean(face_points[0])
+                y = np.mean(face_points[1])
+                r = np.mean(face_points[2])
                 all_faces.append((x, y, r))
 
                 diff = abs(x - center)

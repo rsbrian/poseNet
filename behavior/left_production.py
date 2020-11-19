@@ -7,8 +7,8 @@ class Behavior(object):
         self.state = state
         self.state.behavior = ""
         self.moving = 4
-        self.valid_width = 20
-        self.valid_height = 5
+        self.valid_width = 40
+        self.valid_height = 30
         self.thres = None
 
     def calcAngles(self, listed_x, listed_y):
@@ -75,13 +75,14 @@ class Behavior(object):
         return temp
 
     def predict_behavior(self):
-        min_thres = 15
-        max_thres = 55
+        min_thres = -15
+        max_thres = 60
         angles = self.calcAngles(
             self.history["left_wrist_x"], self.history["left_wrist_y"])
         angles = self.smoothing(angles)
         angles = self.negative_filter(angles)
-        if len(angles) == 0 or self.check_length():
+        print(angles)
+        if len(angles) == 0: # or self.check_length():
             return ""
         mean_angles = np.mean(angles)
         print(round(mean_angles, 2))

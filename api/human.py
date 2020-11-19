@@ -41,6 +41,55 @@ class Human:
 
     @points.setter
     def points(self, new_points):
+        self._points["left_hip_x"] = new_points[12][0]
+        self._points["left_hip_y"] = new_points[12][1]
+        self._points["left_knee_x"] = new_points[13][0]
+        self._points["left_knee_y"] = new_points[13][1]
+        self._points["right_knee_x"] = new_points[10][0]
+        self._points["right_knee_y"] = new_points[10][1]
+        self._points["right_hip_x"] = new_points[9][0]
+        self._points["right_hip_y"] = new_points[9][1]
+        self._points["left_ankle_x"] = new_points[14][0]
+        self._points["left_ankle_y"] = new_points[14][1]
+        self._points["right_ankle_x"] = new_points[11][0]
+        self._points["right_ankle_y"] = new_points[11][1]
+        self._points["left_wrist_x"] = new_points[7][0]
+        self._points["left_wrist_y"] = new_points[7][1]
+        self._points["left_elbow_x"] = new_points[6][0]
+        self._points["left_elbow_y"] = new_points[6][1]
+        self._points["right_elbow_x"] = new_points[3][0]
+        self._points["right_elbow_y"] = new_points[3][1]
+        self._points["right_wrist_x"] = new_points[4][0]
+        self._points["right_wrist_y"] = new_points[4][1]
+        self._points["left_shoulder_x"] = new_points[5][0]
+        self._points["left_shoulder_y"] = new_points[5][1]
+        self._points["right_shoulder_x"] = new_points[2][0]
+        self._points["right_shoulder_y"] = new_points[2][1]
+
+    @property
+    def angles(self):
+        return self._angles
+
+    @angles.setter
+    def angles(self, new_angles):
+        self._angles["left_shoulder_angle"] = new_angles[0][1]
+        self._angles["right_shoulder_angle"] = new_angles[2][1]
+
+        self._angles["left_elbow_angle"] = new_angles[1][1]
+        self._angles["right_elbow_angle"] = new_angles[3][1]
+
+        self._angles["left_knee_angle"] = new_angles[5][1]
+        self._angles["right_knee_angle"] = new_angles[7][1]
+
+
+
+
+
+
+
+
+"""
+def points(self, new_points):
         self._points["left_hip_x"] = new_points[0][0][0]
         self._points["left_hip_y"] = new_points[0][0][1]
         self._points["left_knee_x"] = new_points[4][0][0]
@@ -65,18 +114,4 @@ class Human:
         self._points["left_shoulder_y"] = new_points[0][1][1]
         self._points["right_shoulder_x"] = new_points[6][1][0]
         self._points["right_shoulder_y"] = new_points[6][1][1]
-
-    @property
-    def angles(self):
-        return self._angles
-
-    @angles.setter
-    def angles(self, new_angles):
-        self._angles["left_shoulder_angle"] = new_angles[0][1]
-        self._angles["right_shoulder_angle"] = new_angles[2][1]
-
-        self._angles["left_elbow_angle"] = new_angles[1][1]
-        self._angles["right_elbow_angle"] = new_angles[3][1]
-
-        self._angles["left_knee_angle"] = new_angles[5][1]
-        self._angles["right_knee_angle"] = new_angles[7][1]
+"""

@@ -116,7 +116,7 @@ class Analysis(object):
             return "向下選取"
 
     def check_down_leg(self, points):
-        thres = 40
+        thres = 25
         lhy = points["left_hip_y"]
         rhy = points["right_hip_y"]
         lsy = points["left_shoulder_y"]
@@ -130,7 +130,6 @@ class Analysis(object):
         if len(self.means) > 10:
             self.means = self.means[1:]
             gradients = self.cal_gradient(self.means)
-            print(gradients)
             if gradients > thres:
                 return "向下選取"
 

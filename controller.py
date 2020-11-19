@@ -1,12 +1,13 @@
 import cv2
 import json
 import copy
-import posenet
+#import posenet
 import numpy as np
 
 from utils.view import View
 from utils.brain import Brain
 from utils.server import Server
+import openpose_information
 
 
 class Controller(object):
@@ -20,17 +21,24 @@ class Controller(object):
     def loading(self, points, face):
         if len(points) == 0:
             return
+        #print(points)
         angles = self.calculate_angles(points)
+        #print(angles)
         if not self.is_angles_none(angles):
             self.brain.reset_state(points, angles)
             self.brain.add_median_filter()
             self.brain.face = face
+            
+    
 
     def add_video_writer(self, camera):
         self.camera = camera
 
+    #def calculate_angles(self, points):
+    #    return posenet.computeangle.calculateangle_all_body(points)
+
     def calculate_angles(self, points):
-        return posenet.computeangle.calculateangle_all_body(points)
+        return openpose_information.calculateangle_all_body(points)
 
     def is_angles_none(self, angles):
         if len(angles) == 2:

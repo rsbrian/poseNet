@@ -20,7 +20,8 @@ class Outside(Behavior):
             self.state.analysis.change_left_state(
                 LeftClose(self.state.analysis))
 
-        elif not self.move(points):
+        # elif not self.move(points):
+        else:
             self.state.behavior = self.predict_behavior()
             self.cut_history_to_start()
             self.state.analysis.change_left_state(
@@ -126,7 +127,7 @@ class Open(Behavior):
             self.analysis.thres = (
                 left_bound, right_bound, upper_bound, lower_bound)
             self.state(points, face, self.history)
-
+            print(self.state.__class__.__name__)
         return self.behavior
 
     def append(self, points, face):

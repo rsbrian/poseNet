@@ -20,7 +20,7 @@ from camera import Camera
 from controller import Controller
 from third_party import ThirdParty
 from websocket_server import WebsocketServer
-
+import openpose
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
@@ -72,7 +72,9 @@ def main():
             img = camera.preprocessing(img)
             camera.store(img)
             extract_qrcode(img)
-
+            data = openpose.wxfopenpose()
+            print("data:")
+            print(data)
             multi_points = third_party.get_multi_skeleton_from(img)
             points, face, all_faces = camera.one_person_filter(multi_points)
 

@@ -48,7 +48,10 @@ class Action(object):
 
         if self.brain.is_pose("shoulder_width_apart"):
             # print("雙腳請與肩同寬")
-            self.set_alert_msg(["action", "alert"], "雙腳請與肩同寬")
+            self.course.api.course_action["action"]["alert"] = [
+                "雙腳請與肩同寬"]
+            self.course.set_time("alertLastTime")
+            self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
