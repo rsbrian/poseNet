@@ -2,7 +2,7 @@ import cv2
 import copy
 import numpy as np
 
-from behavior.left_state import LeftClose
+from behavior_static.left_state import LeftClose
 from behavior.both_state import BothClose
 
 
@@ -46,12 +46,6 @@ class Analysis(object):
         angle1 = self.cal_angle(x1, y1, x2, y2)
         angle2 = self.cal_angle(x1, y1, x3, y3)
         angle3 = self.cal_angle(x2, y2, x3, y3)
-        # print(
-        #     round(angle1, 2),
-        #     round(angle2, 2),
-        #     round(angle3, 2),
-        #     round(dist, 2), 
-        #     round(diff, 2))
 
         up = self.check_up(angle1, angle2, angle3, dy)
         right = self.check_right(angle1, angle2, angle3)
