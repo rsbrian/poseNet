@@ -26,7 +26,7 @@ class Controller(object):
         #print(angles)
         if not self.is_angles_none(angles):
             self.brain.reset_state(points, angles)
-            self.brain.add_median_filter()
+            #self.brain.add_median_filter()
             self.brain.face = face
             
     

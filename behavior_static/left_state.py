@@ -15,7 +15,6 @@ class Open(object):
         angle1 = self.cal_angle(x1, y1, x2, y2)
         angle2 = self.cal_angle(x1, y1, x3, y3)
         angle3 = self.cal_angle(x2, y2, x3, y3)
-
         left = self.check_left(angle1, angle2, angle3)
 
         dist1 = self.analysis.norm(x1, y1, x3, y3)
@@ -37,7 +36,7 @@ class Open(object):
 
     def check_left(self, angle1, angle2, angle3):
         c1 = 140 < abs(angle1) and abs(angle1) < 200
-        c2 = 140 < abs(angle2) and abs(angle2) < 200
+        c2 = 100 < abs(angle2) and abs(angle2) < 200
         c3 = 0 < abs(angle3) and abs(angle3) < 40
         if (c1 and c2 and c3):
             return "取消"
