@@ -55,7 +55,7 @@ member = Api()
 
 
 def extract_qrcode(img):
-    bars = pyzbar.decode(img)
+    bars = pyzbar.decode(img, symbols=[64])
     member.qrcode["content"] = ""
     for bar in bars:
         barcodeData = bar.data.decode("utf-8")
