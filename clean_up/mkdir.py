@@ -1,7 +1,7 @@
 import os
 
 def mkdir():
-    os.chdir("/home/iiidsimirror/Documents/poseNet")
+    os.chdir("C:\\Users\\iiids\\Documents\\openPose\\openpose\\build\\examples\\openpose_mirror")
     cs = os.listdir("courses")
     for c in cs:
         if not os.path.isdir(os.path.join(os.getcwd(), os.path.join("courses", c))):

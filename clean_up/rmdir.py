@@ -3,7 +3,7 @@ import shutil
 from mkdir import mkdir
 
 def rmdir():
-    os.chdir("/home/iiidsimirror/Documents/poseNet")
+    os.chdir("C:\\Users\\iiids\\Documents\\openPose\\openpose\\build\\examples\\openpose_mirror")
     cs = os.listdir("videos")
     for c in cs:
         if "test" in c:
