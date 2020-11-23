@@ -16,11 +16,10 @@ import tensorflow as tf
 
 from api.socket import Api
 from pyzbar import pyzbar
-from camera import Camera
-from controller import Controller
+from camera_posenet import Camera
 from third_party import ThirdParty
+from controller_posenet import Controller
 from websocket_server import WebsocketServer
-import openpose
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
@@ -72,9 +71,7 @@ def main():
             img = camera.preprocessing(img)
             camera.store(img)
             extract_qrcode(img)
-            data = openpose.wxfopenpose()
-            print("data:")
-            print(data)
+
             multi_points = third_party.get_multi_skeleton_from(img)
             points, face, all_faces = camera.one_person_filter(multi_points)
 
@@ -90,7 +87,6 @@ def main():
 
             control.update(img)
             control.show(points, (200, 200, 0), 3)
-            control.show(face, (200, 200, 0), -1)
             control.show(bounding_box, (0, 200, 0), 3)
             cv2.imshow("img", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
