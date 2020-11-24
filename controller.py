@@ -17,6 +17,7 @@ class Controller(object):
         self.view = View(args)
         self.my_server = Server()
         self.camera = None
+        self.api_history = []
 
     def loading(self, points, face):
         if len(points) == 0:
@@ -84,3 +85,10 @@ class Controller(object):
             print(f"QRCode: {api}")
             server.send_message_to_all(
                 json.dumps(api, ensure_ascii=False))
+    
+    def save_history(self):
+        with open('history.json', 'w') as json_file:
+            json.dump(self.api_history, json_file)
+
+    def __del__(self):
+        print("del Control")

@@ -20,5 +20,6 @@
         "quit": false,
         "score": 0
     },
-    "start": false
+    "start": false,
+    "take_a_break": false
 }

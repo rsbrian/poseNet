@@ -16,6 +16,7 @@ class Api(object):
                 "score": 0
             },
             "start": False,
+            "take_a_break": False
         }
         self._end = {"break": False}
         self._behavior = {

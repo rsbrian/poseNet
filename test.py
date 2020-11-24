@@ -64,7 +64,6 @@ def extract_qrcode(img):
 
 def main():
     global server
-    
     while (camera.isOpened()):
         po = []
         fa = []
@@ -80,12 +79,9 @@ def main():
         datum = op.Datum()
         datum.cvInputData = img
         opWrapper.emplaceAndPop(op.VectorDatum([datum]))
-        #print("Body keypoints: \n" + str(datum.poseKeypoints))
         img = datum.cvOutputData
-        # cv2.imshow('frame', datum.cvOutputData)
         if datum.poseKeypoints is not None:
             multi_points = openpose_information.get_multipoints(datum.poseKeypoints)
-            #print(multi_points)
             points, face, all_faces = camera.one_person_filter(multi_points)
             for i in range(len(points)):
                 a = int(points[i][0])
@@ -113,11 +109,10 @@ def main():
             control.show(points, (200, 200, 0), 3)
             control.show(face, (200, 200, 0), -1)
             control.show(bounding_box, (0, 200, 0), 3)
-            cv2.imshow("img", img)
-        
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-        
+
+        cv2.imshow("img", img)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
 
     camera.release()
     control.destroy()
@@ -187,7 +182,7 @@ try:
 except Exception as e:
     print(e)
     sys.exit(-1)
-    
+
 PORT = 5500
 server = WebsocketServer(PORT)
 if args.socket:
