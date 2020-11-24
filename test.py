@@ -80,7 +80,7 @@ def main():
         datum.cvInputData = img
         opWrapper.emplaceAndPop(op.VectorDatum([datum]))
         img = datum.cvOutputData
-        if datum.poseKeypoints is not None:
+        if datum.poseKeypoints is not None and not member.course_action["take_a_break"]:
             multi_points = openpose_information.get_multipoints(datum.poseKeypoints)
             points, face, all_faces = camera.one_person_filter(multi_points)
             for i in range(len(points)):
