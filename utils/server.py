@@ -66,7 +66,7 @@ class Server(object):
         return self.course
 
     def set_api(self, msg):
-        self.function = msg["function"]
+        self.function = msg.get("function")
 
         if self.function == "endExercise":
             self.default()

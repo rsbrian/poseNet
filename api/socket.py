@@ -15,10 +15,9 @@ class Api(object):
                 "quit": False,
                 "score": 0
             },
-            "start": False,
-            "take_a_break": False
+            "start": False
         }
-        self._end = {"break": False}
+        self._take_a_rest = {"take_a_break": False}
         self._behavior = {
             'function': 'exercise_status',
             '最後動作': ''
@@ -27,6 +26,14 @@ class Api(object):
             "function": "qrcode",
             "content": ""
         }
+
+    @property
+    def take_a_rest(self):
+        return self._take_a_rest
+
+    @take_a_rest.setter
+    def take_a_rest(self, key, value):
+        self._take_a_rest[key] = value
 
     @property
     def course(self):
@@ -43,14 +50,6 @@ class Api(object):
     @course_action.setter
     def course_action(self, key, value):
         self._course_action[key] = value
-
-    @property
-    def end(self):
-        return self._end
-
-    @end.setter
-    def end(self, key, value):
-        self._end[key] = value
 
     @property
     def behavior(self):

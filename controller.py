@@ -29,8 +29,6 @@ class Controller(object):
             self.brain.reset_state(points, angles)
             #self.brain.add_median_filter()
             self.brain.face = face
-            
-    
 
     def add_video_writer(self, camera):
         self.camera = camera

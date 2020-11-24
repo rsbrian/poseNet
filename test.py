@@ -80,7 +80,7 @@ def main():
         datum.cvInputData = img
         opWrapper.emplaceAndPop(op.VectorDatum([datum]))
         img = datum.cvOutputData
-        if datum.poseKeypoints is not None and not member.course_action["take_a_break"]:
+        if datum.poseKeypoints is not None and not member.take_a_rest["take_a_break"]:
             multi_points = openpose_information.get_multipoints(datum.poseKeypoints)
             points, face, all_faces = camera.one_person_filter(multi_points)
             for i in range(len(points)):
@@ -132,7 +132,8 @@ def message_received(client, server, message):
 
     msg = json.loads(message, encoding="utf-8")
     control.update_server(msg)
-
+    if msg.get("take_a_break") is not None:
+        member.take_a_rest["take_a_break"] = msg.get("take_a_break")
 
 def main_thread():
     global t
