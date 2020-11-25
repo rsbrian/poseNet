@@ -71,8 +71,6 @@ class Camera(object):
         center = self.args.cam_width // 2
         for i in range(len(multi_points)):
             face_points = multi_points[i][1].copy()
-   
-
 
             if len(face_points) > 0:
                 #x = np.mean([point[0] for point in face_points])

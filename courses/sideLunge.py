@@ -163,13 +163,13 @@ class Evaluation(object):
 
         if total_time < 1.2:
             # print("太快了，請放慢速度")
-            self.course.api.course_action["action"]["alert"] = ["太快了，請放慢速度"]
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
         elif total_time < 2.5:
             # print("完美")
             self.course.api.course_action["action"]["alert"] = ["完美"]
         else:
             # print("太慢了，請加快速度")
-            self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
 
         self.course.api.course_action["action"]["times"] += 1
 

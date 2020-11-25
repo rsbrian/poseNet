@@ -28,7 +28,7 @@ from websocket_server import WebsocketServer
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=1)
-parser.add_argument('--cam_id', type=int, default=0)
+parser.add_argument('--cam_id', type=int, default=1)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
@@ -82,12 +82,10 @@ def main():
         opWrapper.emplaceAndPop(op.VectorDatum([datum]))
         img = datum.cvOutputData
         print(type(datum.poseKeypoints))
-        print(datum.poseKeypoints)
+        print(sys.getrefcount(datum.poseKeypoints))
         print(count)
-        count += 1
-
+        
         if datum.poseKeypoints is not None and \
-            len(datum.poseKeypoints) != 1 and \
             not member.take_a_rest["take_a_break"]:
             multi_points = openpose_information.get_multipoints(datum.poseKeypoints)
             points, face, all_faces = camera.one_person_filter(multi_points)
@@ -117,6 +115,10 @@ def main():
             control.show(points, (200, 200, 0), 3)
             control.show(face, (200, 200, 0), -1)
             control.show(bounding_box, (0, 200, 0), 3)
+        else:
+            count += 1
+
+        del datum
 
         cv2.imshow("img", img)
         if cv2.waitKey(1) & 0xFF == ord('q'):

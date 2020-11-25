@@ -11,12 +11,12 @@ class EvaluationTemplate(object):
         print("Evaluation")
         total_time = self.counter.get_logs()["total"]
 
-        if total_time < 0.8:
-            self.course.api.course_action["action"]["alert"] = ["還可以"]
-        elif total_time < 2.0:
+        if total_time < 1.2:
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
+        elif total_time < 2.5:
             self.course.api.course_action["action"]["alert"] = ["完美"]
         else:
-            self.course.api.course_action["action"]["alert"] = ["還可以"]
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
 
         self.course.set_time("alertLastTime")
         self.course.set_time("startPointLastTime")

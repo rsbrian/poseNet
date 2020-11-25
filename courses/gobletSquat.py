@@ -15,19 +15,15 @@ class GobletSquat(Home):
     def __init__(self, brain, camera):
         super().__init__(brain, camera)
         self.state = Prepare(self, self.brain)
-
+        self.bounding_box = self.brain.setting_calibrate_box_leg()
+    
     def __call__(self):
-        if self.is_body_in_box(leg="leg"):
-            self.state()
-            print(self.api.course_action["action"]["score"])
-            # self.cancel_state()
-        return self
+        return super().__call__()
 
 
 class Prepare(PrepareTemp):
     prepare_notes = {
         "高腳杯握法持啞鈴至胸前​": "hold_dumbbells_on_chest",
-        "雙腳張開45度，腹部收緊": "spread_feet"
     }
 
     def __init__(self, course, brain):
@@ -85,7 +81,7 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-        elif self.brain.is_pose("hands_down_overheadsquat"):
+        elif self.brain.is_pose("hands_down_thruster"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
             self.counter.record("up")
@@ -130,35 +126,6 @@ class HandsDown(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
         """
-
-
-class Evaluation(object):
-    def __init__(self, course, brain, counter):
-        self.course = course
-        self.brain = brain
-        self.counter = counter
-
-    def __call__(self):
-        print("Evaluation")
-        total_time = self.counter.get_logs()["total"]
-
-        self.course.set_time("alertLastTime")
-        self.course.set_time("startPointLastTime")
-
-        if total_time < 1.2:
-            # print("太快了，請放慢速度")
-            self.course.api.course_action["action"]["alert"] = ["太快了，請放慢速度"]
-        elif total_time < 2.5:
-            # print("完美")
-            self.course.api.course_action["action"]["alert"] = ["完美"]
-        else:
-            # print("太慢了，請加快速度")
-            self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
-
-        self.course.api.course_action["action"]["times"] += 1
-
-        self.course.change(
-            Action(self.course, self.brain))
 
 
 class ErrorHandleing(ErrorHandleingTemplate):

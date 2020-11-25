@@ -8,13 +8,14 @@ from courses.template.prepare import PrepareTemp
 from courses.template.evaluation import EvaluationTemplate
 from courses.template.error_handleing import ErrorHandleingTemplate
 
-# 坐立肩推上提
+# 伐木(左)
 
 
-class ShoulderPressSit(Home):
+class LiftAndChopLeft(Home):
     def __init__(self, brain, camera):
         super().__init__(brain, camera)
         self.state = Prepare(self, self.brain)
+        self.bounding_box = self.brain.setting_calibrate_box_leg()
 
     def __call__(self):
         return super().__call__()
@@ -22,14 +23,14 @@ class ShoulderPressSit(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "坐姿，腹部收緊": "sit_down",
-        "雙手持啞鈴於肩膀兩側": "hold_dumbbel_shoulder"
+        "持啞鈴於腹前": "hold_dumbbells_on_abdomen"
     }
 
     def __init__(self, course, brain):
         super().__init__(course, brain, self.prepare_notes)
 
     def __call__(self):
+        print("Preparing")
         super().__call__(Action)
 
 
@@ -41,21 +42,14 @@ class Action(object):
     def __call__(self):
         print("Action")
 
-        if self.brain.is_pose("sit_down"):
-            # print("坐姿，腹部收緊")
-            self.course.api.course_action["action"]["alert"] = ["坐姿，腹部收緊"]
+        if self.brain.is_pose("keep_body_stable"):
+            # print("請保持身體穩定​")
+            self.course.api.course_action["action"]["alert"] = ["請保持身體穩定​"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
-        elif self.brain.is_pose("hands_lower_than_shoulder"):
-            # print("下放時，手肘略低於肩膀，無須再下放")
-            self.course.api.course_action["action"]["alert"] = [
-                "下放時，手肘略低於肩膀，無須再下放"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-
+                
         elif self.brain.is_pose("hands_up"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")
@@ -82,15 +76,15 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
 
-        elif self.brain.is_pose("sit_down"):
-            # print("坐姿，腹部收緊")
-            self.course.api.course_action["action"]["alert"] = ["坐姿，腹部收緊"]
+        elif self.brain.is_pose("keep_body_stable"):
+            # print("請保持身體穩定​")
+            self.course.api.course_action["action"]["alert"] = ["請保持身體穩定​"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
-        elif self.brain.is_pose("hands_down_shoulderpress"):
+        elif self.brain.is_pose("hands_down_lift_left"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
             self.counter.record("up")
@@ -114,26 +108,19 @@ class HandsDown(object):
         self.counter.start()
         if self.brain.is_pose("ending"):
             # print("Bar2 Close", self.counter.result())
+            self.brain.reset_temp_points()
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
 
-        elif self.brain.is_pose("hand_too_straight"):
-            print("手打太直了，請回到預備動作重新開始")
-            self.course.api.course_action["action"]["alert"] = [
-                "手打太直了，請回到預備動作重新開始"]
+        elif self.brain.is_pose("keep_body_stable"):
+            # print("請保持身體穩定​")
+            self.course.api.course_action["action"]["alert"] = ["請保持身體穩定​"]
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
-        elif self.brain.is_pose("sit_down"):
-            # print("坐姿，腹部收緊")
-            self.course.api.course_action["action"]["alert"] = ["坐姿，腹部收緊"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
 
 
 class Evaluation(object):

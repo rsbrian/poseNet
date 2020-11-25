@@ -22,7 +22,6 @@ class LaterRaise(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "雙腳請與肩同寬": "shoulder_width_apart",
         "請將手自然垂放": "drop_hand_natrually"
     }
 
@@ -38,7 +37,6 @@ class Action(object):
         self.course = course
         self.brain = brain
         self.action_notes = {
-            "雙腳請與肩同寬": "shoulder_width_apart",
             "手不要舉超過肩，請回到預備動作重新開始": "hands_over_shoulder",
             "請回到預備動作重新開始": "prepare_action"
         }
@@ -46,16 +44,7 @@ class Action(object):
     def __call__(self):
         print("Action")
 
-        if self.brain.is_pose("shoulder_width_apart"):
-            # print("雙腳請與肩同寬")
-            self.course.api.course_action["action"]["alert"] = [
-                "雙腳請與肩同寬"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
-
-        elif self.brain.is_pose("hands_over_shoulder"):
+        if self.brain.is_pose("hands_over_shoulder"):
             print("手不要舉超過肩，請回到預備動作重新開始")
             self.course.api.course_action["action"]["alert"] = [
                 "手不要舉超過肩，請回到預備動作重新開始"]
@@ -99,14 +88,6 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
 
-        elif self.brain.is_pose("shoulder_width_apart"):
-            # print("雙腳請與肩同寬")
-            self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
-
         elif self.brain.is_pose("prepare_action"):
             print("請回到預備動作重新開始")
             self.course.api.course_action["action"]["alert"] = [
@@ -144,14 +125,6 @@ class HandsDown(object):
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
 
-        elif self.brain.is_pose("shoulder_width_apart"):
-            # print("雙腳請與肩同寬")
-            self.course.api.course_action["action"]["alert"] = ["雙腳請與肩同寬"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
-
         elif self.brain.is_pose("prepare_action"):
             print("請回到預備動作重新開始")
             self.course.api.course_action["action"]["alert"] = [
@@ -186,13 +159,13 @@ class Evaluation(object):
 
         if total_time < 1.2:
             # print("太快了，請放慢速度")
-            self.course.api.course_action["action"]["alert"] = ["太快了，請放慢速度"]
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
         elif total_time < 2.5:
             # print("完美")
             self.course.api.course_action["action"]["alert"] = ["完美"]
         else:
             # print("太慢了，請加快速度")
-            self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
 
         self.course.api.course_action["action"]["times"] += 1
 

@@ -56,7 +56,7 @@ class Action(object):
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
-                ErrorHandleing2(self.course, self.brain))
+                ErrorHandleing(self.course, self.brain))
 
         elif self.brain.is_pose("hands_up_left") and self.course.number == 1:
             # print("請換右手動作，請回到預備動作重新開始")
@@ -65,7 +65,7 @@ class Action(object):
             self.course.set_time("alertLastTime")
             self.course.set_time("startPointLastTime")
             self.course.change(
-                ErrorHandleing2(self.course, self.brain))
+                ErrorHandleing(self.course, self.brain))
 
         elif self.brain.is_pose("prepare_action"):
             print("請回到預備動作重新開始")
@@ -254,13 +254,13 @@ class Evaluation(object):
 
         if total_time < 1.2:
             # print("太快了，請放慢速度")
-            self.course.api.course_action["action"]["alert"] = ["太快了，請放慢速度"]
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
         elif total_time < 2.5:
             # print("完美")
             self.course.api.course_action["action"]["alert"] = ["完美"]
         else:
             # print("太慢了，請加快速度")
-            self.course.api.course_action["action"]["alert"] = ["太慢了，請加快速度"]
+            self.course.api.course_action["action"]["alert"] = ["不錯"]
 
         self.course.api.course_action["action"]["times"] += 1
 
@@ -272,16 +272,6 @@ class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):
         super().__init__(course, brain)
         self.check_list = ["ending_left", "ending_right"]
-
-    def __call__(self):
-        if super().__call__(self.check_list):
-            self.course.change(Action(self.course, self.brain))
-
-
-class ErrorHandleing2(ErrorHandleingTemplate):
-    def __init__(self, course, brain):
-        super().__init__(course, brain)
-        self.check_list = ["ending_right", "ending_left"]
 
     def __call__(self):
         if super().__call__(self.check_list):

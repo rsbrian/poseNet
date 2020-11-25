@@ -34,6 +34,8 @@ class Human:
         self._points["left_shoulder_y_temp"] = self._points["left_shoulder_y"]
         self._points["right_shoulder_x_temp"] = self._points["right_shoulder_x"]
         self._points["right_shoulder_y_temp"] = self._points["right_shoulder_y"]
+        self._points["brain_x_temp"] = self._points["brain_x"]
+        self._points["brain_y_temp"] = self._points["brain_y"]
 
     @property
     def points(self):
@@ -65,6 +67,8 @@ class Human:
         self._points["left_shoulder_y"] = new_points[5][1]
         self._points["right_shoulder_x"] = new_points[2][0]
         self._points["right_shoulder_y"] = new_points[2][1]
+        self._points["brain_x"] = new_points[0][0]
+        self._points["brain_y"] = new_points[0][1]
 
     @property
     def angles(self):
@@ -74,9 +78,16 @@ class Human:
     def angles(self, new_angles):
         self._angles["left_shoulder_angle"] = new_angles[0][1]
         self._angles["right_shoulder_angle"] = new_angles[2][1]
-
+        #print("left_shoulder")
+        #print(new_angles[0][1])
+        #print("right shoulder:")
+        #print(new_angles[2][1])
         self._angles["left_elbow_angle"] = new_angles[1][1]
         self._angles["right_elbow_angle"] = new_angles[3][1]
+        #print("left_elbow")
+        #print(new_angles[1][1])
+        #print("right elbow:")
+        #print(new_angles[3][1])
 
         self._angles["left_knee_angle"] = new_angles[5][1]
         self._angles["right_knee_angle"] = new_angles[7][1]
