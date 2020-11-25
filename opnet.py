@@ -39,9 +39,6 @@ parser.add_argument('--file', type=str, default=None,
                     help="Optionally use a video file instead of a live camera")
 args = parser.parse_args()
 
-print(type(args))
-print(args)
-
 physical_devices = tf.config.experimental.list_physical_devices("GPU")
 print("Num of GPUs", physical_devices)
 if len(physical_devices):
