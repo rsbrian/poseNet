@@ -25,18 +25,22 @@ from third_party import ThirdParty
 from websocket_server import WebsocketServer
 
 parser = argparse.ArgumentParser()
+# parser.add_argument('--net_resolution', type=str, default="320x176")
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=1)
 parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
-parser.add_argument('--cam_width', type=int, default=540)
-parser.add_argument('--cam_height', type=int, default=960)
+parser.add_argument('--cam_width', type=int, default=160)
+parser.add_argument('--cam_height', type=int, default=320)
 parser.add_argument('--scale_factor', type=float, default=0.7125)
 parser.add_argument('--file', type=str, default=None,
                     help="Optionally use a video file instead of a live camera")
 args = parser.parse_args()
+
+print(type(args))
+print(args)
 
 physical_devices = tf.config.experimental.list_physical_devices("GPU")
 print("Num of GPUs", physical_devices)
@@ -83,6 +87,7 @@ def main():
                 datum = op.Datum()
                 datum.cvInputData = img
                 opWrapper.emplaceAndPop(op.VectorDatum([datum]))
+
                 img = datum.cvOutputData
                 if datum.poseKeypoints is not None and not member.take_a_rest["take_a_break"]:
                     multi_points = openpose_information.get_multipoints(datum.poseKeypoints)

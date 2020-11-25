@@ -63,6 +63,7 @@ def extract_qrcode(img):
 
 
 def main():
+    count = 0
     global server
     while (camera.isOpened()):
         po = []
@@ -80,7 +81,14 @@ def main():
         datum.cvInputData = img
         opWrapper.emplaceAndPop(op.VectorDatum([datum]))
         img = datum.cvOutputData
-        if datum.poseKeypoints is not None and not member.take_a_rest["take_a_break"]:
+        print(type(datum.poseKeypoints))
+        print(datum.poseKeypoints)
+        print(count)
+        count += 1
+
+        if datum.poseKeypoints is not None and \
+            len(datum.poseKeypoints) != 1 and \
+            not member.take_a_rest["take_a_break"]:
             multi_points = openpose_information.get_multipoints(datum.poseKeypoints)
             points, face, all_faces = camera.one_person_filter(multi_points)
             for i in range(len(points)):
@@ -132,6 +140,8 @@ def message_received(client, server, message):
 
     msg = json.loads(message, encoding="utf-8")
     control.update_server(msg)
+    print(msg)
+    print(msg.get("take_a_break"))
     if msg.get("take_a_break") is not None:
         member.take_a_rest["take_a_break"] = msg.get("take_a_break")
 
