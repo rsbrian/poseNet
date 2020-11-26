@@ -32,8 +32,8 @@ parser.add_argument('--cam_id', type=int, default=1)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
-parser.add_argument('--cam_width', type=int, default=160)
-parser.add_argument('--cam_height', type=int, default=320)
+parser.add_argument('--cam_width', type=int, default=540)
+parser.add_argument('--cam_height', type=int, default=960)
 parser.add_argument('--scale_factor', type=float, default=0.7125)
 parser.add_argument('--file', type=str, default=None,
                     help="Optionally use a video file instead of a live camera")
@@ -52,7 +52,6 @@ camera = Camera(args, videos)
 control = Controller(args)
 third_party = ThirdParty(args)
 member = Api()
-
 
 def extract_qrcode(img):
     bars = pyzbar.decode(img, symbols=[64])
@@ -118,6 +117,7 @@ def main():
                     control.show(face, (200, 200, 0), -1)
                     control.show(bounding_box, (0, 200, 0), 3)
 
+            cv2.namedWindow("img", 0)
             cv2.imshow("img", img)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
