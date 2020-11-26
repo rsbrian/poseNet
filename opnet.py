@@ -28,7 +28,7 @@ parser = argparse.ArgumentParser()
 # parser.add_argument('--net_resolution', type=str, default="320x176")
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=1)
-parser.add_argument('--cam_id', type=int, default=1)
+parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
@@ -79,7 +79,6 @@ def main():
             
             posenet_img = copy.deepcopy(img)
             multi_points = third_party.get_multi_skeleton_from(posenet_img)
-            print(len(multi_points))
 
             if len(multi_points):
                 datum = op.Datum()
