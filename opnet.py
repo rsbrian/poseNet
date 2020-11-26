@@ -139,10 +139,10 @@ def message_received(client, server, message):
         message = message[:200] + ".."
 
     msg = json.loads(message, encoding="utf-8")
-    control.update_server(msg)
     if msg.get("take_a_break") is not None:
         member.take_a_rest["take_a_break"] = msg.get("take_a_break")
-
+    else:
+        control.update_server(msg)
 def main_thread():
     global t
     t = threading.Thread(target=main, args=())

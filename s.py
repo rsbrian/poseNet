@@ -9,12 +9,15 @@ def func():
 
 c = 0
 while True:
-    if c < 2:
-        func()
-    else:
-        c = 0
+    # if c > 100:
+    #     break
+    x = func()
+    # for i in range()
+    print(sys.getrefcount(x))
+    # del x
+    # ctypes.pythonapi._Py_Dealloc(ctypes.py_object(x))
+    print(c)
     c += 1
-
 
 # C:\Users\iiids\Documents\openpose\src\openpose\net\bodyPartConnectorBase.cpp(902)
 # peopleVectorToPeopleArray
