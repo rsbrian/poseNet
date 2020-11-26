@@ -275,10 +275,10 @@ class Brain(object):
             self.noabs_compare("left_knee_x", "left_ankle_x", "<", -20)
 
     def hold_dumbbel_shoulder(self):  # 雙手持啞鈴於肩膀兩側
-        return self.abs_compare("right_shoulder_y", "right_elbow_y", ">", 50) or \
-            self.abs_compare("left_shoulder_y", "left_elbow_y", ">", 50) or \
-            self.abs_compare("right_elbow_x", "right_wrist_x", ">", 50) or \
-            self.abs_compare("left_elbow_x", "left_wrist_x", ">", 50)
+        return self.abs_compare("right_shoulder_y", "right_wrist_y", ">", 60) or \
+            self.abs_compare("left_shoulder_y", "left_wrist_y", ">", 60)
+            #self.abs_compare("right_elbow_x", "right_wrist_x", ">", 50) or \
+            #self.abs_compare("left_elbow_x", "left_wrist_x", ">", 50)
 
     def raised_with_one_hand(self):  # 持啞鈴手舉起並貼緊耳朵
         return self.human.angles["right_shoulder_angle"] < 120 and \
@@ -311,10 +311,10 @@ class Brain(object):
             self.abs_compare("right_wrist_y", "right_shoulder_y", ">", 30) 
     
     def hold_dumbbells_on_brain(self):
-        return self.abs_compare("left_elbow_y", "brain_y", ">", 30) or \
-            self.abs_compare("left_wrist_y", "brain_y", ">", 30) or \
-            self.abs_compare("right_elbow_y", "brain_y", ">", 30) or \
-            self.abs_compare("right_wrist_y", "brain_y", ">", 30)
+        return self.abs_compare("left_elbow_y", "brain_y", ">", 40) or \
+            self.abs_compare("right_elbow_y", "brain_y", ">", 40) 
+            #self.abs_compare("left_wrist_y", "brain_y", ">", 30) or \
+            #self.abs_compare("right_wrist_y", "brain_y", ">", 30)
 
     def hold_rightfeet_on_step(self):
         return self.abs_compare("right_knee_y", "right_hip_y", ">", 80)

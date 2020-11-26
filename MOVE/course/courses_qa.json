@@ -1066,37 +1066,37 @@
                 {
                     "category_id": "3ce6c3b8875047e8ab69a0f6d05144d0",
                     "course_id": "b9d01ece79b84d3494c4d46e9671d593",
-                    "reps": 8,
+                    "reps": 1,
                     "sets": 1
                 },
                 {
                     "category_id": "3ce6c3b8875047e8ab69a0f6d05144d0",
                     "course_id": "12ce3e00ac0945a99a823ec90fd20924",
-                    "reps": 12,
+                    "reps": 1,
                     "sets": 1
                 },
                 {
                     "category_id": "3ce6c3b8875047e8ab69a0f6d05144d0",
                     "course_id": "1811a0c5d7044b21b3651dcf0d0eb9ec",
-                    "reps": 12,
+                    "reps": 1,
                     "sets": 1
                 },
                 {
                     "category_id": "7020a342c9b24a588f0b8a351ea4cae5",
                     "course_id": "f46ec51170114df7a112cf3bd4dd6f0a",
-                    "reps": 15,
+                    "reps": 1,
                     "sets": 1
                 },
                 {
                     "category_id": "7020a342c9b24a588f0b8a351ea4cae5",
                     "course_id": "b19880e8b4d84658a68de2eb4b57c6fb",
-                    "reps": 10,
+                    "reps": 1,
                     "sets": 1
                 },
                 {
                     "category_id": "7020a342c9b24a588f0b8a351ea4cae5",
                     "course_id": "87d18f398aec4fc289a85f0374dc2005",
-                    "reps": 15,
+                    "reps": 1,
                     "sets": 1
                 }
             ]
@@ -1110,12 +1110,12 @@
         ],
         "2020_11_25": [
             {
-                "course_set_id": "9c20317f89f44e5ea8f10b36f1c165f7"
+                "course_set_id": "3a393e50e62a403fafef6cdce7fa7e2a"
             }
         ],
         "2020_11_26": [
             {
-                "course_set_id": "3a393e50e62a403fafef6cdce7fa7e2a"
+                "course_set_id": "da81151d9f7748848715c79b065f2137"
             }
         ],
         "2020_11_27": [
