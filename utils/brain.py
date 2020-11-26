@@ -505,25 +505,25 @@ class Brain(object):
             self.abs_compare("right_hip_y", "left_hip_y", "<", 20)
 
     def ending(self):
-        return not self.hands_up(param=15)
+        return not self.hands_up(param=10)
 
     def ending_left(self):
-        return not self.hands_up_left(param=15)
+        return not self.hands_up_left(param=10)
 
     def ending_right(self):
-        return not self.hands_up_right(param=15)
+        return not self.hands_up_right(param=10)
 
     def ending_down(self):
-        return not self.hands_up_down(param=15)
+        return not self.hands_up_down(param=10)
 
     def ending_downleft(self):
-        return not self.hands_up_downleft(param=15)
+        return not self.hands_up_downleft(param=10)
 
     def ending_downright(self):
-        return not self.hands_up_downright(param=15)
+        return not self.hands_up_downright(param=10)
     
     def ending_left_feet(self):
-        return not self.hands_up_left_feet(param=15)
+        return not self.hands_up_left_feet(param=10)
 
     def ending_right_feet(self):
-        return not self.hands_up_right_feet(param=15)
+        return not self.hands_up_right_feet(param=10)
