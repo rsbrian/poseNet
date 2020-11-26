@@ -1,21 +1,22 @@
 import sys
 import ctypes
+import gc
+import weakref
+from weakref import ref
 
 FUNCTYPE = ctypes.CFUNCTYPE(ctypes.py_object)
 
-@FUNCTYPE
-def func():
-    return None
+class X:
+    @FUNCTYPE
+    def func():
+        return None
 
 c = 0
+x = X()
+y = weakref.proxy(x)
 while True:
-    # if c > 100:
-    #     break
-    x = func()
-    # for i in range()
-    print(sys.getrefcount(x))
-    # del x
-    # ctypes.pythonapi._Py_Dealloc(ctypes.py_object(x))
+    z = y.func()
+    collected = gc.collect()
     print(c)
     c += 1
 
