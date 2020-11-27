@@ -14,6 +14,7 @@ import threading
 import numpy as np
 import tensorflow as tf
 
+from clean_up.mkdir import mkdir
 from api.socket import Api
 from pyzbar import pyzbar
 from camera_posenet import Camera
@@ -43,6 +44,7 @@ if len(physical_devices):
 saved_folder = "videos"
 if not os.path.isdir(saved_folder):
     os.mkdir(saved_folder)
+mkdir(os.getcwd())
 videos = os.listdir(saved_folder)
 camera = Camera(args, videos)
 control = Controller(args)
