@@ -1,12 +1,14 @@
 import os
 
-def mkdir():
-    os.chdir("C:\\Users\\iiids\\Documents\\openPose\\openpose\\build\\examples\\openpose_mirror")
-    cs = os.listdir("courses")
-    for c in cs:
-        if not os.path.isdir(os.path.join(os.getcwd(), os.path.join("courses", c))):
+def mkdir(current_path):
+    courses_path = os.path.join(current_path, "courses")
+    courses_folder = os.listdir("courses")
+    for c in courses_folder:
+        target = os.path.join(os.path.join(current_path, "courses"), c)
+        if not os.path.isdir(target):
             name, _ = c.split(".")
             if "noCourse" in name:
                 continue
-            name = os.path.join(os.getcwd(), os.path.join("videos", name.lower()))
-            os.mkdir(name)
+            result_path = os.path.join(os.path.join(current_path, "videos"), name)
+            if not os.path.isdir(result_path):
+                os.mkdir(result_path)
