@@ -83,8 +83,8 @@ class Brain(object):
             segment_width = self.args.cam_width // 3
             segment_height = self.args.cam_height // 6
 
-        x1 = segment_width * 1 + 10  # 1
-        x2 = segment_width * 2 - 10  # 2
+        x1 = segment_width * 1 - 30  # 1
+        x2 = segment_width * 2 + 30  # 2
         y1 = segment_height * 4 + 50  # 4
         y2 = segment_height * 5 + 100  # 5
         return (x1, x2, y1, y2)
