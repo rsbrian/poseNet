@@ -29,7 +29,7 @@ from websocket_server import WebsocketServer
 parser = argparse.ArgumentParser()
 parser.add_argument('--show', type=int, default=1)
 parser.add_argument('--save', type=int, default=1)
-parser.add_argument('--cam_id', type=int, default=1)
+parser.add_argument('--cam_id', type=int, default=0)
 parser.add_argument('--socket', type=int, default=1)
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--rotate', type=int, default=-90)
@@ -178,17 +178,17 @@ try:
     params = dict()
     params["model_folder"] = "../../../models/"
 
-    # Add others in path?
-    for i in range(0, len(args1[1])):
-        curr_item = args1[1][i]
-        if i != len(args1[1])-1: next_item = args1[1][i+1]
-        else: next_item = "1"
-        if "--" in curr_item and "--" in next_item:
-            key = curr_item.replace('-','')
-            if key not in params:  params[key] = "1"
-        elif "--" in curr_item and "--" not in next_item:
-            key = curr_item.replace('-','')
-            if key not in params: params[key] = next_item
+    # # Add others in path?
+    # for i in range(0, len(args1[1])):
+    #     curr_item = args1[1][i]
+    #     if i != len(args1[1])-1: next_item = args1[1][i+1]
+    #     else: next_item = "1"
+    #     if "--" in curr_item and "--" in next_item:
+    #         key = curr_item.replace('-','')
+    #         if key not in params:  params[key] = "1"
+    #     elif "--" in curr_item and "--" not in next_item:
+    #         key = curr_item.replace('-','')
+    #         if key not in params: params[key] = next_item
     # Starting OpenPose
     opWrapper = op.WrapperPython()
     opWrapper.configure(params)
