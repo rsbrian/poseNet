@@ -78,16 +78,9 @@ class Human:
     def angles(self, new_angles):
         self._angles["left_shoulder_angle"] = new_angles[0][1]
         self._angles["right_shoulder_angle"] = new_angles[2][1]
-        #print("left_shoulder")
-        #print(new_angles[0][1])
-        #print("right shoulder:")
-        #print(new_angles[2][1])
+
         self._angles["left_elbow_angle"] = new_angles[1][1]
         self._angles["right_elbow_angle"] = new_angles[3][1]
-        #print("left_elbow")
-        #print(new_angles[1][1])
-        #print("right elbow:")
-        #print(new_angles[3][1])
 
         self._angles["left_knee_angle"] = new_angles[5][1]
         self._angles["right_knee_angle"] = new_angles[7][1]

@@ -120,7 +120,7 @@
                     "coach_id": "bdfd43afe3f54dfaa757e87a04ac7a0b",
                     "video_preview": "/coach_videos/2626b2e3ec3246b486e41068835f8dda/C2_M_C6_Romanian_deadlift_dumbbell.gif",
                     "video": "/coach_videos/2626b2e3ec3246b486e41068835f8dda/C2_M_C6_Romanian_deadlift_dumbbell.MOV",
-                    "side_video": "/coach_videos/2626b2e3ec3246b486e41068835f8dda/C1_M_C6_Romanian_deadlift_dumbbell_3mii5xd.MOV",
+                    "side_video": "/coach_videos/2626b2e3ec3246b486e41068835f8dda/C1_M_C6_Romanian_deadlift_dumbbell.MOV",
                     "video_start_point": 0.3,
                     "side_video_start_point": null
                 },
@@ -628,6 +628,42 @@
             "image": "/courses/87d18f398aec4fc289a85f0374dc2005/Mucle_Biceps_Brachii_and_Brachioradialis.png"
         },
         {
+            "id": "afbff0e4d6704f9eae5048b1dcabb2f8",
+            "title": "上斜飛鳥",
+            "description": "斜躺啞鈴飛鳥",
+            "course_categories": [
+                "6dd0142a18bc47c7ba65b86373911640"
+            ],
+            "muscles": [
+                "1cc976981d2b4d0985769e398b992f11"
+            ],
+            "coach_videos": [
+                {
+                    "id": "8d7452778e89435b98162af07e3c9697",
+                    "coach_id": "1d419cdc030a4be8848231afffab1015",
+                    "video_preview": "/coach_videos/8d7452778e89435b98162af07e3c9697/C1-2_Dumbbell_Incline_Fly_F.gif",
+                    "video": "/coach_videos/8d7452778e89435b98162af07e3c9697/C1-2_Dumbbell_Incline_Fly_F.mov",
+                    "side_video": null,
+                    "video_start_point": null,
+                    "side_video_start_point": null
+                },
+                {
+                    "id": "e8de6d1294c5431e8e173c74153ba5ad",
+                    "coach_id": "bdfd43afe3f54dfaa757e87a04ac7a0b",
+                    "video_preview": "/coach_videos/e8de6d1294c5431e8e173c74153ba5ad/C1-2_Dumbbell_Incline_Fly_M.gif",
+                    "video": "/coach_videos/e8de6d1294c5431e8e173c74153ba5ad/C1-2_Dumbbell_Incline_Fly_M.mov",
+                    "side_video": null,
+                    "video_start_point": null,
+                    "side_video_start_point": null
+                }
+            ],
+            "coaches": [
+                "1d419cdc030a4be8848231afffab1015",
+                "bdfd43afe3f54dfaa757e87a04ac7a0b"
+            ],
+            "image": "/courses/afbff0e4d6704f9eae5048b1dcabb2f8/Muscle_Pectoralis_Major.png"
+        },
+        {
             "id": "b19880e8b4d84658a68de2eb4b57c6fb",
             "title": "雙手過頂伸展",
             "description": null,
@@ -728,44 +764,6 @@
                 "1d419cdc030a4be8848231afffab1015"
             ],
             "image": "/courses/d917d63a70cd4c23a7bb34435174217e/Leg_Muscles.gif"
-        },
-        {
-            "id": "e657ea2b1a8b4b9d86a9e297835a07da",
-            "title": "上斜伏地挺身",
-            "description": null,
-            "course_categories": [
-                "6dd0142a18bc47c7ba65b86373911640"
-            ],
-            "muscles": [
-                "848c61b1d465484aa2b7fba650104ba4",
-                "fd129b9f0fa846d189b9edab924b0abf",
-                "1cc976981d2b4d0985769e398b992f11"
-            ],
-            "coach_videos": [
-                {
-                    "id": "4d560e4ab8a54df596de3f20fc440e6c",
-                    "coach_id": "bdfd43afe3f54dfaa757e87a04ac7a0b",
-                    "video_preview": "/coach_videos/4d560e4ab8a54df596de3f20fc440e6c/C1_M_A2_incline_push_up.gif",
-                    "video": "/coach_videos/4d560e4ab8a54df596de3f20fc440e6c/C1_M_A2_incline_push_up.MOV",
-                    "side_video": null,
-                    "video_start_point": null,
-                    "side_video_start_point": null
-                },
-                {
-                    "id": "5c866b8c14e841849e4f6d5c6b121ff7",
-                    "coach_id": "1d419cdc030a4be8848231afffab1015",
-                    "video_preview": "/coach_videos/5c866b8c14e841849e4f6d5c6b121ff7/C1_F_A_2_incline_push_up.gif",
-                    "video": "/coach_videos/5c866b8c14e841849e4f6d5c6b121ff7/C1_F_A_2_incline_push_up.MOV",
-                    "side_video": null,
-                    "video_start_point": null,
-                    "side_video_start_point": null
-                }
-            ],
-            "coaches": [
-                "bdfd43afe3f54dfaa757e87a04ac7a0b",
-                "1d419cdc030a4be8848231afffab1015"
-            ],
-            "image": "/courses/e657ea2b1a8b4b9d86a9e297835a07da/Muscle_Pectoralis_Major.png"
         },
         {
             "id": "f15a645026084d649d5b7fa6d92f221b",
@@ -957,7 +955,7 @@
                 },
                 {
                     "category_id": "6dd0142a18bc47c7ba65b86373911640",
-                    "course_id": "e657ea2b1a8b4b9d86a9e297835a07da",
+                    "course_id": "afbff0e4d6704f9eae5048b1dcabb2f8",
                     "reps": 15,
                     "sets": 1
                 },
@@ -1115,12 +1113,12 @@
         ],
         "2020_11_26": [
             {
-                "course_set_id": "da81151d9f7748848715c79b065f2137"
+                "course_set_id": "3a393e50e62a403fafef6cdce7fa7e2a"
             }
         ],
         "2020_11_27": [
             {
-                "course_set_id": "2853da7e9dd346de938f10bfc8f3118c"
+                "course_set_id": "3a393e50e62a403fafef6cdce7fa7e2a"
             }
         ],
         "2020_11_28": [

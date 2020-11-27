@@ -42,7 +42,7 @@ class Action(object):
     def __call__(self):
         print("Action")
 
-        if self.brain.is_pose("keep_body_stable"):
+        if self.brain.is_pose("keep_body_stable_left"):
             # print("請保持身體穩定​")
             self.course.api.course_action["action"]["alert"] = ["請保持身體穩定​"]
             self.course.set_time("alertLastTime")
@@ -76,7 +76,7 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
 
-        elif self.brain.is_pose("keep_body_stable"):
+        elif self.brain.is_pose("keep_body_stable_left"):
             # print("請保持身體穩定​")
             self.course.api.course_action["action"]["alert"] = ["請保持身體穩定​"]
             self.course.set_time("alertLastTime")
@@ -113,7 +113,7 @@ class HandsDown(object):
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
 
-        elif self.brain.is_pose("keep_body_stable"):
+        elif self.brain.is_pose("keep_body_stable_left"):
             # print("請保持身體穩定​")
             self.course.api.course_action["action"]["alert"] = ["請保持身體穩定​"]
             self.course.set_time("alertLastTime")

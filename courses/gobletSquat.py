@@ -40,15 +40,6 @@ class Action(object):
 
     def __call__(self):
         print("Action")
-        """
-        if self.brain.is_pose("hold_dumbbells_on_chest"):
-            # print("持啞鈴於胸口")
-            self.course.api.course_action["action"]["alert"] = ["高腳杯握法持啞鈴至胸前​"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
-        """
         if self.brain.is_pose("hands_up_down"):
             self.course.set_time("lastTime")
             self.course.set_time("startPoint")
@@ -117,16 +108,6 @@ class HandsDown(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-        """
-        elif self.brain.is_pose("hold_dumbbells_on_chest"):
-            # print("持啞鈴於胸口")
-            self.course.api.course_action["action"]["alert"] = ["高腳杯握法持啞鈴至胸前​"]
-            self.course.set_time("alertLastTime")
-            self.course.set_time("startPointLastTime")
-            self.course.change(
-                ErrorHandleing(self.course, self.brain))
-        """
-
 
 class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):

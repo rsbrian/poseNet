@@ -30,15 +30,18 @@ from courses.liftAndChopRight import LiftAndChopRight
 from courses.overheadTricepExtension import OverheadTricepExtension
 from courses.stepRight import StepRight
 from courses.stepLeft import StepLeft
+from courses.jump import Jump
+from courses.skiing import Skiing
+from courses.inclinePushUp import InclinePushUp
 
 class Server(object):
     def __init__(self):
         self.course_template = {
             "首頁": NoCourse,
             # Test
-            "跳躍": LaterRaise,
-            "滑雪": LaterRaise,
-            "上斜伏地挺身": LaterRaise,
+            "跳躍": Jump,
+            "滑雪": Skiing,
+            "上斜飛鳥": RecumbentChestPress,
 
             # Shoulder
             "側平舉": LaterRaise,
@@ -64,8 +67,8 @@ class Server(object):
             "徒手登階(右)": StepRight,
             "徒手登階(左)": StepLeft,
             # 核心
-            "伐木(左)": LiftAndChopLeft, #ok 
-            "伐木(右)": LiftAndChopRight, #ok
+            "伐木(左)": LiftAndChopRight, #ok 
+            "伐木(右)": LiftAndChopLeft, #ok
 
             # No
             "相撲深蹲": SumoDeadlift, # 相撲硬拉深蹲

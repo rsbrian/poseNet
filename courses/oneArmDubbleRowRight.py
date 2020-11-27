@@ -215,7 +215,7 @@ class ErrorHandleing(ErrorHandleingTemplate):
 
     def __call__(self):
         if super().__call__(self.check_list):
-            self.course.change(PrepareTest(self.course, self.brain))
+            self.course.change(Action(self.course, self.brain))
 
 
 class EvaluationScore(EvaluationTemplate):
