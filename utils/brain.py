@@ -25,22 +25,18 @@ class Brain(object):
 
     def add_median_filter(self):
         self.stored_points.append(copy.deepcopy(self.human.points))
-        self.stored_angles.append(copy.deepcopy(self.human.angles))
 
         if len(self.stored_points) > 8:
             self.stored_points = self.stored_points[1:]
-            self.stored_angles = self.stored_angles[1:]
-            self.median_filter(self.stored_points, self.human.points)
-            self.median_filter(self.stored_angles, self.human.angles)
+            self.median_filter(self.stored_points, self.human.temp_points)
 
     def median_filter(self, listed_points, new_list):
         median = len(listed_points) // 2
         for key in listed_points[0].keys():
             if "temp" in key:
-                continue
-            newlist = sorted(listed_points, key=lambda x: x[key])
-            value = newlist[median].get(key)
-            new_list[key] = value
+                newlist = sorted(listed_points, key=lambda x: x[key])
+                value = newlist[median].get(key)
+                new_list[key] = value
 
     def compare(self, name, ops, param):
         try:
@@ -175,6 +171,7 @@ class Brain(object):
             "hands_down_laterraise": self.hands_down_laterraise,
             "hands_down_shoulderpress": self.hands_down_shoulderpress,
             "hands_down_bent": self.hands_down_bent,
+            "hands_down_bent_simple": self.hands_down_bent_simple,
             "hands_down_overheadsquat": self.hands_down_overheadsquat,
             "hands_down_thruster": self.hands_down_thruster,
             "hands_down_pushpress": self.hands_down_pushpress,
@@ -490,7 +487,7 @@ class Brain(object):
         """
     
     def hands_down_bent(self):  # 曲腿挺髖
-        param_y = 50
+        param_y = 70
         #param_x = 50
         return self.abs_compare("right_shoulder_y", "right_hip_y_temp", "<", param_y) and \
             self.abs_compare("left_shoulder_y", "left_hip_y_temp", "<", param_y) and \
@@ -501,6 +498,12 @@ class Brain(object):
         # self.abs_compare("left_shoulder_x", "left_hip_x_temp", ">", param_x) and \
         # self.abs_compare("right_elbow_x", "right_knee_x_temp", ">", param_x) and \
         # self.abs_compare("left_elbow_x", "left_knee_x_temp", ">", param_x)
+    
+    def hands_down_bent_simple(self):  # 曲腿挺髖
+        param_y = 50
+        #param_x = 50
+        return self.abs_compare("right_wrist_y", "right_knee_y", "<", param_y) and \
+            self.abs_compare("left_wrist_y", "left_knee_y", "<", param_y)
 
     def hands_down_overheadsquat(self):
         return self.human.angles["right_knee_angle"] < 150 and self.human.angles["left_knee_angle"] < 150

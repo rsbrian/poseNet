@@ -47,6 +47,7 @@ class Action(object):
 
     def __call__(self):
         print("Action")
+        self.brain.add_median_filter()
         if self.brain.is_pose("hands_up_downright"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")

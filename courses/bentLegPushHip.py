@@ -67,7 +67,7 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
 
-        elif self.brain.is_pose("hands_down_bent"):
+        elif self.brain.is_pose("hands_down_bent_simple"):
             # print("Bar1 Close", self.counter.result())
             # print("Bar2 Open")
             self.counter.record("up")
