@@ -49,7 +49,7 @@ class Action(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-                
+
         elif self.brain.is_pose("hands_up"):
             # print("Bar1 Open")
             self.course.set_time("lastTime")
@@ -120,7 +120,6 @@ class HandsDown(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
 
 
 class Evaluation(object):

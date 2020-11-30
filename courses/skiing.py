@@ -146,6 +146,7 @@ class HandsDown(object):
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
 
+
 class Evaluation(object):
     def __init__(self, course, brain, counter):
         self.course = course

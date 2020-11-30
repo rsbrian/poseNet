@@ -34,10 +34,12 @@ from courses.jump import Jump
 from courses.skiing import Skiing
 from courses.inclinePushUp import InclinePushUp
 
+
 class Server(object):
     def __init__(self):
         self.course_template = {
             "首頁": NoCourse,
+
             # Test
             "跳躍": Jump,
             "滑雪": Skiing,
@@ -46,38 +48,44 @@ class Server(object):
             # Shoulder
             "側平舉": LaterRaise,
             "雙手交替前舉": FrontRaise,
-            "肩上交替推舉": AlternateShoulderPress, #ok
-            "雙手前平舉": DoubleFrontRaise, #ok
-            "借力推舉": PushPress, #ok
+            "肩上交替推舉": AlternateShoulderPress,  # ok
+            "雙手前平舉": DoubleFrontRaise,  # ok
+            "借力推舉": PushPress,  # ok
+
             # Arm
             "雙手錘式彎舉": BicepsCurl,
             "雙手彎舉": BicepsCurl,
-            "雙手過頂伸展": OverheadTricepExtension, # ok
+            "雙手過頂伸展": OverheadTricepExtension,  # ok
+
             # Chest
             "上斜臥推": RecumbentChestPress,
+
             # Back
-            "單(右)手划船": OneArmDubbleRowRight, # wrong
-            "單(左)手划船": OneArmDubbleRowLeft, # wrong
+            "單(右)手划船": OneArmDubbleRowRight,  # wrong
+            "單(左)手划船": OneArmDubbleRowLeft,  # wrong
+
             # Hip
-            "羅馬尼亞硬舉": BentLegPushHip, # 曲腿挺髖
+            "羅馬尼亞硬舉": BentLegPushHip,  # 曲腿挺髖
+
             # Leg
-            "分腿蹲(右)": SplitSquatRight, # ok
-            "分腿蹲(左)": SplitSquatLeft, # ok
-            "火箭推舉": Thruster, # ok
+            "分腿蹲(右)": SplitSquatRight,  # ok
+            "分腿蹲(左)": SplitSquatLeft,  # ok
+            "火箭推舉": Thruster,  # ok
             "徒手登階(右)": StepRight,
             "徒手登階(左)": StepLeft,
+
             # 核心
-            "伐木(左)": LiftAndChopRight, #ok 
-            "伐木(右)": LiftAndChopLeft, #ok
+            "伐木(左)": LiftAndChopRight,  # ok
+            "伐木(右)": LiftAndChopLeft,  # ok
 
             # No
-            "相撲深蹲": SumoDeadlift, # 相撲硬拉深蹲
+            "相撲深蹲": SumoDeadlift,  # 相撲硬拉深蹲
             "啞鈴肩推": ShoulderPress,
             "斜躺啞鈴飛鳥": Recumbentbird,
             "俯身啞鈴反向飛鳥": BentLaterRaise,
             "俯身啞鈴後划船": BentRow,
             "啞鈴側弓步蹲": SideLunge,
-            "坐立肩推上提": ShoulderPressSit,#ShoulderPressSit, # 坐立肩推上提
+            "坐立肩推上提": ShoulderPressSit,  # ShoulderPressSit, # 坐立肩推上提
             "二頭彎曲": TurnBicepsCurl,
             "高腳杯深蹲": GobletSquat,
             "單臂啞鈴過頂深蹲": BarbellOverheadSquat,

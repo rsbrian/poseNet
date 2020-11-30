@@ -25,9 +25,10 @@ class StepRight(Home):
             self.api.course_action["action"]["quit"] = True
         return self
 
+
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "將右腳踏於臺階上": "hold_rightfeet_on_step"
+        "請將右腳踏於臺階上": "hold_rightfeet_on_step"
     }
 
     def __init__(self, course, brain):
@@ -63,7 +64,7 @@ class HandsUp(object):
         print('HandsUp')
 
         self.counter.start()
-        
+
         if self.brain.is_pose("ending_left_feet"):
             if self.is_time_small_than(0.8):
                 print("你沒有要開始就不要亂動")
@@ -100,7 +101,8 @@ class HandsDown(object):
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
-       
+
+
 class Evaluation(object):
     def __init__(self, course, brain, counter):
         self.course = course

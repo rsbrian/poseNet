@@ -28,7 +28,7 @@ class SplitSquatRight(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "請將右腳往前踏左腳向後伸​": "front_right_feet",
+        "請將右腳往前踏，弓箭步站立後垂直下蹲": "front_right_feet",
         "將雙手自然垂放,身體保持直立": "drop_hand_natrually"
     }
 

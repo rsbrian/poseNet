@@ -22,7 +22,7 @@ class OverheadTricepExtension(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "請將啞鈴持於後腦": "hold_dumbbells_on_brain"
+        "請將啞鈴以雙手虎口交叉握住後舉至頭部後方": "hold_dumbbells_on_brain"
     }
 
     def __init__(self, course, brain):
@@ -120,7 +120,6 @@ class HandsDown(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
-
 
 
 class Evaluation(object):

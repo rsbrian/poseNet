@@ -16,7 +16,7 @@ class Jump(Home):
         super().__init__(brain, camera)
         self.state = Prepare(self, self.brain)
         self.bounding_box = self.brain.setting_calibrate_box_leg()
-    
+
     def __call__(self):
         self.camera.save(self.resolutions)
         self.state()
@@ -24,6 +24,7 @@ class Jump(Home):
         if behavior == "取消":
             self.api.course_action["action"]["quit"] = True
         return self
+
 
 class Prepare(PrepareTemp):
     prepare_notes = {
@@ -68,7 +69,7 @@ class HandsUp(object):
             self.course.change(
                 HandsDown(self.course, self.brain, self.counter))
 
-        #if self.brain.is_pose("ending_down"):
+        # if self.brain.is_pose("ending_down"):
         #    if self.is_time_small_than(0.8):
         #        print("你沒有要開始就不要亂動")
         #    self.course.api.course_action["action"]["alert"] = ["跳的不夠高不列入次數"]
@@ -96,6 +97,7 @@ class HandsDown(object):
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
+
 
 class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):

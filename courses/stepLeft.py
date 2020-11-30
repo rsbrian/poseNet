@@ -28,7 +28,7 @@ class StepLeft(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "將左腳踏於臺階上": "hold_leftfeet_on_step"
+        "請將左腳踏於臺階上": "hold_leftfeet_on_step"
     }
 
     def __init__(self, course, brain):
@@ -100,6 +100,7 @@ class HandsDown(object):
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
+
 
 class Evaluation(object):
     def __init__(self, course, brain, counter):

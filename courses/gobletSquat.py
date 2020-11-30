@@ -16,7 +16,7 @@ class GobletSquat(Home):
         super().__init__(brain, camera)
         self.state = Prepare(self, self.brain)
         self.bounding_box = self.brain.setting_calibrate_box_leg()
-    
+
     def __call__(self):
         return super().__call__()
 
@@ -108,6 +108,7 @@ class HandsDown(object):
             self.course.set_time("startPointLastTime")
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
+
 
 class ErrorHandleing(ErrorHandleingTemplate):
     def __init__(self, course, brain):

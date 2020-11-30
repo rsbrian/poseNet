@@ -28,7 +28,7 @@ class SplitSquatLeft(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "請將左腳往前踏右腳向後伸​": "front_left_feet",
+        "請將左腳往前踏，弓箭步站立後垂直下蹲": "front_left_feet",
         "將雙手自然垂放,身體保持直立": "drop_hand_natrually"
     }
 
@@ -54,6 +54,7 @@ class Action(object):
             self.course.set_time("startPoint")
             self.course.change(
                 HandsUp(self.course, self.brain))
+
 
 class HandsUp(object):
     def __init__(self, course, brain):
@@ -101,7 +102,6 @@ class HandsDown(object):
             self.counter.record("total")
             self.course.change(
                 EvaluationScore(self.course, self.brain, self.counter))
-
 
 
 class Evaluation(object):

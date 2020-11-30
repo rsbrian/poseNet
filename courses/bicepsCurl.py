@@ -197,6 +197,7 @@ class HandsDown(object):
             self.course.change(
                 ErrorHandleing(self.course, self.brain))
 
+
 class Evaluation(object):
     def __init__(self, course, brain, counter):
         self.course = course

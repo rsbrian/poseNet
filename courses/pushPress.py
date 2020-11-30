@@ -23,7 +23,7 @@ class PushPress(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "將啞鈴放置於肩膀之上​": "hold_dumbbells_on_shoulder"
+        "將啞鈴舉至肩膀前方偏外側​": "hold_dumbbells_on_shoulder"
     }
 
     def __init__(self, course, brain):
@@ -67,7 +67,6 @@ class HandsUp(object):
             self.course.set_time("startPointLastTime")
             self.course.change(Action(self.course, self.brain))
 
-
         elif self.brain.is_pose("hands_down_pushpress"):
             self.counter.record("up")
             self.course.change(
@@ -101,7 +100,7 @@ class HandsDown(object):
                 self.frame = 0
                 print("上來時請同時將手舉高")
                 self.course.api.course_action["action"]["alert"] = [
-                "上來時請同時將手舉高"]
+                    "上來時請同時將手舉高"]
                 self.course.set_time("alertLastTime")
                 self.course.set_time("startPointLastTime")
                 self.course.change(

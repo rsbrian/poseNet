@@ -36,6 +36,7 @@ class Action(object):
     def __init__(self, course, brain):
         self.course = course
         self.brain = brain
+
     def __call__(self):
         print("Action")
 

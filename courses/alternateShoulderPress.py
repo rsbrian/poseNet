@@ -23,7 +23,7 @@ class AlternateShoulderPress(Home):
 
 class Prepare(PrepareTemp):
     prepare_notes = {
-        "請將手持壺鈴於胸前": "hold_dumbbells_on_chest"
+        "雙手將壺鈴舉至胸前": "hold_dumbbells_on_chest"
     }
 
     def __init__(self, course, brain):

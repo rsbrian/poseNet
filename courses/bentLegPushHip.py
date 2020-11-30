@@ -8,7 +8,7 @@ from courses.template.prepare import PrepareTemp
 from courses.template.evaluation import EvaluationTemplate
 from courses.template.error_handleing import ErrorHandleingTemplate
 
-# 曲腿挺髖
+# 羅馬尼亞硬舉
 
 
 class BentLegPushHip(Home):
